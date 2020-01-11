@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\hospital;
+use App\agente;
 class hospitales extends Controller
 {
     public function index()

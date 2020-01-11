@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use App\agente;
 class agente extends Model
 {
     protected $table= 'agentes';
@@ -12,4 +12,5 @@ class agente extends Model
     {
        return $this->belongsTo(hospital::class, 'IDHOSP');
     }
+    
 }

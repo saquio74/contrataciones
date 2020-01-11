@@ -4,13 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\agente;
-class hospital extends Model
+class inciso extends Model
 {
-    protected $table = 'hospitales';
+    protected $table = 'inciso';
 
     public function agentes()
     {
-       return $this->hasMany('App\agente', 'ID' );
+       return $this->hasMany('App\agente', 'id' );
     }
-
 }

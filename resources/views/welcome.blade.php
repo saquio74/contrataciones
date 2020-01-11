@@ -7,7 +7,7 @@
     
         <div class="btn-group-vertical text-center text-light col-sm-5">
             <button class="btn btn-default badge-dark text-white" type="button">MENU ADMINISTRATIVO</button>
-            <button class="btn btn-default badge-dark text-white" type="button" onclick="window.location.href='nuevoagente.php' ">Nuevo Agente</button>
+            <button class="btn btn-default badge-dark text-white" type="button" onclick="window.location.href='{{action('agentes@nuevo')}}'">Nuevo Agente</button>
             <button class="btn btn-default badge-dark text-white" type="button" onclick="window.location.href='buscaragente.php'" >Modificar Agente</button>
             <button class="btn btn-default badge-dark text-white" type="button" onclick="window.location.href='liquidacionhospital.php'">Liquidacion</button>
             <button class="btn btn-default badge-dark text-white" type="button" onclick="window.location.href='certificacion.html'">Certificaciones</button>

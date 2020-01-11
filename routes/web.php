@@ -15,10 +15,13 @@ Route::get('/', 'PagesController@index');
 
 Route::get('/agentes', 'agentes@index');
 
+Route::get('/agentes/nuevo', 'agentes@nuevo');
+
 Route::get('/agentes/{legajo}', 'agentes@show');
 
 Route::get('/hospitales','hospitales@index');
 
 Route::get('/hospitales/{id}','hospitales@show');
+
 
 

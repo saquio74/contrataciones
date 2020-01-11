@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
-use App\agente;
+
 class agentes extends Controller
 {
     public function index(){
@@ -20,13 +20,17 @@ class agentes extends Controller
         $agente = agente::where('legajo',$legajo)->get();
         
         //$agente = agente::find('legajo');
-
+        
         
         if($agente->isEmpty()){
-            return view('agente.show');
+            return view('agente.show', compact('agente'));
         }else{
-        return view('agente.show', compact('agente'));
+            return view('agente.show', compact('agente'));
         }
         
+    }
+    public function nuevo()
+    {
+        return view('agente.nuevo');
     }
 }
