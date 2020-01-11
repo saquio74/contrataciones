@@ -19,6 +19,7 @@
         "sass-loader": "^7.1.0"
     },
     "dependencies": {
+        "angular": "^1.7.9",
         "bootstrap": "^4.4.1",
         "eloquent": "^1.0.0",
         "gulp": "^4.0.2",
