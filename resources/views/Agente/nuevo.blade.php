@@ -25,7 +25,7 @@
             <label for="legajo" class="col-sm-2 col-form-label text-center ">HOSPITAL</label>
             <div class="col-sm-5">
                 <select multiple class="form-control" id="hospitales">
-                    @foreach ($hospitales as $hosp)
+                    @foreach ($hospitales ?? '' as $hosp)
                         
                         <select name="{{$hosp->ID}}" id="{{$hosp->ID}}">{{$hosp->HOSPITAL}}</select>
                         

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
-
+use App\agente;
 class agentes extends Controller
 {
     public function index(){

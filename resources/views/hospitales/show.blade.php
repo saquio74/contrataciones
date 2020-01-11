@@ -10,9 +10,13 @@
     @else
         <h1>Hospital {{$hospitales[0]->HOSPITAL}}</h1>
         <ul>
-            @foreach ($hospitales[0]->agentes as $agente)
-                <li>
-                    {{$agente->HOSPITAL}}
+            @foreach ($hospitales[0]->agentes as $gente)
+                
+                <a href="{{action('agentes@show', [$gente->LEGAJO])}}">
+                <li class="list-group-item">
+                    {{$gente->LEGAJO}}-
+                    {{$gente->NOMBRE}}-
+                    {{$gente->hospital->HOSPITAL}}
                 </li>
 
             @endforeach
