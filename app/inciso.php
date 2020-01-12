@@ -8,8 +8,7 @@ class inciso extends Model
 {
     protected $table = 'inciso';
 
-    public function agentes()
-    {
-       return $this->hasMany('App\agente', 'id' );
-    }
+    protected $primaryKey = 'ID';
+
+    
 }

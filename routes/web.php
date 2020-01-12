@@ -17,6 +17,8 @@ Route::get('/agentes', 'agentes@index');
 
 Route::get('/agentes/nuevo', 'agentes@nuevo');
 
+Route::post('/agentes', 'agentes@store');
+
 Route::get('/agentes/{legajo}', 'agentes@show');
 
 Route::get('/hospitales','hospitales@index');

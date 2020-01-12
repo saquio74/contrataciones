@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\agente;
+use App\hospital;
+use App\inciso;
+use App\sector;
+use App\servicio;
 class agentes extends Controller
 {
     public function index(){
@@ -31,6 +35,18 @@ class agentes extends Controller
     }
     public function nuevo()
     {
-        return view('agente.nuevo');
+        $hospitales = hospital::all();
+        $inciso = inciso::all();
+        $sector = sector::all();
+        $servicio = servicio::all();
+        
+        return view('agente.nuevo', compact('hospitales','inciso','sector','servicio'));
+    }
+    public function store(Request $agente)
+    {
+        dd($agente->all());
+        
+        return $agente;
+
     }
 }

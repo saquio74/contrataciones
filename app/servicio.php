@@ -4,13 +4,13 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class sector extends Model
+class servicio extends Model
 {
-    protected $table = 'sector';
+    protected $table = 'servicio';
     protected $primaryKey = 'ID';
 
     public function agentes()
     {
-       return $this->hasMany('App\agente', 'sec' );
+       return $this->hasMany('App\agente', 'idservicio' );
     }
 }
