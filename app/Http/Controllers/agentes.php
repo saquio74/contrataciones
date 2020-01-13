@@ -42,11 +42,24 @@ class agentes extends Controller
         
         return view('agente.nuevo', compact('hospitales','inciso','sector','servicio'));
     }
-    public function store(Request $agente)
+    public function store(Request $request)
     {
-        dd($agente->all());
+        $agente = new agente;
+
+        /*$agente->legajo = $request->input('legajo');
+        $agente->dni = $request->input('dni');
+        $agente->nombre = $request->input('nombre');
+        $agente->idhosp = $request->input('idhosp');
+        $agente->sec = $request->input('sec');
+        $agente->idservicio = $request->input('idservicio');
+        $agente->activo = $request->inpput('activo');
+        $agente->horario = $request->input('horario');
+        $agente->save();*/
         
-        return $agente;
+        agente::create($request->all());
+        
+        
+        return $agente->legajo;
 
     }
 }

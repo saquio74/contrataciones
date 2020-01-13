@@ -6,37 +6,38 @@
     <form class="badge-dark text-white " method="POST" action="{{action('agentes@store')}}">
         <hr>
         @csrf
+        <input type="hidden" value='0' id="legajo" name='activo'>
         
         <div class="form-group row">
             
             <label for="legajo" class="col-sm-2 col-form-label text-center ">LEGAJO</label>
             <div class="col-sm-5">
-                <input type="text" class="form-control badge-secondary" id="legajo">
+                <input type="text" class="form-control badge-secondary" id="legajo" name='legajo'>
             </div>
         </div>
         <div class="form-group row">
             
-            <label for="documento" class="col-sm-2 col-form-label text-center ">DOCUMENTO</label>
+            <label for="documento" class="col-sm-2 col-form-label text-center ">DNI</label>
             <div class="col-sm-5">
-                <input type="text" class="form-control badge-secondary" id="documento">
+                <input type="text" class="form-control badge-secondary" id="dni" name='dni'>
             </div>
         </div>
         <div class="form-group row">
             
             <label for="horario" class="col-sm-2 col-form-label text-center ">NOMBRE</label>
             <div class="col-sm-5">
-                <input type="text" class="form-control badge-secondary" id="nombre">
+                <input type="text" class="form-control badge-secondary" id="nombre" name='nombre'>
             </div>
         </div>
         <div class="form-group row">
             
             <label for="legajo" class="col-sm-2 col-form-label text-center ">HOSPITAL</label>
             <div class="col-sm-5">
-                <select  class="form-control badge-secondary" id="hospitales">
+                <select  class="form-control badge-secondary" id="hospitales" name='idhosp'>
                         <option value="">Seleccione</option>
                     @foreach ($hospitales as $hosp)
                         
-                        <option name="{{$hosp->ID}}" id="{{$hosp->ID}}">{{$hosp->HOSPITAL}}</option>
+                        <option value="{{$hosp->ID}}" id="{{$hosp->ID}}">{{$hosp->HOSPITAL}}</option>
                         
                     @endforeach
                             
@@ -47,11 +48,11 @@
             
             <label for="legajo" class="col-sm-2 col-form-label text-center ">INCISO</label>
             <div class="col-sm-5">
-                <select multiple class="form-control badge-secondary" id="inciso">
+                <select multiple class="form-control badge-secondary" id="inciso" name='inciso'>
                         
                     @foreach ($inciso as $incisos)
                         
-                        <option name="{{$incisos->ID}}" id="{{$incisos->ID}}">{{$incisos->INCISO}}</option>
+                        <option value="{{$incisos->ID}}" id="{{$incisos->ID}}">{{$incisos->INCISO}}</option>
                         
                     @endforeach
                             
@@ -62,11 +63,11 @@
             
             <label for="legajo" class="col-sm-2 col-form-label text-center ">SECTOR</label>
             <div class="col-sm-5">
-                <select  class="form-control badge-secondary" id="sector">
+                <select  class="form-control badge-secondary" id="sector" name='sec'>
                         <option value="">Seleccione</option>
                     @foreach ($sector as $sectores)
                         
-                        <option name="{{$sectores->ID}}" id="{{$sectores->ID}}">{{$sectores->SECTOR}}</option>
+                        <option value="{{$sectores->ID}}" id="{{$sectores->ID}}">{{$sectores->SECTOR}}</option>
                         
                     @endforeach
                             
@@ -77,11 +78,11 @@
             
             <label for="legajo" class="col-sm-2 col-form-label text-center ">SERVICIO</label>
             <div class="col-sm-5">
-                <select  class="form-control badge-secondary" id="servicio">
+                <select  class="form-control badge-secondary" id="servicio" name='idservicio'>
                         <option value="">Seleccione</option>
                     @foreach ($servicio as $servicio)
                         
-                        <option name="{{$servicio->ID}}" id="{{$servicio->ID}}">{{$servicio->SERVICIO}}</option>
+                        <option value="{{$servicio->ID}}" id="{{$servicio->ID}}">{{$servicio->SERVICIO}}</option>
                         
                     @endforeach
                             
@@ -92,7 +93,7 @@
             
             <label for="horario" class="col-sm-2 col-form-label text-center ">HORARIO</label>
             <div class="col-sm-5">
-                <input type="text" class="form-control badge-secondary" id="horario">
+                <input type="text" class="form-control badge-secondary" id="horario" name='horario'>
             </div>
         </div>
         
