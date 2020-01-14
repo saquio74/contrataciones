@@ -7,15 +7,11 @@ use App\hospital;
 use App\inciso;
 use App\sector;
 use App\servicio;
+use App\ageninc;
 class agentes extends Controller
 {
     public function index(){
-
-        //$gente = \DB::table('agentes')->select('LEGAJO','NOMBRE')->get();
-        
-        
         $gente = agente::all();
-
         return view('Agente.agentes', compact('gente'));
     }
     public function show($legajo)
@@ -44,22 +40,41 @@ class agentes extends Controller
     }
     public function store(Request $request)
     {
-        $agente = new agente;
+        /*$this->validate($request,[
+            'legajo'=>'required',
+            'dni'=>'required',
+            'nombre'=>'required',
+            'hospital'=>'required',
+            'inciso'=>'required'
 
-        /*$agente->legajo = $request->input('legajo');
-        $agente->dni = $request->input('dni');
-        $agente->nombre = $request->input('nombre');
-        $agente->idhosp = $request->input('idhosp');
-        $agente->sec = $request->input('sec');
-        $agente->idservicio = $request->input('idservicio');
-        $agente->activo = $request->inpput('activo');
-        $agente->horario = $request->input('horario');
-        $agente->save();*/
-        
-        agente::create($request->all());
-        
-        
-        return $agente->legajo;
 
+        ]);*/
+        $agente = agente::where('legajo',$request->legajo)->get();
+        
+        $inciso = new ageninc;
+        
+        
+        //dd($verificar);
+        try {
+            if(count($agente)>=1) {
+
+                return view('agente.show', compact('agente'));
+            } else {
+                $inciso->idagente=$request->legajo;
+                $inciso->idinc=$request->inciso;
+                agente::create($request->all());
+                $inciso->save();
+                $agente = agente::where('legajo',$request->legajo)->get();
+                
+                
+                return view('Agente.show', compact('agente'));
+            }
+            
+
+            
+        } catch (\Throwable $th) {
+            //throw $th;
+            return 'ocurrio algun problema';
+        }
     }
 }

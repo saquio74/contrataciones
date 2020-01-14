@@ -23,7 +23,7 @@ class hospitales extends Controller
         if($hospitales->isEmpty()){
             return view('hospitales.show');
         }else{
-        return view('hospitales.show', compact('hospitales'));
+            return view('hospitales.show', compact('hospitales'));
         }
         
     }
