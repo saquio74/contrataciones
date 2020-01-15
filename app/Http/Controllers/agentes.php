@@ -11,7 +11,7 @@ use App\ageninc;
 class agentes extends Controller
 {
     public function index(){
-        $gente = agente::all();
+        $gente = agente::all()->sortByDesc('created_at');
         return view('Agente.agentes', compact('gente'));
     }
     public function show($legajo)
@@ -54,7 +54,7 @@ class agentes extends Controller
         $inciso = new ageninc;
         
         
-        //dd($verificar);
+        
         try {
             if(count($agente)>=1) {
 

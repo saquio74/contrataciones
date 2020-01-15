@@ -29,6 +29,8 @@
             <button class="btn btn-default badge-dark text-white" type="button" onclick="window.location.href='complementaria.php'" >Generar Excel Liquidacion</button>
             <button class="btn btn-default badge-dark text-secondary" type="button" onclick="window.location.href='{{action('agentes@index')}}'" >-</button>
         </div>
+
+        
         
     </div>    
     <br>
