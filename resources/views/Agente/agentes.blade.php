@@ -8,7 +8,7 @@
                 <li class="list-group-item">
                 {{$gente->LEGAJO}}-
                 {{$gente->NOMBRE}}-
-                {{$gente->hospital->HOSPITAL}}
+                {{$gente->HOSPITAL}}
                 
             </li>
             </a>

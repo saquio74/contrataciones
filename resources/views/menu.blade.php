@@ -17,7 +17,7 @@
                 <a class="nav-link" href="#">Certificaciones</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">liquidacion</a>
+                <a class="nav-link" href="#">Liquidacion</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">Estadistica</a>

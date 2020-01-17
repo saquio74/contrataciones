@@ -8,10 +8,15 @@ use App\inciso;
 use App\sector;
 use App\servicio;
 use App\ageninc;
+use DB;
 class agentes extends Controller
 {
     public function index(){
-        $gente = agente::all()->sortByDesc('created_at');
+        $gente = DB::table('agentes')
+                    ->join('hospitales','idhosp','=','hospitales.id')
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+
         return view('Agente.agentes', compact('gente'));
     }
     public function show($legajo)
@@ -40,15 +45,16 @@ class agentes extends Controller
     }
     public function store(Request $request)
     {
-        /*$this->validate($request,[
+        $this->validate($request,[
             'legajo'=>'required',
             'dni'=>'required',
             'nombre'=>'required',
-            'hospital'=>'required',
-            'inciso'=>'required'
-
-
-        ]);*/
+            'idhosp'=>'required',
+            'inciso'=>'required',
+            'sec'=>'required',
+            'idservicio'=>'required',
+            'horario'=>'required'
+        ]);
         $agente = agente::where('legajo',$request->legajo)->get();
         
         $inciso = new ageninc;

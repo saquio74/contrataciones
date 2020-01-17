@@ -31,6 +31,13 @@
         </div>
         <div class="form-group row">
             
+            <label for="horario" class="col-sm-2 col-form-label text-center ">TELEFONO</label>
+            <div class="col-sm-5">
+                <input type="text" class="form-control badge-secondary" id="telefono" name='telefono'>
+            </div>
+        </div>
+        <div class="form-group row">
+            
             <label for="legajo" class="col-sm-2 col-form-label text-center ">HOSPITAL</label>
             <div class="col-sm-5">
                 <select  class="form-control badge-secondary" id="hospitales" name='idhosp'>
