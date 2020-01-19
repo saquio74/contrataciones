@@ -2,7 +2,19 @@
 
 @section('contenido')
     <h1>Nuevo Agente</h1>
-        
+    
+    @if (count($errors)>0)
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{$error}}</li>    
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+
+
     <form class="badge-dark text-white " method="POST" action="{{action('agentes@store')}}">
         <hr>
         @csrf
@@ -12,28 +24,28 @@
             
             <label for="legajo" class="col-sm-2 col-form-label text-center ">LEGAJO</label>
             <div class="col-sm-5">
-                <input type="text" class="form-control badge-secondary" id="legajo" name='legajo'>
+            <input type="text" class="form-control badge-secondary" id="legajo" name='legajo' value='{{old('legajo')}}'>
             </div>
         </div>
         <div class="form-group row">
             
             <label for="documento" class="col-sm-2 col-form-label text-center ">DNI</label>
             <div class="col-sm-5">
-                <input type="text" class="form-control badge-secondary" id="dni" name='dni'>
+                <input type="text" class="form-control badge-secondary" id="dni" name='dni' value='{{old('dni')}}'>
             </div>
         </div>
         <div class="form-group row">
             
             <label for="horario" class="col-sm-2 col-form-label text-center ">NOMBRE</label>
             <div class="col-sm-5">
-                <input type="text" class="form-control badge-secondary" id="nombre" name='nombre'>
+                <input type="text" class="form-control badge-secondary" id="nombre" name='nombre' value='{{old('nombre')}}'>
             </div>
         </div>
         <div class="form-group row">
             
             <label for="horario" class="col-sm-2 col-form-label text-center ">TELEFONO</label>
             <div class="col-sm-5">
-                <input type="text" class="form-control badge-secondary" id="telefono" name='telefono'>
+                <input type="text" class="form-control badge-secondary" id="telefono" name='telefono' value='{{old('telefono')}}'>
             </div>
         </div>
         <div class="form-group row">
@@ -55,7 +67,7 @@
             
             <label for="legajo" class="col-sm-2 col-form-label text-center ">INCISO</label>
             <div class="col-sm-5">
-                <select multiple class="form-control badge-secondary" id="inciso" name='inciso'>
+                <select multiple class="form-control badge-secondary" id="inciso" name='inciso[]'>
                         
                     @foreach ($inciso as $incisos)
                         
@@ -100,7 +112,7 @@
             
             <label for="horario" class="col-sm-2 col-form-label text-center ">HORARIO</label>
             <div class="col-sm-5">
-                <input type="text" class="form-control badge-secondary" id="horario" name='horario'>
+                <input type="text" class="form-control badge-secondary" id="horario" name='horario' value='{{old('horario')}}'>
             </div>
         </div>
         

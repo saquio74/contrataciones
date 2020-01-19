@@ -18,11 +18,11 @@
         <div class="container-fluid">
             <div class="row">
 
-                <div class=" col-sm-2">
+                <div class=" col-sm-1">
                     @include('menu')
                 </div>
                 
-                <div class="col-sm-8">
+                <div class="col-sm-10">
                     <div class="bg-secondary">
                         <div class="col-sm-12">
                             <div class="panel panel-default   col-sm-12">

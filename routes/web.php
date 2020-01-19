@@ -17,7 +17,15 @@ Route::get('/agentes', 'agentes@index');
 
 Route::get('/agentes/nuevo', 'agentes@nuevo');
 
+Route::get('/agentes/buscar', 'agentes@buscar');
+
+Route::get('/agente/modificar', 'agente@modificar');
+
+Route::post('/agente', 'agentes@update');
+
 Route::post('/agentes', 'agentes@store');
+
+Route::post('/agentes', 'agentes@modificar');
 
 Route::get('/agentes/{legajo}', 'agentes@show');
 

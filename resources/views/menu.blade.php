@@ -14,7 +14,7 @@
                 
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Certificaciones</a>
+                <a class="nav-link" href="#">Certificar</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">Liquidacion</a>
