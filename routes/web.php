@@ -23,7 +23,7 @@ Route::get('/agente/modificar', 'agente@modificar');
 
 Route::post('/agente', 'agentes@update');
 
-Route::post('/agentes', 'agentes@store');
+Route::post('/agente', 'agentes@store');
 
 Route::post('/agentes', 'agentes@modificar');
 
