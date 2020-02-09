@@ -12,14 +12,19 @@ use DB;
 class agentes extends Controller
 {
     public function index(){
-        $gente = DB::table('agentes')
+        $agente = DB::table('agentes')
                     ->join('hospitales','idhosp','=','hospitales.id')
                     ->join('servicio','idservicio','=','servicio.id')
                     ->join('sector','sec','=','sector.id')
                     ->orderBy('created_at', 'desc')
                     ->get();
-
-        return view('Agente.agentes', compact('gente'));
+        $agente = json_encode($agente);
+        return $agente;
+        
+    }
+    public function vistaAgentes()
+    {
+        return view('agente.agentes');
     }
 
 

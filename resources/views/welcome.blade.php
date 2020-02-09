@@ -27,7 +27,7 @@
             <button class="btn btn-default badge-dark text-white" type="button" onclick="window.location.href='contaduria.php'" >Agregar Prestacion</button>
             <button class="btn btn-default badge-dark text-white" type="button" onclick="window.location.href='borrarliquidacion.php'" >Agregar Profesional</button>
             <button class="btn btn-default badge-dark text-white" type="button" onclick="window.location.href='complementaria.php'" >Generar Excel Liquidacion</button>
-            <button class="btn btn-default badge-dark text-secondary" type="button" onclick="window.location.href='{{action('agentes@index')}}'" >-</button>
+            <button class="btn btn-default badge-dark text-secondary" type="button" onclick="window.location.href='{{action('agentes@vistaAgentes')}}'" >-</button>
         </div>
 
         

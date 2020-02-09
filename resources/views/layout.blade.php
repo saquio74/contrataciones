@@ -26,7 +26,7 @@
                 <div class="col-sm-10">
                     <div class="bg-secondary">
                         <div class="col-sm-12">
-                            <div id='app' class="panel panel-default   col-sm-12">
+                            <div id='app' >
                                 
                                 
                                 @yield('contenido')    

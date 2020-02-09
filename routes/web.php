@@ -13,7 +13,9 @@
 
 Route::get('/', 'PagesController@index');
 
-Route::get('/agentes', 'agentes@index');
+Route::get('/agente/agente','agentes@index');
+
+Route::get('/agente/agentes','agentes@vistaAgentes');
 
 Route::get('/agentes/nuevo', 'agentes@nuevo');
 
