@@ -9,6 +9,8 @@ require('./bootstrap');
 window.Vue = require('vue');
 
 
+
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -26,8 +28,11 @@ Vue.component('listado-agentes-component', require('./components/ListadoAgentesC
 
 
 import Example from './components/ListadoAgentesComponent'
-import axios from 'axios'
+import axios   from 'axios'
+import toastr  from 'toastr'
+import moment  from 'moment'
 
+moment.lang('es');
 
 
 /**

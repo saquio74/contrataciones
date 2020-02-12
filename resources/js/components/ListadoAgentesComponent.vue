@@ -2,6 +2,22 @@
     <div class="panel panel-default   col-sm-12">
 
         <h1 class="text-center">Listado General de agentes</h1>
+        <div class="form-group row badge-dark">
+            <hr>
+            <hr>
+
+            <button v-on:click="getAgentes" class="btn btn-primary" v-if="!agentes.length">Listar</button>
+            <div class="col-sm-6">
+            <input type="text" v-model="legajo" v-if="agentes.length" class="form-control badge-secondary" id="legajo" name='legajo'>
+            </div>
+            <div class="com-sm-2">
+                
+                <p v-if="!LEGAJO">para filtrar por legajo escribe aqui</p>
+                <p v-else>puedes elegir por donde filtrar</p>
+            </div>
+            <hr>
+            <hr>
+        </div>
         <table class="table table-striped table-dark table-bordered table-hover">
             <thead>
                 <tr>
@@ -16,7 +32,7 @@
             </thead>
                     
             <tbody>
-                <tr  v-for="agente in agentes" >
+                <tr  v-for="agente in agentes" :key="agente.LEGAJO" >
                     <th>
                         {{agente.LEGAJO}}
                     </th>
@@ -49,21 +65,25 @@
         data(){
             return {
                 agentes:  [],
-                
+                legajo: '',
             }
         },
-        created: function(){
-            this.getAgentes();
-        },
+        
         methods:{
             getAgentes: function(){
                 var urlAgentes ='agente';
                 axios.get(urlAgentes).then(Response => {
                     this.agentes = Response.data
-                    
                 });
-                
-                
+            }
+        },
+        computed:{
+            filtroAgentes(){
+                if(this.legajo){
+                    return this.legajo.toLowerCase().split(' ').every(v => agente.NOMBRE.toLowerCase().includes(v))
+                }else{
+                    return this.agentes;
+                }
             }
         }
     }
