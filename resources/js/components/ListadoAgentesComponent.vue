@@ -8,26 +8,24 @@
 
             <button v-on:click="getAgentes" class="btn btn-primary" v-if="!agentes.length">Listar</button>
             <div class="col-sm-2">
-                <label class="text">legajo</label>
-                <input type="int" v-model="legajo" v-if="agentes.length" class="form-control badge-secondary" id="legajo" name='legajo'>
-                <p>{{legajo}}</p>
+                <label class="text"> legajo      </label>
+                <input type="int" v-model="legajo"    v-if="agentes.length" class="form-control badge-secondary" id="legajo" name='legajo'>
             </div>
             <div class="col-sm-2">
-                <label class="text">nombre</label>
-                <input type="text" v-model="nombre" v-if="agentes.length" class="form-control badge-secondary" id="nombre" name='nombre'>
-                <p>{{nombre}}</p>
+                <label class="text"> nombre      </label>
+                <input type="text" v-model="nombre"   v-if="agentes.length" class="form-control badge-secondary" id="nombre" name='nombre'>
             </div>
             <div class="col-sm-2">
-                <label class="text">hospital</label>
+                <label class="text"> hospital    </label>
                 <input type="text" v-model="hospital" v-if="agentes.length" class="form-control badge-secondary" id="hospital" name='hospital'>
             </div>
             <div class="col-sm-2">
-                <label class="text">servicio</label>
+                <label class="text"> servicio    </label>
                 <input type="text" v-model="servicio" v-if="agentes.length" class="form-control badge-secondary" id="legajo" name='legajo'>
             </div>
             <div class="col-sm-2">
                 <label class="text">activo o baja</label>
-                <input type="text" v-model="activo" v-if="agentes.length" class="form-control badge-secondary" id="legajo" name='legajo'>
+                <input type="text" v-model="activo"   v-if="agentes.length" class="form-control badge-secondary" id="legajo" name='legajo'>
             </div>
             
             <hr>
@@ -63,8 +61,11 @@
                     <th>
                         {{agente.SECTOR}}
                     </th >
-                    <th>
-                        Activo
+                    <th v-if="agente.ACTIVO==0">
+                        ACTIVO
+                    </th>
+                    <th v-else>
+                        BAJA
                     </th>
                     <th>
                         {{agente.fecha_ingreso}}
@@ -72,6 +73,7 @@
                 </tr>
             </tbody>
         </table>
+        
     </div>
 </template>
 
@@ -103,7 +105,8 @@
             searchAgentes: function(){
                 if (this.nombre) {
                     return this.agentes.filter((agente)=>
-                    agente.NOMBRE.toUpperCase().includes(this.nombre.toUpperCase()))
+                    agente.NOMBRE.toUpperCase().includes(this.nombre.toUpperCase())
+                    )
                 }else if(this.hospital){
                     return this.agentes.filter((agente)=>agente.HOSPITAL.toUpperCase().includes(this.hospital.toUpperCase()))
                 }else if(this.servicio){
