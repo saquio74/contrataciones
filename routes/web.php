@@ -15,6 +15,10 @@ Route::get('/', 'PagesController@index');
 
 Route::get('/agente/agente','agentes@index');
 
+Route::get('/agente/activos','agentes@activos');
+
+Route::get('/agente/bajas','agentes@bajas');
+
 Route::get('/agente/agentes','agentes@vistaAgentes');
 
 Route::get('/agentes/nuevo', 'agentes@nuevo');

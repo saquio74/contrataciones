@@ -1940,6 +1940,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1963,27 +1967,43 @@ __webpack_require__.r(__webpack_exports__);
       axios.get(urlAgentes).then(function (Response) {
         _this.agentes = Response.data;
       });
+    },
+    getActivos: function getActivos() {
+      var _this2 = this;
+
+      var urlActivos = 'activos';
+      axios.get(urlActivos).then(function (Response) {
+        _this2.agentes = Response.data;
+      });
+    },
+    getBajas: function getBajas() {
+      var _this3 = this;
+
+      var urlBajas = 'bajas';
+      axios.get(urlBajas).then(function (Response) {
+        _this3.agentes = Response.data;
+      });
     }
   },
   computed: {
     searchAgentes: function searchAgentes() {
-      var _this2 = this;
+      var _this4 = this;
 
       if (this.nombre) {
         return this.agentes.filter(function (agente) {
-          return agente.NOMBRE.toUpperCase().includes(_this2.nombre.toUpperCase());
+          return agente.NOMBRE.toUpperCase().includes(_this4.nombre.toUpperCase());
         });
       } else if (this.hospital) {
         return this.agentes.filter(function (agente) {
-          return agente.HOSPITAL.toUpperCase().includes(_this2.hospital.toUpperCase());
+          return agente.HOSPITAL.toUpperCase().includes(_this4.hospital.toUpperCase());
         });
       } else if (this.servicio) {
         return this.agentes.filter(function (agente) {
-          return agente.SERVICIO.toUpperCase().includes(_this2.servicio.toUpperCase());
+          return agente.SERVICIO.toUpperCase().includes(_this4.servicio.toUpperCase());
         });
       } else if (this.legajo) {
         return this.agentes.filter(function (agente) {
-          return agente.LEGAJO.toString().includes(_this2.legajo.toString());
+          return agente.LEGAJO.toString().includes(_this4.legajo.toString());
         });
       } else {
         return this.agentes;
@@ -48295,6 +48315,34 @@ var render = function() {
       _vm._v("Listado General de agentes")
     ]),
     _vm._v(" "),
+    _c("div", { staticClass: "form-group badge-black row" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-outline-black",
+          attrs: { type: "submit" },
+          on: { click: _vm.getActivos }
+        },
+        [_vm._v("ALTAS")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-outline-black",
+          attrs: { type: "submit" },
+          on: { click: _vm.getBajas }
+        },
+        [_vm._v("BAJAS")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        { staticClass: "btn btn-outline-black", attrs: { type: "submit" } },
+        [_vm._v("VACACIONES")]
+      )
+    ]),
+    _vm._v(" "),
     _c("div", { staticClass: "form-group row badge-dark" }, [
       _c("hr"),
       _vm._v(" "),
@@ -48309,7 +48357,7 @@ var render = function() {
         : _vm._e(),
       _vm._v(" "),
       _c("div", { staticClass: "col-sm-2" }, [
-        _c("label", { staticClass: "text" }, [_vm._v("legajo")]),
+        _c("label", { staticClass: "text" }, [_vm._v(" legajo      ")]),
         _vm._v(" "),
         _vm.agentes.length
           ? _c("input", {
@@ -48337,7 +48385,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "col-sm-2" }, [
-        _c("label", { staticClass: "text" }, [_vm._v("nombre")]),
+        _c("label", { staticClass: "text" }, [_vm._v(" nombre      ")]),
         _vm._v(" "),
         _vm.agentes.length
           ? _c("input", {
@@ -48365,7 +48413,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "col-sm-2" }, [
-        _c("label", { staticClass: "text" }, [_vm._v("hospital")]),
+        _c("label", { staticClass: "text" }, [_vm._v(" hospital    ")]),
         _vm._v(" "),
         _vm.agentes.length
           ? _c("input", {
@@ -48393,7 +48441,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "col-sm-2" }, [
-        _c("label", { staticClass: "text" }, [_vm._v("servicio")]),
+        _c("label", { staticClass: "text" }, [_vm._v(" servicio    ")]),
         _vm._v(" "),
         _vm.agentes.length
           ? _c("input", {
@@ -48641,7 +48689,7 @@ function normalizeComponent (
       // for template-only hot-reload because in that case the render fn doesn't
       // go through the normalizer
       options._injectStyles = hook
-      // register for functional component in vue file
+      // register for functioal component in vue file
       var originalRender = options.render
       options.render = function renderWithStyleInjection (h, context) {
         hook.call(context)

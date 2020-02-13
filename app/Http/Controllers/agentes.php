@@ -22,6 +22,30 @@ class agentes extends Controller
         return $agente;
         
     }
+    public function activos(){
+        $agente = DB::table('agentes')
+                    ->join('hospitales','idhosp','=','hospitales.id')
+                    ->join('servicio','idservicio','=','servicio.id')
+                    ->join('sector','sec','=','sector.id')
+                    ->where('agentes.activo','=',0)
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+        $agente = json_encode($agente);
+        return $agente;
+        
+    }
+    public function bajas(){
+        $agente = DB::table('agentes')
+                    ->join('hospitales','idhosp','=','hospitales.id')
+                    ->join('servicio','idservicio','=','servicio.id')
+                    ->join('sector','sec','=','sector.id')
+                    ->where('agentes.activo','=',1)
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+        $agente = json_encode($agente);
+        return $agente;
+        
+    }
     public function vistaAgentes()
     {
         return view('agente.agentes');

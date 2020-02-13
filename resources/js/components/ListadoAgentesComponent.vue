@@ -2,6 +2,11 @@
     <div class="panel panel-default   col-sm-12">
 
         <h1 class="text-center">Listado General de agentes</h1>
+        <div class="form-group badge-black row">
+            <button v-on:click="getActivos" type="submit" class="btn btn-outline-dark">ALTAS</button>
+            <button v-on:click="getBajas"   type="submit" class="btn btn-outline-dark">BAJAS</button>
+            <button type="submit" class="btn btn-outline-black">VACACIONES</button>
+        </div>
         <div class="form-group row badge-dark">
             <hr>
             <hr>
@@ -73,7 +78,7 @@
                 </tr>
             </tbody>
         </table>
-        
+
     </div>
 </template>
 
@@ -97,6 +102,18 @@
             getAgentes: function(){
                 var urlAgentes ='agente';
                 axios.get(urlAgentes).then(Response => {
+                    this.agentes = Response.data
+                });
+            },
+            getActivos: function(){
+                var urlActivos ='activos';
+                axios.get(urlActivos).then(Response => {
+                    this.agentes = Response.data
+                });
+            },
+            getBajas: function(){
+                var urlBajas = 'bajas';
+                axios.get(urlBajas).then(Response=>{
                     this.agentes = Response.data
                 });
             }
