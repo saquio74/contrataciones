@@ -1970,12 +1970,35 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       agentes: [],
-      legajo: ''
+      legajo: '',
+      nombre: '',
+      hospital: '',
+      servicio: '',
+      activo: '',
+      auxiliar: []
     };
+  },
+  created: function created() {
+    this.getAgentes();
   },
   methods: {
     getAgentes: function getAgentes() {
@@ -1988,10 +2011,24 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   computed: {
-    filtroAgentes: function filtroAgentes() {
-      if (this.legajo) {
-        return this.legajo.toLowerCase().split(' ').every(function (v) {
-          return agente.NOMBRE.toLowerCase().includes(v);
+    searchAgentes: function searchAgentes() {
+      var _this2 = this;
+
+      if (this.nombre) {
+        return this.agentes.filter(function (agente) {
+          return agente.NOMBRE.toUpperCase().includes(_this2.nombre.toUpperCase());
+        });
+      } else if (this.hospital) {
+        return this.agentes.filter(function (agente) {
+          return agente.HOSPITAL.toUpperCase().includes(_this2.hospital.toUpperCase());
+        });
+      } else if (this.servicio) {
+        return this.agentes.filter(function (agente) {
+          return agente.SERVICIO.toUpperCase().includes(_this2.servicio.toUpperCase());
+        });
+      } else if (this.legajo) {
+        return this.agentes.filter(function (agente) {
+          return agente.LEGAJO.toString().includes(_this2.legajo.toString());
         });
       } else {
         return this.agentes;
@@ -48316,7 +48353,9 @@ var render = function() {
           )
         : _vm._e(),
       _vm._v(" "),
-      _c("div", { staticClass: "col-sm-6" }, [
+      _c("div", { staticClass: "col-sm-2" }, [
+        _c("label", { staticClass: "text" }, [_vm._v("legajo")]),
+        _vm._v(" "),
         _vm.agentes.length
           ? _c("input", {
               directives: [
@@ -48328,7 +48367,7 @@ var render = function() {
                 }
               ],
               staticClass: "form-control badge-secondary",
-              attrs: { type: "text", id: "legajo", name: "legajo" },
+              attrs: { type: "int", id: "legajo", name: "legajo" },
               domProps: { value: _vm.legajo },
               on: {
                 input: function($event) {
@@ -48339,13 +48378,123 @@ var render = function() {
                 }
               }
             })
+          : _vm._e(),
+        _vm._v(" "),
+        _c("p", [_vm._v(_vm._s(_vm.legajo))])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-sm-2" }, [
+        _c("label", { staticClass: "text" }, [_vm._v("nombre")]),
+        _vm._v(" "),
+        _vm.agentes.length
+          ? _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.nombre,
+                  expression: "nombre"
+                }
+              ],
+              staticClass: "form-control badge-secondary",
+              attrs: { type: "text", id: "nombre", name: "nombre" },
+              domProps: { value: _vm.nombre },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.nombre = $event.target.value
+                }
+              }
+            })
+          : _vm._e(),
+        _vm._v(" "),
+        _c("p", [_vm._v(_vm._s(_vm.nombre))])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-sm-2" }, [
+        _c("label", { staticClass: "text" }, [_vm._v("hospital")]),
+        _vm._v(" "),
+        _vm.agentes.length
+          ? _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.hospital,
+                  expression: "hospital"
+                }
+              ],
+              staticClass: "form-control badge-secondary",
+              attrs: { type: "text", id: "hospital", name: "hospital" },
+              domProps: { value: _vm.hospital },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.hospital = $event.target.value
+                }
+              }
+            })
           : _vm._e()
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "com-sm-2" }, [
-        !_vm.LEGAJO
-          ? _c("p", [_vm._v("para filtrar por legajo escribe aqui")])
-          : _c("p", [_vm._v("puedes elegir por donde filtrar")])
+      _c("div", { staticClass: "col-sm-2" }, [
+        _c("label", { staticClass: "text" }, [_vm._v("servicio")]),
+        _vm._v(" "),
+        _vm.agentes.length
+          ? _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.servicio,
+                  expression: "servicio"
+                }
+              ],
+              staticClass: "form-control badge-secondary",
+              attrs: { type: "text", id: "legajo", name: "legajo" },
+              domProps: { value: _vm.servicio },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.servicio = $event.target.value
+                }
+              }
+            })
+          : _vm._e()
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-sm-2" }, [
+        _c("label", { staticClass: "text" }, [_vm._v("activo o baja")]),
+        _vm._v(" "),
+        _vm.agentes.length
+          ? _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.activo,
+                  expression: "activo"
+                }
+              ],
+              staticClass: "form-control badge-secondary",
+              attrs: { type: "text", id: "legajo", name: "legajo" },
+              domProps: { value: _vm.activo },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.activo = $event.target.value
+                }
+              }
+            })
+          : _vm._e()
       ]),
       _vm._v(" "),
       _c("hr"),
@@ -48363,7 +48512,7 @@ var render = function() {
         _vm._v(" "),
         _c(
           "tbody",
-          _vm._l(_vm.agentes, function(agente) {
+          _vm._l(_vm.searchAgentes, function(agente) {
             return _c("tr", { key: agente.LEGAJO }, [
               _c("th", [
                 _vm._v(
@@ -48376,7 +48525,7 @@ var render = function() {
               _c("th", [
                 _vm._v(
                   "\n                    " +
-                    _vm._s(agente.NOMBRE) +
+                    _vm._s(agente.NOMBRE.toUpperCase()) +
                     "\n                "
                 )
               ]),
@@ -48384,7 +48533,7 @@ var render = function() {
               _c("th", [
                 _vm._v(
                   "\n                    " +
-                    _vm._s(agente.HOSPITAL) +
+                    _vm._s(agente.HOSPITAL.toUpperCase()) +
                     "\n                "
                 )
               ]),

@@ -7,14 +7,29 @@
             <hr>
 
             <button v-on:click="getAgentes" class="btn btn-primary" v-if="!agentes.length">Listar</button>
-            <div class="col-sm-6">
-            <input type="text" v-model="legajo" v-if="agentes.length" class="form-control badge-secondary" id="legajo" name='legajo'>
+            <div class="col-sm-2">
+                <label class="text">legajo</label>
+                <input type="int" v-model="legajo" v-if="agentes.length" class="form-control badge-secondary" id="legajo" name='legajo'>
+                <p>{{legajo}}</p>
             </div>
-            <div class="com-sm-2">
-                
-                <p v-if="!LEGAJO">para filtrar por legajo escribe aqui</p>
-                <p v-else>puedes elegir por donde filtrar</p>
+            <div class="col-sm-2">
+                <label class="text">nombre</label>
+                <input type="text" v-model="nombre" v-if="agentes.length" class="form-control badge-secondary" id="nombre" name='nombre'>
+                <p>{{nombre}}</p>
             </div>
+            <div class="col-sm-2">
+                <label class="text">hospital</label>
+                <input type="text" v-model="hospital" v-if="agentes.length" class="form-control badge-secondary" id="hospital" name='hospital'>
+            </div>
+            <div class="col-sm-2">
+                <label class="text">servicio</label>
+                <input type="text" v-model="servicio" v-if="agentes.length" class="form-control badge-secondary" id="legajo" name='legajo'>
+            </div>
+            <div class="col-sm-2">
+                <label class="text">activo o baja</label>
+                <input type="text" v-model="activo" v-if="agentes.length" class="form-control badge-secondary" id="legajo" name='legajo'>
+            </div>
+            
             <hr>
             <hr>
         </div>
@@ -32,15 +47,15 @@
             </thead>
                     
             <tbody>
-                <tr  v-for="agente in agentes" :key="agente.LEGAJO" >
+                <tr  v-for="agente in searchAgentes" :key="agente.LEGAJO" >
                     <th>
                         {{agente.LEGAJO}}
                     </th>
                     <th>
-                        {{agente.NOMBRE}}
+                        {{agente.NOMBRE.toUpperCase()}}
                     </th>
                     <th>
-                        {{agente.HOSPITAL}}
+                        {{agente.HOSPITAL.toUpperCase()}}
                     </th>
                     <th>
                         {{agente.SERVICIO}}
@@ -66,9 +81,16 @@
             return {
                 agentes:  [],
                 legajo: '',
+                nombre:'',
+                hospital:'',
+                servicio:'',
+                activo:'',
+                auxiliar:[],
             }
         },
-        
+        created: function(){
+            this.getAgentes();
+        },
         methods:{
             getAgentes: function(){
                 var urlAgentes ='agente';
@@ -78,12 +100,20 @@
             }
         },
         computed:{
-            filtroAgentes(){
-                if(this.legajo){
-                    return this.legajo.toLowerCase().split(' ').every(v => agente.NOMBRE.toLowerCase().includes(v))
+            searchAgentes: function(){
+                if (this.nombre) {
+                    return this.agentes.filter((agente)=>
+                    agente.NOMBRE.toUpperCase().includes(this.nombre.toUpperCase()))
+                }else if(this.hospital){
+                    return this.agentes.filter((agente)=>agente.HOSPITAL.toUpperCase().includes(this.hospital.toUpperCase()))
+                }else if(this.servicio){
+                    return this.agentes.filter((agente)=>agente.SERVICIO.toUpperCase().includes(this.servicio.toUpperCase()))
+                }else if(this.legajo){
+                    return this.agentes.filter((agente)=>agente.LEGAJO.toString().includes(this.legajo.toString()))
                 }else{
-                    return this.agentes;
+                    return this.agentes
                 }
+                
             }
         }
     }
