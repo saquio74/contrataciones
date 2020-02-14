@@ -16,7 +16,7 @@ class agentes extends Controller
                     ->join('hospitales','idhosp','=','hospitales.id')
                     ->join('servicio','idservicio','=','servicio.id')
                     ->join('sector','sec','=','sector.id')
-                    ->orderBy('created_at', 'desc')
+                    ->orderBy('legajo', 'asc')
                     ->get();
         $agente = json_encode($agente);
         return $agente;
@@ -28,7 +28,7 @@ class agentes extends Controller
                     ->join('servicio','idservicio','=','servicio.id')
                     ->join('sector','sec','=','sector.id')
                     ->where('agentes.activo','=',0)
-                    ->orderBy('created_at', 'desc')
+                    ->orderBy('legajo', 'desc')
                     ->get();
         $agente = json_encode($agente);
         return $agente;
@@ -40,7 +40,7 @@ class agentes extends Controller
                     ->join('servicio','idservicio','=','servicio.id')
                     ->join('sector','sec','=','sector.id')
                     ->where('agentes.activo','=',1)
-                    ->orderBy('created_at', 'desc')
+                    ->orderBy('legajo', 'desc')
                     ->get();
         $agente = json_encode($agente);
         return $agente;
