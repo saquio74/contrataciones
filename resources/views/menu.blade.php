@@ -2,18 +2,18 @@
 
 
 
-<nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark col-sm-4">
     
     
     <div class="collapse navbar-collapse secondary" id="navbarCollapse">
-        <ul class="nav flex-column">
+        <ul class="nav column">
             <li class="nav-item active">
-                <button class="btn btn-default badge-dark text-white" type="button">
+                <button type="submit" class="btn btn-outline-primary">
                     <a class="nav-link" href="{{action('PagesController@index')}}">INICIO <span class="sr-only">(current)</span></a>
                 </button>
                 
             </li>
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link" href="#">Certificar</a>
             </li>
             <li class="nav-item">

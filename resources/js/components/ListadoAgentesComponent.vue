@@ -2,12 +2,14 @@
     <div class="panel panel-default   col-sm-12">
 
         <h1 class="text-center">Listado General de agentes</h1>
-        <div class="form-group badge-black row">
+        <div class="form-group badge-black row col-sm-12">
             <button v-on:click="getActivos" type="submit" class="btn btn-outline-dark">ALTAS</button>
             <button v-on:click="getBajas"   type="submit" class="btn btn-outline-dark">BAJAS</button>
-            <button type="submit" class="btn btn-outline-black">VACACIONES</button>
+            <button v-on:click="getAgentes"  type="submit" class="btn btn-outline-dark">TODOS</button>
+            <button type="submit" class="btn btn-outline-dark">VACACIONES</button>
         </div>
-        <div class="form-group row badge-dark">
+        
+        <div class="form-group row badge-dark col-sm-12">
             <hr>
             <hr>
 
@@ -15,6 +17,10 @@
             <div class="col-sm-2">
                 <label class="text"> legajo      </label>
                 <input type="int" v-model="legajo"    v-if="agentes.length" class="form-control badge-secondary" id="legajo" name='legajo'>
+            </div>
+            <div class="col-sm-2">
+                <label class="text"> DNI      </label>
+                <input type="int" v-model="dni"    v-if="agentes.length" class="form-control badge-secondary" id="legajo" name='legajo'>
             </div>
             <div class="col-sm-2">
                 <label class="text"> nombre      </label>
@@ -26,15 +32,25 @@
             </div>
             <div class="col-sm-2">
                 <label class="text"> servicio    </label>
-                <input type="text" v-model="servicio" v-if="agentes.length" class="form-control badge-secondary" id="legajo" name='legajo'>
+                <input type="text" v-model="servicio" v-if="agentes.length" class="form-control badge-secondary" id="servicio" name='servicio'>
             </div>
-            <div class="col-sm-2">
-                <label class="text">activo o baja</label>
-                <input type="text" v-model="activo"   v-if="agentes.length" class="form-control badge-secondary" id="legajo" name='legajo'>
-            </div>
+            
+            
             
             <hr>
             <hr>
+            <div class="col-sm-6">
+                <label class="text">TOTAL DE AGENTES:</label>
+                
+                <P>  {{searchAgentes.length}}</P>
+            </div>
+            
+                   
+        </div>
+        <div class="form-group row badge-dark col-sm-12">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#NuevoAgente">
+                Nuevo Agente
+            </button>
         </div>
         <table class="table table-striped table-dark table-bordered table-hover">
             <thead>
@@ -55,6 +71,9 @@
                         {{agente.LEGAJO}}
                     </th>
                     <th>
+                        {{agente.DNI}}
+                    </th>
+                    <th>
                         {{agente.NOMBRE.toUpperCase()}}
                     </th>
                     <th>
@@ -73,21 +92,47 @@
                         BAJA
                     </th>
                     <th>
-                        {{agente.fecha_ingreso}}
+                        {{since(agente.fecha_ingreso)}}
                     </th>
                 </tr>
             </tbody>
         </table>
+        <div class="modal fade" id="NuevoAgente" tabindex="-1" role="dialog"  aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="Nuevo Agente" id="nuevo">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+                </div>
+            </div>
+        </div>
 
+        <button v-on:click="notificacion"  type="submit" class="btn btn-outline-dark">TODOS</button>
+        
     </div>
 </template>
 
 <script>
+    import toastr from 'toastr'
+    import moment from 'moment'
     export default{
+        
+        
         data(){
             return {
                 agentes:  [],
                 legajo: '',
+                dni:'',
                 nombre:'',
                 hospital:'',
                 servicio:'',
@@ -103,19 +148,48 @@
                 var urlAgentes ='agente';
                 axios.get(urlAgentes).then(Response => {
                     this.agentes = Response.data
+                    toastr.success('contenido cargado satisfactoriamente');
                 });
             },
             getActivos: function(){
                 var urlActivos ='activos';
                 axios.get(urlActivos).then(Response => {
                     this.agentes = Response.data
+                    toastr.success('contenido cargado satisfactoriamente');
                 });
             },
             getBajas: function(){
                 var urlBajas = 'bajas';
                 axios.get(urlBajas).then(Response=>{
                     this.agentes = Response.data
+                    toastr.success('contenido cargado satisfactoriamente');
                 });
+            },
+            getOrdenadosAsc: function(){
+                var urlOrdAsc = 'ordenadosAsc';
+                axios.get(urlOrdAsc).then(Response=>{
+                    this.agentes = Response.data
+                    toastr.success('contenido cargado satisfactoriamente');
+                });
+            },
+            getOrdenadosDesc: function(){
+                var urlOrdDesc = 'ordenadosDesc';
+                axios.get(urlOrdDesc).then(Response=>{
+                    this.agentes = Response.data
+                    toastr.success('contenido cargado satisfactoriamente');
+                });
+            },
+            since: function(d){
+                if(d=='0000-00-00 00:00:00'){
+                    d='fecha no inicializada'
+                    return d
+                }else{
+                    return moment(d).fromNow();
+                }
+            },
+            notificacion: function(){
+                toastr.warning('prueba');
+                
             }
         },
         computed:{
@@ -130,6 +204,8 @@
                     return this.agentes.filter((agente)=>agente.SERVICIO.toUpperCase().includes(this.servicio.toUpperCase()))
                 }else if(this.legajo){
                     return this.agentes.filter((agente)=>agente.LEGAJO.toString().includes(this.legajo.toString()))
+                }else if(this.dni){
+                    return this.agentes.filter((agente)=>agente.DNI.toString().includes(this.dni.toString()))
                 }else{
                     return this.agentes
                 }

@@ -21,18 +21,20 @@ window.Vue = require('vue');
 
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
-
-
-Vue.component('listado-agentes-component', require('./components/ListadoAgentesComponent.vue').default); 
-//Vue.component('agente-compontent', require('./components/AgentesComponent.vue'));
-
-
 import Example from './components/ListadoAgentesComponent'
 import axios   from 'axios'
 import toastr  from 'toastr'
 import moment  from 'moment'
+moment.locale('es');
 
-moment.lang('es');
+Vue.component('listado-agentes-component', require('./components/ListadoAgentesComponent.vue').default);
+Vue.component('nuevo-agente', require('./components/NuevoAgenteComponent.vue').degault);
+//Vue.component('agente-compontent', require('./components/AgentesComponent.vue'));
+
+
+
+
+
 
 
 /**

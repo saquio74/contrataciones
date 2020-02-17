@@ -11,7 +11,8 @@ class hospitales extends Controller
     {
         //$hospitales = \DB::table('hospitales')->select('hospital')->get();
         $hospitales = hospital::all();
-        return view('hospitales.hospitales', compact('hospitales'));
+        $hospitales = json_encode($hospitales);
+        return $hospitales;
     }
     public function show($id)
     {
