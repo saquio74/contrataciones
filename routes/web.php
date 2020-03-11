@@ -25,7 +25,11 @@ Route::get('/agentes/nuevo', 'agentes@nuevo');
 
 Route::get('/agentes/buscar', 'agentes@buscar');
 
-Route::get('/agente/modificar', 'agente@modificar');
+Route::get('/agente/porhospital/{hospital}', 'agentes@porHospital');
+
+Route::get('/agente/porservicio/{servicio}', 'agentes@porservicio');
+
+Route::get('/agente/modificar', 'agentes@modificar');
 
 Route::post('/agente', 'agentes@update');
 
@@ -38,6 +42,10 @@ Route::get('/agentes/{legajo}', 'agentes@show');
 Route::get('/hospitales','hospitales@index');
 
 Route::get('/hospitales/{id}','hospitales@show');
+
+Route::get('/servicios','servicios@index');
+
+Route::get('/sectores','sectores@index');
 
 
 

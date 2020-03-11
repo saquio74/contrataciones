@@ -2,7 +2,7 @@
     <div class="panel panel-default   col-sm-12">
 
         <h1 class="text-center">Listado General de agentes</h1>
-        <div class="form-group badge-black row col-sm-12">
+        <div class="badge-black row col-sm-12">
             <button v-on:click="getActivos" type="submit" class="btn btn-outline-dark">ALTAS</button>
             <button v-on:click="getBajas"   type="submit" class="btn btn-outline-dark">BAJAS</button>
             <button v-on:click="getAgentes"  type="submit" class="btn btn-outline-dark">TODOS</button>
@@ -27,12 +27,33 @@
                 <input type="text" v-model="nombre"   v-if="agentes.length" class="form-control badge-secondary" id="nombre" name='nombre'>
             </div>
             <div class="col-sm-2">
-                <label class="text"> hospital    </label>
-                <input type="text" v-model="hospital" v-if="agentes.length" class="form-control badge-secondary" id="hospital" name='hospital'>
+                <label class="text"> hospital</label>
+                <select class="form-control badge-secondary" @change="getPorHospital" v-model="hospital" id="hospital" name='hospital'>
+                    <option value=''>seleccione</option>
+                    <option v-for="hosp in hospitales" :key="hosp.ID" :value="hosp" >{{hosp.HOSPITAL}}</option>
+                
+                </select>
+                
             </div>
+            
+            
             <div class="col-sm-2">
                 <label class="text"> servicio    </label>
-                <input type="text" v-model="servicio" v-if="agentes.length" class="form-control badge-secondary" id="servicio" name='servicio'>
+                <select class="form-control badge-secondary" v-model="servicio" id="servicio" name='servicio'>
+                    <option value=''>seleccione</option>
+                    <option v-for="serv in servicios" :value="serv.SERVICIO" :key="serv.ID">{{serv.SERVICIO}}</option>
+
+                </select>
+
+            </div>
+            <div class="col-sm-2">
+                <label class="text"> sectores    </label>
+                <select class="form-control badge-secondary" v-model="sector" id="servicio" name='servicio'>
+                    <option value=''>seleccione</option>
+                    <option v-for="sect in sectores" :value="sect.SECTOR" :key="sect.SECTOR">{{sect.SECTOR}}</option>
+
+                </select>
+
             </div>
             
             
@@ -52,15 +73,33 @@
                 Nuevo Agente
             </button>
         </div>
+        <p>{{auxiliar}}</p>
+        <p>Ordenar Por</p>
+        <div class="badge-black row col-sm-12">
+            <button v-on:click="ordenadosDesc('LEGAJO')  ;ordenadosAsc('LEGAJO')"   type="submit" class="btn btn-outline-dark">LEGAJO  </button>
+            <button v-on:click="ordenadosDesc('DNI')     ;ordenadosAsc('DNI')"      type="submit" class="btn btn-outline-dark">DNI     </button>
+            <button v-on:click="ordenadosDesc('NOMBRE')  ;ordenadosAsc('NOMBRE')"   type="submit" class="btn btn-outline-dark">NOMBRE  </button>
+            <button v-on:click="ordenadosDesc('HOSPITAL');ordenadosAsc('HOSPITAL')" type="submit" class="btn btn-outline-dark">HOSPITAL</button>
+            <button v-on:click="ordenadosDesc('SERVICIO');ordenadosAsc('SERVICIO')" type="submit" class="btn btn-outline-dark">SERVICIO</button>
+            <button v-on:click="ordenadosDesc('SECTOR')  ;ordenadosAsc('SECTOR')"   type="submit" class="btn btn-outline-dark">SECTOR  </button>
+            
+        </div>
         <table class="table table-striped table-dark table-bordered table-hover">
             <thead>
                 <tr>
-                    <th scope="col">LEGAJO</th>
-                    <th scope="col">NOMBRE</th>
-                    <th scope="col">HOSPITAL</th>
-                    <th scope="col">SERVICIO</th>
-                    <th scope="col">SECTOR</th>
-                    <th scope="col">ACTIVO</th>
+                    <th scope="col" v-if="auxiliar===0" v-on:click="ordenadosDesc('LEGAJO');auxiliar++"  >LEGAJO</th>
+                    <th scope="col" v-else v-on:click="ordenadosAsc('LEGAJO');auxiliar--" >LEGAJO</th>
+                    <th scope="col" v-if="auxiliar===0" v-on:click="ordenadosDesc('DNI');auxiliar++"  >DNI</th>
+                    <th scope="col" v-else v-on:click="ordenadosAsc('DNI');auxiliar--" >DNI</th>
+                    <th scope="col" v-if="auxiliar===0" v-on:click="ordenadosDesc('NOMBRE');auxiliar++"  >NOMBRE</th>
+                    <th scope="col" v-else v-on:click="ordenadosAsc('NOMBRE');auxiliar--" >NOMBRE</th>
+                    <th scope="col" v-if="auxiliar===0" v-on:click="ordenadosDesc('HOSPITAL');auxiliar++"  >HOSPITAL</th>
+                    <th scope="col" v-else v-on:click="ordenadosAsc('HOSPITAL');auxiliar--" >HOSPITAL</th>
+                    <th scope="col" v-if="auxiliar===0" v-on:click="ordenadosDesc('SERVICIO');auxiliar++"  >SERVICIO</th>
+                    <th scope="col" v-else v-on:click="ordenadosAsc('SERVICIO');auxiliar--" >SERVICIO</th>
+                    <th scope="col" v-if="auxiliar===0" v-on:click="ordenadosDesc('SECTOR');auxiliar++"  >SECTOR</th>
+                    <th scope="col" v-else v-on:click="ordenadosAsc('SECTOR');auxiliar--" >SECTOR</th>
+                    <th scope="col" >ACTIVO</th>
                     <th scope="col">FECHA DE INGRESO</th>
                 </tr>
             </thead>
@@ -117,7 +156,7 @@
             </div>
         </div>
 
-        <button v-on:click="notificacion"  type="submit" class="btn btn-outline-dark">TODOS</button>
+        
         
     </div>
 </template>
@@ -131,17 +170,24 @@
         data(){
             return {
                 agentes:  [],
+                hospitales: [],
+                servicios:[],
+                sectores:[],
                 legajo: '',
                 dni:'',
                 nombre:'',
-                hospital:'',
+                hospital:{},
                 servicio:'',
+                sector:'',
                 activo:'',
-                auxiliar:[],
+                auxiliar:0,
             }
         },
         created: function(){
             this.getAgentes();
+            this.getHospitales();
+            this.getServicios();
+            this.getSectores();
         },
         methods:{
             getAgentes: function(){
@@ -165,20 +211,6 @@
                     toastr.success('contenido cargado satisfactoriamente');
                 });
             },
-            getOrdenadosAsc: function(){
-                var urlOrdAsc = 'ordenadosAsc';
-                axios.get(urlOrdAsc).then(Response=>{
-                    this.agentes = Response.data
-                    toastr.success('contenido cargado satisfactoriamente');
-                });
-            },
-            getOrdenadosDesc: function(){
-                var urlOrdDesc = 'ordenadosDesc';
-                axios.get(urlOrdDesc).then(Response=>{
-                    this.agentes = Response.data
-                    toastr.success('contenido cargado satisfactoriamente');
-                });
-            },
             since: function(d){
                 if(d=='0000-00-00 00:00:00'){
                     d='fecha no inicializada'
@@ -187,28 +219,85 @@
                     return moment(d).fromNow();
                 }
             },
-            notificacion: function(){
-                toastr.warning('prueba');
+            getHospitales:function(){
+                var urlHospitales = '/contrataciones-1/public/hospitales';
+                axios.get(urlHospitales).then(Response=>{
+                    this.hospitales = Response.data
+                });
+            },
+            getServicios:function(){
+                var urlServicios = '/contrataciones-1/public/servicios';
+                axios.get(urlServicios).then(Response=>{
+                    this.servicios = Response.data
+                });
+            },
+            getSectores:function(){
+                var urlSectores = '/contrataciones-1/public/sectores';
+                axios.get(urlSectores).then(Response=>{
+                    this.sectores = Response.data
+                });
+            },
+            getPorHospital:function(){
+                if(this.hospital!=''){
+                    var urlPorHospital = 'porhospital/' + this.hospital.ID; 
+                    axios.get(urlPorHospital).then(Response=>{
+                    this.agentes = Response.data
+                    });
+                }
+            },
+            
+            
+            ordenadosAsc: function(prop) {
+                // Set slice() to avoid to generate an infinite loop!
+                this.agentes.sort(function(a,b){
+                    if(prop === 'LEGAJO'){
+                        return (a.LEGAJO - b.LEGAJO)
+                    }
+                    if(prop === 'DNI'){
+                        return (a.DNI - b.DNI)
+                    }
+                    if(prop ==='NOMBRE'){
+                        return (a.NOMBRE - b.NOMBRE)
+                        }
+                    if(prop ==='HOSPITAL'){
+                        return (a.HOSPITAL - b.HOSPITAL)
+                    }
+                    if(prop ==='SERVICIO'){
+                        return (a.SERVICIO - b.SERVICIO)
+                    }
+                    if(prop ==='SECTOR'){
+                        return (a.SECTOR - b.SECTOR)
+                    }
+                });
                 
+                
+            },
+            ordenadosDesc:function(prop){
+                this.ordenadosAsc(prop);
+                this.agentes.reverse();
+                toastr.success('contenido cargado satisfactoriamente');
             }
         },
         computed:{
             searchAgentes: function(){
                 if (this.nombre) {
-                    return this.agentes.filter((agente)=>
-                    agente.NOMBRE.toUpperCase().includes(this.nombre.toUpperCase())
+                    return this.agentes.filter((agente)=>agente.NOMBRE.toUpperCase().includes(this.nombre.toUpperCase())
                     )
-                }else if(this.hospital){
-                    return this.agentes.filter((agente)=>agente.HOSPITAL.toUpperCase().includes(this.hospital.toUpperCase()))
-                }else if(this.servicio){
-                    return this.agentes.filter((agente)=>agente.SERVICIO.toUpperCase().includes(this.servicio.toUpperCase()))
-                }else if(this.legajo){
-                    return this.agentes.filter((agente)=>agente.LEGAJO.toString().includes(this.legajo.toString()))
-                }else if(this.dni){
-                    return this.agentes.filter((agente)=>agente.DNI.toString().includes(this.dni.toString()))
-                }else{
-                    return this.agentes
                 }
+                if(this.servicio){
+                    return this.agentes.filter((agente)=>agente.SERVICIO.toUpperCase().includes(this.servicio.toUpperCase()))
+                }
+                if(this.legajo){
+                    return this.agentes.filter((agente)=>agente.LEGAJO.toString().includes(this.legajo.toString()))
+                }
+                if(this.dni){
+                    return this.agentes.filter((agente)=>agente.DNI.toString().includes(this.dni.toString()))
+                }
+                if(this.sector){
+                    return this.agentes.filter((agente)=>agente.SECTOR.toString().includes(this.sector.toString()))
+                }
+
+                return this.agentes
                 
             }
         }

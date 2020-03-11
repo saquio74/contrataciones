@@ -2036,23 +2036,69 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       agentes: [],
+      hospitales: [],
+      servicios: [],
+      sectores: [],
       legajo: '',
       dni: '',
       nombre: '',
-      hospital: '',
+      hospital: {},
       servicio: '',
+      sector: '',
       activo: '',
-      auxiliar: []
+      auxiliar: 0
     };
   },
   created: function created() {
     this.getAgentes();
+    this.getHospitales();
+    this.getServicios();
+    this.getSectores();
   },
   methods: {
     getAgentes: function getAgentes() {
@@ -2082,24 +2128,6 @@ __webpack_require__.r(__webpack_exports__);
         toastr__WEBPACK_IMPORTED_MODULE_0___default.a.success('contenido cargado satisfactoriamente');
       });
     },
-    getOrdenadosAsc: function getOrdenadosAsc() {
-      var _this4 = this;
-
-      var urlOrdAsc = 'ordenadosAsc';
-      axios.get(urlOrdAsc).then(function (Response) {
-        _this4.agentes = Response.data;
-        toastr__WEBPACK_IMPORTED_MODULE_0___default.a.success('contenido cargado satisfactoriamente');
-      });
-    },
-    getOrdenadosDesc: function getOrdenadosDesc() {
-      var _this5 = this;
-
-      var urlOrdDesc = 'ordenadosDesc';
-      axios.get(urlOrdDesc).then(function (Response) {
-        _this5.agentes = Response.data;
-        toastr__WEBPACK_IMPORTED_MODULE_0___default.a.success('contenido cargado satisfactoriamente');
-      });
-    },
     since: function since(d) {
       if (d == '0000-00-00 00:00:00') {
         d = 'fecha no inicializada';
@@ -2108,37 +2136,109 @@ __webpack_require__.r(__webpack_exports__);
         return moment__WEBPACK_IMPORTED_MODULE_1___default()(d).fromNow();
       }
     },
-    notificacion: function notificacion() {
-      toastr__WEBPACK_IMPORTED_MODULE_0___default.a.warning('prueba');
+    getHospitales: function getHospitales() {
+      var _this4 = this;
+
+      var urlHospitales = '/contrataciones-1/public/hospitales';
+      axios.get(urlHospitales).then(function (Response) {
+        _this4.hospitales = Response.data;
+      });
+    },
+    getServicios: function getServicios() {
+      var _this5 = this;
+
+      var urlServicios = '/contrataciones-1/public/servicios';
+      axios.get(urlServicios).then(function (Response) {
+        _this5.servicios = Response.data;
+      });
+    },
+    getSectores: function getSectores() {
+      var _this6 = this;
+
+      var urlSectores = '/contrataciones-1/public/sectores';
+      axios.get(urlSectores).then(function (Response) {
+        _this6.sectores = Response.data;
+      });
+    },
+    getPorHospital: function getPorHospital() {
+      var _this7 = this;
+
+      if (this.hospital != '') {
+        var urlPorHospital = 'porhospital/' + this.hospital.ID;
+        axios.get(urlPorHospital).then(function (Response) {
+          _this7.agentes = Response.data;
+        });
+      }
+    },
+    ordenadosAsc: function ordenadosAsc(prop) {
+      // Set slice() to avoid to generate an infinite loop!
+      this.agentes.sort(function (a, b) {
+        if (prop === 'LEGAJO') {
+          return a.LEGAJO - b.LEGAJO;
+        }
+
+        if (prop === 'DNI') {
+          return a.DNI - b.DNI;
+        }
+
+        if (prop === 'NOMBRE') {
+          return a.NOMBRE - b.NOMBRE;
+        }
+
+        if (prop === 'HOSPITAL') {
+          return a.HOSPITAL - b.HOSPITAL;
+        }
+
+        if (prop === 'SERVICIO') {
+          return a.SERVICIO - b.SERVICIO;
+        }
+
+        if (prop === 'SECTOR') {
+          return a.SECTOR - b.SECTOR;
+        }
+      });
+    },
+    ordenadosDesc: function ordenadosDesc(prop) {
+      this.ordenadosAsc(prop);
+      this.agentes.reverse();
+      toastr__WEBPACK_IMPORTED_MODULE_0___default.a.success('contenido cargado satisfactoriamente');
     }
   },
   computed: {
     searchAgentes: function searchAgentes() {
-      var _this6 = this;
+      var _this8 = this;
 
       if (this.nombre) {
         return this.agentes.filter(function (agente) {
-          return agente.NOMBRE.toUpperCase().includes(_this6.nombre.toUpperCase());
+          return agente.NOMBRE.toUpperCase().includes(_this8.nombre.toUpperCase());
         });
-      } else if (this.hospital) {
-        return this.agentes.filter(function (agente) {
-          return agente.HOSPITAL.toUpperCase().includes(_this6.hospital.toUpperCase());
-        });
-      } else if (this.servicio) {
-        return this.agentes.filter(function (agente) {
-          return agente.SERVICIO.toUpperCase().includes(_this6.servicio.toUpperCase());
-        });
-      } else if (this.legajo) {
-        return this.agentes.filter(function (agente) {
-          return agente.LEGAJO.toString().includes(_this6.legajo.toString());
-        });
-      } else if (this.dni) {
-        return this.agentes.filter(function (agente) {
-          return agente.DNI.toString().includes(_this6.dni.toString());
-        });
-      } else {
-        return this.agentes;
       }
+
+      if (this.servicio) {
+        return this.agentes.filter(function (agente) {
+          return agente.SERVICIO.toUpperCase().includes(_this8.servicio.toUpperCase());
+        });
+      }
+
+      if (this.legajo) {
+        return this.agentes.filter(function (agente) {
+          return agente.LEGAJO.toString().includes(_this8.legajo.toString());
+        });
+      }
+
+      if (this.dni) {
+        return this.agentes.filter(function (agente) {
+          return agente.DNI.toString().includes(_this8.dni.toString());
+        });
+      }
+
+      if (this.sector) {
+        return this.agentes.filter(function (agente) {
+          return agente.SECTOR.toString().includes(_this8.sector.toString());
+        });
+      }
+
+      return this.agentes;
     }
   }
 });
@@ -48464,7 +48564,7 @@ var render = function() {
       _vm._v("Listado General de agentes")
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "form-group badge-black row col-sm-12" }, [
+    _c("div", { staticClass: "badge-black row col-sm-12" }, [
       _c(
         "button",
         {
@@ -48600,59 +48700,145 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "col-sm-2" }, [
-        _c("label", { staticClass: "text" }, [_vm._v(" hospital    ")]),
+        _c("label", { staticClass: "text" }, [_vm._v(" hospital")]),
         _vm._v(" "),
-        _vm.agentes.length
-          ? _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.hospital,
-                  expression: "hospital"
-                }
-              ],
-              staticClass: "form-control badge-secondary",
-              attrs: { type: "text", id: "hospital", name: "hospital" },
-              domProps: { value: _vm.hospital },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.hospital = $event.target.value
-                }
+        _c(
+          "select",
+          {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.hospital,
+                expression: "hospital"
               }
+            ],
+            staticClass: "form-control badge-secondary",
+            attrs: { id: "hospital", name: "hospital" },
+            on: {
+              change: [
+                function($event) {
+                  var $$selectedVal = Array.prototype.filter
+                    .call($event.target.options, function(o) {
+                      return o.selected
+                    })
+                    .map(function(o) {
+                      var val = "_value" in o ? o._value : o.value
+                      return val
+                    })
+                  _vm.hospital = $event.target.multiple
+                    ? $$selectedVal
+                    : $$selectedVal[0]
+                },
+                _vm.getPorHospital
+              ]
+            }
+          },
+          [
+            _c("option", { attrs: { value: "" } }, [_vm._v("seleccione")]),
+            _vm._v(" "),
+            _vm._l(_vm.hospitales, function(hosp) {
+              return _c("option", { key: hosp.ID, domProps: { value: hosp } }, [
+                _vm._v(_vm._s(hosp.HOSPITAL))
+              ])
             })
-          : _vm._e()
+          ],
+          2
+        )
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "col-sm-2" }, [
         _c("label", { staticClass: "text" }, [_vm._v(" servicio    ")]),
         _vm._v(" "),
-        _vm.agentes.length
-          ? _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.servicio,
-                  expression: "servicio"
-                }
-              ],
-              staticClass: "form-control badge-secondary",
-              attrs: { type: "text", id: "servicio", name: "servicio" },
-              domProps: { value: _vm.servicio },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.servicio = $event.target.value
-                }
+        _c(
+          "select",
+          {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.servicio,
+                expression: "servicio"
               }
+            ],
+            staticClass: "form-control badge-secondary",
+            attrs: { id: "servicio", name: "servicio" },
+            on: {
+              change: function($event) {
+                var $$selectedVal = Array.prototype.filter
+                  .call($event.target.options, function(o) {
+                    return o.selected
+                  })
+                  .map(function(o) {
+                    var val = "_value" in o ? o._value : o.value
+                    return val
+                  })
+                _vm.servicio = $event.target.multiple
+                  ? $$selectedVal
+                  : $$selectedVal[0]
+              }
+            }
+          },
+          [
+            _c("option", { attrs: { value: "" } }, [_vm._v("seleccione")]),
+            _vm._v(" "),
+            _vm._l(_vm.servicios, function(serv) {
+              return _c(
+                "option",
+                { key: serv.ID, domProps: { value: serv.SERVICIO } },
+                [_vm._v(_vm._s(serv.SERVICIO))]
+              )
             })
-          : _vm._e()
+          ],
+          2
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-sm-2" }, [
+        _c("label", { staticClass: "text" }, [_vm._v(" sectores    ")]),
+        _vm._v(" "),
+        _c(
+          "select",
+          {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.sector,
+                expression: "sector"
+              }
+            ],
+            staticClass: "form-control badge-secondary",
+            attrs: { id: "servicio", name: "servicio" },
+            on: {
+              change: function($event) {
+                var $$selectedVal = Array.prototype.filter
+                  .call($event.target.options, function(o) {
+                    return o.selected
+                  })
+                  .map(function(o) {
+                    var val = "_value" in o ? o._value : o.value
+                    return val
+                  })
+                _vm.sector = $event.target.multiple
+                  ? $$selectedVal
+                  : $$selectedVal[0]
+              }
+            }
+          },
+          [
+            _c("option", { attrs: { value: "" } }, [_vm._v("seleccione")]),
+            _vm._v(" "),
+            _vm._l(_vm.sectores, function(sect) {
+              return _c(
+                "option",
+                { key: sect.SECTOR, domProps: { value: sect.SECTOR } },
+                [_vm._v(_vm._s(sect.SECTOR))]
+              )
+            })
+          ],
+          2
+        )
       ]),
       _vm._v(" "),
       _c("hr"),
@@ -48673,13 +48859,283 @@ var render = function() {
     _vm._v(" "),
     _vm._m(0),
     _vm._v(" "),
+    _c("p", [_vm._v(_vm._s(_vm.auxiliar))]),
+    _vm._v(" "),
+    _c("p", [_vm._v("Ordenar Por")]),
+    _vm._v(" "),
+    _c("div", { staticClass: "badge-black row col-sm-12" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-outline-dark",
+          attrs: { type: "submit" },
+          on: {
+            click: function($event) {
+              _vm.ordenadosDesc("LEGAJO")
+              _vm.ordenadosAsc("LEGAJO")
+            }
+          }
+        },
+        [_vm._v("LEGAJO  ")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-outline-dark",
+          attrs: { type: "submit" },
+          on: {
+            click: function($event) {
+              _vm.ordenadosDesc("DNI")
+              _vm.ordenadosAsc("DNI")
+            }
+          }
+        },
+        [_vm._v("DNI     ")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-outline-dark",
+          attrs: { type: "submit" },
+          on: {
+            click: function($event) {
+              _vm.ordenadosDesc("NOMBRE")
+              _vm.ordenadosAsc("NOMBRE")
+            }
+          }
+        },
+        [_vm._v("NOMBRE  ")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-outline-dark",
+          attrs: { type: "submit" },
+          on: {
+            click: function($event) {
+              _vm.ordenadosDesc("HOSPITAL")
+              _vm.ordenadosAsc("HOSPITAL")
+            }
+          }
+        },
+        [_vm._v("HOSPITAL")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-outline-dark",
+          attrs: { type: "submit" },
+          on: {
+            click: function($event) {
+              _vm.ordenadosDesc("SERVICIO")
+              _vm.ordenadosAsc("SERVICIO")
+            }
+          }
+        },
+        [_vm._v("SERVICIO")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-outline-dark",
+          attrs: { type: "submit" },
+          on: {
+            click: function($event) {
+              _vm.ordenadosDesc("SECTOR")
+              _vm.ordenadosAsc("SECTOR")
+            }
+          }
+        },
+        [_vm._v("SECTOR  ")]
+      )
+    ]),
+    _vm._v(" "),
     _c(
       "table",
       {
         staticClass: "table table-striped table-dark table-bordered table-hover"
       },
       [
-        _vm._m(1),
+        _c("thead", [
+          _c("tr", [
+            _vm.auxiliar === 0
+              ? _c(
+                  "th",
+                  {
+                    attrs: { scope: "col" },
+                    on: {
+                      click: function($event) {
+                        _vm.ordenadosDesc("LEGAJO")
+                        _vm.auxiliar++
+                      }
+                    }
+                  },
+                  [_vm._v("LEGAJO")]
+                )
+              : _c(
+                  "th",
+                  {
+                    attrs: { scope: "col" },
+                    on: {
+                      click: function($event) {
+                        _vm.ordenadosAsc("LEGAJO")
+                        _vm.auxiliar--
+                      }
+                    }
+                  },
+                  [_vm._v("LEGAJO")]
+                ),
+            _vm._v(" "),
+            _vm.auxiliar === 0
+              ? _c(
+                  "th",
+                  {
+                    attrs: { scope: "col" },
+                    on: {
+                      click: function($event) {
+                        _vm.ordenadosDesc("DNI")
+                        _vm.auxiliar++
+                      }
+                    }
+                  },
+                  [_vm._v("DNI")]
+                )
+              : _c(
+                  "th",
+                  {
+                    attrs: { scope: "col" },
+                    on: {
+                      click: function($event) {
+                        _vm.ordenadosAsc("DNI")
+                        _vm.auxiliar--
+                      }
+                    }
+                  },
+                  [_vm._v("DNI")]
+                ),
+            _vm._v(" "),
+            _vm.auxiliar === 0
+              ? _c(
+                  "th",
+                  {
+                    attrs: { scope: "col" },
+                    on: {
+                      click: function($event) {
+                        _vm.ordenadosDesc("NOMBRE")
+                        _vm.auxiliar++
+                      }
+                    }
+                  },
+                  [_vm._v("NOMBRE")]
+                )
+              : _c(
+                  "th",
+                  {
+                    attrs: { scope: "col" },
+                    on: {
+                      click: function($event) {
+                        _vm.ordenadosAsc("NOMBRE")
+                        _vm.auxiliar--
+                      }
+                    }
+                  },
+                  [_vm._v("NOMBRE")]
+                ),
+            _vm._v(" "),
+            _vm.auxiliar === 0
+              ? _c(
+                  "th",
+                  {
+                    attrs: { scope: "col" },
+                    on: {
+                      click: function($event) {
+                        _vm.ordenadosDesc("HOSPITAL")
+                        _vm.auxiliar++
+                      }
+                    }
+                  },
+                  [_vm._v("HOSPITAL")]
+                )
+              : _c(
+                  "th",
+                  {
+                    attrs: { scope: "col" },
+                    on: {
+                      click: function($event) {
+                        _vm.ordenadosAsc("HOSPITAL")
+                        _vm.auxiliar--
+                      }
+                    }
+                  },
+                  [_vm._v("HOSPITAL")]
+                ),
+            _vm._v(" "),
+            _vm.auxiliar === 0
+              ? _c(
+                  "th",
+                  {
+                    attrs: { scope: "col" },
+                    on: {
+                      click: function($event) {
+                        _vm.ordenadosDesc("SERVICIO")
+                        _vm.auxiliar++
+                      }
+                    }
+                  },
+                  [_vm._v("SERVICIO")]
+                )
+              : _c(
+                  "th",
+                  {
+                    attrs: { scope: "col" },
+                    on: {
+                      click: function($event) {
+                        _vm.ordenadosAsc("SERVICIO")
+                        _vm.auxiliar--
+                      }
+                    }
+                  },
+                  [_vm._v("SERVICIO")]
+                ),
+            _vm._v(" "),
+            _vm.auxiliar === 0
+              ? _c(
+                  "th",
+                  {
+                    attrs: { scope: "col" },
+                    on: {
+                      click: function($event) {
+                        _vm.ordenadosDesc("SECTOR")
+                        _vm.auxiliar++
+                      }
+                    }
+                  },
+                  [_vm._v("SECTOR")]
+                )
+              : _c(
+                  "th",
+                  {
+                    attrs: { scope: "col" },
+                    on: {
+                      click: function($event) {
+                        _vm.ordenadosAsc("SECTOR")
+                        _vm.auxiliar--
+                      }
+                    }
+                  },
+                  [_vm._v("SECTOR")]
+                ),
+            _vm._v(" "),
+            _c("th", { attrs: { scope: "col" } }, [_vm._v("ACTIVO")]),
+            _vm._v(" "),
+            _c("th", { attrs: { scope: "col" } }, [_vm._v("FECHA DE INGRESO")])
+          ])
+        ]),
         _vm._v(" "),
         _c(
           "tbody",
@@ -48755,17 +49211,7 @@ var render = function() {
       ]
     ),
     _vm._v(" "),
-    _vm._m(2),
-    _vm._v(" "),
-    _c(
-      "button",
-      {
-        staticClass: "btn btn-outline-dark",
-        attrs: { type: "submit" },
-        on: { click: _vm.notificacion }
-      },
-      [_vm._v("TODOS")]
-    )
+    _vm._m(1)
   ])
 }
 var staticRenderFns = [
@@ -48786,28 +49232,6 @@ var staticRenderFns = [
         },
         [_vm._v("\n            Nuevo Agente\n        ")]
       )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("LEGAJO")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("NOMBRE")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("HOSPITAL")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("SERVICIO")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("SECTOR")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("ACTIVO")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("FECHA DE INGRESO")])
-      ])
     ])
   },
   function() {

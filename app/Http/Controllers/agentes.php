@@ -11,7 +11,7 @@ use App\ageninc;
 use DB;
 class agentes extends Controller
 {
-    public function index(){
+    public function index(){//listado general de agentes
         $agente = DB::table('agentes')
                     ->join('hospitales','idhosp','=','hospitales.id')
                     ->join('servicio','idservicio','=','servicio.id')
@@ -22,7 +22,7 @@ class agentes extends Controller
         return $agente;
         
     }
-    public function activos(){
+    public function activos(){//listado de agentes activos
         $agente = DB::table('agentes')
                     ->join('hospitales','idhosp','=','hospitales.id')
                     ->join('servicio','idservicio','=','servicio.id')
@@ -34,7 +34,7 @@ class agentes extends Controller
         return $agente;
         
     }
-    public function bajas(){
+    public function bajas(){//listado general de agentes de baja
         $agente = DB::table('agentes')
                     ->join('hospitales','idhosp','=','hospitales.id')
                     ->join('servicio','idservicio','=','servicio.id')
@@ -46,18 +46,45 @@ class agentes extends Controller
         return $agente;
         
     }
-    public function vistaAgentes()
+    public function porHospital($hospital){//listado de agentes activos filtrado por hospital
+        $agente = DB::table('agentes')
+                    ->join('hospitales','idhosp','=','hospitales.id')
+                    ->join('servicio','idservicio','=','servicio.id')
+                    ->join('sector','sec','=','sector.id')
+                    ->where('hospitales.id', '=',$hospital)
+                    ->where('agentes.activo','=',0)
+                    ->orderBy('legajo', 'asc')
+                    ->get();
+        $agente = json_encode($agente);
+        return $agente;
+        
+    }
+    public function porServicio($servicio){//listado de agentes activos filtrado por servicio
+        $agente = DB::table('agentes')
+                    ->join('hospitales','idhosp','=','hospitales.id')
+                    ->join('servicio','idservicio','=','servicio.id')
+                    ->join('sector','sec','=','sector.id')
+                    ->where('servicio.id', '=',$servicio)
+                    ->where('agentes.activo','=',0)
+                    ->orderBy('legajo', 'asc')
+                    ->get();
+        $agente = json_encode($agente);
+        return $agente;
+        
+    }
+    
+    public function vistaAgentes()//devuelve la vista de agentes
     {
         return view('agente.agentes');
     }
 
 
-    public function show($legajo)
+    public function show($legajo)//muestra todos los datos del agente
     {
         $agente = agente::where('legajo',$legajo)->get();
         return view('agente.show', compact('agente'));
     }
-    public function nuevo()
+    public function nuevo()//vista para ingresar un agente
     {
         $hospitales = hospital::all();
         $inciso = inciso::all();
@@ -65,7 +92,7 @@ class agentes extends Controller
         $servicio = servicio::all();
         return view('agente.nuevo', compact('hospitales','inciso','sector','servicio'));
     }
-    public function store(Request $request)
+    public function store(Request $request)//ingresa un agente
     {
 
         $this->validate($request,[
@@ -80,20 +107,20 @@ class agentes extends Controller
         ]);
         
         $agente = agente::where('legajo',$request->legajo)->get();
-        if(count($agente)>=1){
+        if(count($agente)>=1){//verifica que no existe un agente con dicho legajo
 
-        }else{
+        }else{//verifica que no exista un agente con mismo DNI
             $agente = agente::where('dni',$request->dni)->get();
         }
         try {
-            if(count($agente)>=1) {
+            if(count($agente)>=1) {//si existe devuelve el mensaje de error
 
                 $mensaje = 'el agente ya existe';
                 return view('Agente.show', compact('agente','mensaje'));
             } else {
-                agente::create($request->all());
+                agente::create($request->all());//ingresa a dicho agente
                 
-                for($i=0; $i<count($request->inciso);$i++){
+                for($i=0; $i<count($request->inciso);$i++){//ingresa los incisos
                     $incisos = new ageninc;
                     $incisos->idagente=$request->legajo;
                     $incisos->idinc=$request->inciso[$i];
@@ -111,19 +138,20 @@ class agentes extends Controller
             return 'ocurrio algun problema';
         }
     }
-    public function buscar()
+    public function buscar()//retorna la vista buscar
     {
         return view('agente.buscar');
     }
+    
 
     public function modificar(Request $request)
     {
-        $agente = agente::where('legajo',$request->legajo)->get();
+        $agente = agente::where('legajo',$request->legajo)->get();//busca al agente
         if(count($agente)==0){
-            $agente = agente::where('dni',$request->legajo)->get();
+            $agente = agente::where('dni',$request->legajo)->get();//verifica si el agente ingresado con DNI
         }
 
-        $inc = ageninc::where('idagente',$request->legajo)->get();
+        $inc = ageninc::where('idagente',$request->legajo)->get();//busca los incisos del agente
         
         $hospitales = hospital::all();
         $inciso = inciso::all();
@@ -143,44 +171,39 @@ class agentes extends Controller
             'idservicio'=>'required',
             'horario'=>'required'
         ]);
-
-        $agente = agente::where('legajo',$request->legajo)->get();
-        if(count($agente)>=1){
-            ageninc::where('idagente', $request->legajo)->delete();
+        
+        $agente = agente::where('legajo',$request->legajo)->get();//busco al agente por LEGAJO
+        if(count($agente)>=1){//verifica que exista
+            ageninc::where('idagente', $request->legajo)->delete();//borra todos los incisos para volver a ingresarlos
             agente::whereLegajo($request->legajo)->update($request->except('_token','inciso','legajo','created_at','fecha_ingreso'));
-            for($i=0; $i<count($request->inciso);$i++){
+            //actualiza todos los datos 
+            for($i=0; $i<count($request->inciso);$i++){//vuelve a ingresar los incisos seleccionados
                 $incisos = new ageninc;
                 $incisos->idagente=$request->legajo;
                 $incisos->idinc=$request->inciso[$i];
                 $incisos->save();
-                        
             }
-            $agente = agente::where('legajo',$request->legajo)->get();
+            $agente = agente::where('legajo',$request->legajo)->get();//vuelve a buscar al agente
             return view('agente.show', compact('agente'));
         }else{
-            $agente = agente::where('dni',$request->dni)->get();
+            $agente = agente::where('dni',$request->dni)->get();//busco al agente por DNI
             if(count($agente)>=1){
-                ageninc::where('idagente', $request->legajo)->delete();
+                ageninc::where('idagente', $request->legajo)->delete();//borra todos los incisos para volver a ingresarlos
                 agente::whereDni($request->dni)->update($request->except('_token','inciso','created_at','dni','fecha_ingreso'));
-                for($i=0; $i<count($request->inciso);$i++){
+                //actualiza todos los datos 
+                for($i=0; $i<count($request->inciso);$i++){//vuelve a ingresar los incisos seleccionados
                     $incisos = new ageninc;
                     $incisos->idagente=$request->legajo;
                     $incisos->idinc=$request->inciso[$i];
                     $incisos->save();
-                            
                 }
                 return view('agente.show', compact('agente'));
             }else{
                 return 'no puede cambiar el campo LEGAJO y DNI al mismo tiempo';
             }
-            
-            
-            
         }
-
-
-        
     }
+
     
 
 }
