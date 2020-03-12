@@ -2064,17 +2064,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2172,6 +2161,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     ordenadosAsc: function ordenadosAsc(prop) {
       // Set slice() to avoid to generate an infinite loop!
+      console.log(prop);
       this.agentes.sort(function (a, b) {
         if (prop === 'LEGAJO') {
           return a.LEGAJO - b.LEGAJO;
@@ -2182,26 +2172,25 @@ __webpack_require__.r(__webpack_exports__);
         }
 
         if (prop === 'NOMBRE') {
-          return a.NOMBRE - b.NOMBRE;
+          return a.NOMBRE.localeCompare(b.NOMBRE);
         }
 
         if (prop === 'HOSPITAL') {
-          return a.HOSPITAL - b.HOSPITAL;
+          return a.HOSPITAL.localeCompare(b.HOSPITAL);
         }
 
         if (prop === 'SERVICIO') {
-          return a.SERVICIO - b.SERVICIO;
+          return a.SERVICIO.localeCompare(b.SERVICIO);
         }
 
         if (prop === 'SECTOR') {
-          return a.SECTOR - b.SECTOR;
+          return a.SECTOR.localeCompare(b.SECTOR);
         }
       });
     },
     ordenadosDesc: function ordenadosDesc(prop) {
       this.ordenadosAsc(prop);
       this.agentes.reverse();
-      toastr__WEBPACK_IMPORTED_MODULE_0___default.a.success('contenido cargado satisfactoriamente');
     }
   },
   computed: {
@@ -48858,102 +48847,6 @@ var render = function() {
     ]),
     _vm._v(" "),
     _vm._m(0),
-    _vm._v(" "),
-    _c("p", [_vm._v(_vm._s(_vm.auxiliar))]),
-    _vm._v(" "),
-    _c("p", [_vm._v("Ordenar Por")]),
-    _vm._v(" "),
-    _c("div", { staticClass: "badge-black row col-sm-12" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-outline-dark",
-          attrs: { type: "submit" },
-          on: {
-            click: function($event) {
-              _vm.ordenadosDesc("LEGAJO")
-              _vm.ordenadosAsc("LEGAJO")
-            }
-          }
-        },
-        [_vm._v("LEGAJO  ")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-outline-dark",
-          attrs: { type: "submit" },
-          on: {
-            click: function($event) {
-              _vm.ordenadosDesc("DNI")
-              _vm.ordenadosAsc("DNI")
-            }
-          }
-        },
-        [_vm._v("DNI     ")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-outline-dark",
-          attrs: { type: "submit" },
-          on: {
-            click: function($event) {
-              _vm.ordenadosDesc("NOMBRE")
-              _vm.ordenadosAsc("NOMBRE")
-            }
-          }
-        },
-        [_vm._v("NOMBRE  ")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-outline-dark",
-          attrs: { type: "submit" },
-          on: {
-            click: function($event) {
-              _vm.ordenadosDesc("HOSPITAL")
-              _vm.ordenadosAsc("HOSPITAL")
-            }
-          }
-        },
-        [_vm._v("HOSPITAL")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-outline-dark",
-          attrs: { type: "submit" },
-          on: {
-            click: function($event) {
-              _vm.ordenadosDesc("SERVICIO")
-              _vm.ordenadosAsc("SERVICIO")
-            }
-          }
-        },
-        [_vm._v("SERVICIO")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-outline-dark",
-          attrs: { type: "submit" },
-          on: {
-            click: function($event) {
-              _vm.ordenadosDesc("SECTOR")
-              _vm.ordenadosAsc("SECTOR")
-            }
-          }
-        },
-        [_vm._v("SECTOR  ")]
-      )
-    ]),
     _vm._v(" "),
     _c(
       "table",

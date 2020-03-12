@@ -73,17 +73,6 @@
                 Nuevo Agente
             </button>
         </div>
-        <p>{{auxiliar}}</p>
-        <p>Ordenar Por</p>
-        <div class="badge-black row col-sm-12">
-            <button v-on:click="ordenadosDesc('LEGAJO')  ;ordenadosAsc('LEGAJO')"   type="submit" class="btn btn-outline-dark">LEGAJO  </button>
-            <button v-on:click="ordenadosDesc('DNI')     ;ordenadosAsc('DNI')"      type="submit" class="btn btn-outline-dark">DNI     </button>
-            <button v-on:click="ordenadosDesc('NOMBRE')  ;ordenadosAsc('NOMBRE')"   type="submit" class="btn btn-outline-dark">NOMBRE  </button>
-            <button v-on:click="ordenadosDesc('HOSPITAL');ordenadosAsc('HOSPITAL')" type="submit" class="btn btn-outline-dark">HOSPITAL</button>
-            <button v-on:click="ordenadosDesc('SERVICIO');ordenadosAsc('SERVICIO')" type="submit" class="btn btn-outline-dark">SERVICIO</button>
-            <button v-on:click="ordenadosDesc('SECTOR')  ;ordenadosAsc('SECTOR')"   type="submit" class="btn btn-outline-dark">SECTOR  </button>
-            
-        </div>
         <table class="table table-striped table-dark table-bordered table-hover">
             <thead>
                 <tr>
@@ -249,6 +238,7 @@
             
             ordenadosAsc: function(prop) {
                 // Set slice() to avoid to generate an infinite loop!
+                
                 this.agentes.sort(function(a,b){
                     if(prop === 'LEGAJO'){
                         return (a.LEGAJO - b.LEGAJO)
@@ -257,17 +247,18 @@
                         return (a.DNI - b.DNI)
                     }
                     if(prop ==='NOMBRE'){
-                        return (a.NOMBRE - b.NOMBRE)
-                        }
+                        return (a.NOMBRE.localeCompare(b.NOMBRE))
+                    }
                     if(prop ==='HOSPITAL'){
-                        return (a.HOSPITAL - b.HOSPITAL)
+                        return (a.HOSPITAL.localeCompare(b.HOSPITAL))
                     }
                     if(prop ==='SERVICIO'){
-                        return (a.SERVICIO - b.SERVICIO)
+                        return (a.SERVICIO.localeCompare(b.SERVICIO))
                     }
                     if(prop ==='SECTOR'){
-                        return (a.SECTOR - b.SECTOR)
+                        return (a.SECTOR.localeCompare(b.SECTOR))
                     }
+                    
                 });
                 
                 
@@ -275,7 +266,7 @@
             ordenadosDesc:function(prop){
                 this.ordenadosAsc(prop);
                 this.agentes.reverse();
-                toastr.success('contenido cargado satisfactoriamente');
+                
             }
         },
         computed:{
