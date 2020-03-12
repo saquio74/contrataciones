@@ -2161,7 +2161,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     ordenadosAsc: function ordenadosAsc(prop) {
       // Set slice() to avoid to generate an infinite loop!
-      console.log(prop);
       this.agentes.sort(function (a, b) {
         if (prop === 'LEGAJO') {
           return a.LEGAJO - b.LEGAJO;
