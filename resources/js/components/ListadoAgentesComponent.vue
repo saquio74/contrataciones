@@ -27,7 +27,7 @@
                 <input type="text" v-model="nombre"   v-if="agentes.length" class="form-control badge-secondary" id="nombre" name='nombre'>
             </div>
             <div class="col-sm-2">
-                <label class="text"> hospital</label>
+                <label class="text"> hospital    </label>
                 <select class="form-control badge-secondary" @change="getPorHospital" v-model="hospital" id="hospital" name='hospital'>
                     <option value=''>seleccione</option>
                     <option v-for="hosp in hospitales" :key="hosp.ID" :value="hosp" >{{hosp.HOSPITAL}}</option>
@@ -122,28 +122,17 @@
                     <th>
                         {{since(agente.fecha_ingreso)}}
                     </th>
+                    <th width="10px">
+                        <a href="#" class="btn btn-success btn-small">Editar</a>
+                    </th>
+                    <th width="10px">
+                        <a href="#" class="btn btn-primary btn-small">Datos</a>
+                    </th>
+                    
                 </tr>
             </tbody>
         </table>
-        <div class="modal fade" id="NuevoAgente" tabindex="-1" role="dialog"  aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="Nuevo Agente" id="nuevo">Modal title</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    ...
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-                </div>
-            </div>
-        </div>
+        <nuevo-agente></nuevo-agente>
 
         
         
@@ -153,8 +142,8 @@
 <script>
     import toastr from 'toastr'
     import moment from 'moment'
+    
     export default{
-        
         
         data(){
             return {
@@ -258,22 +247,17 @@
                     if(prop ==='SECTOR'){
                         return (a.SECTOR.localeCompare(b.SECTOR))
                     }
-                    
                 });
-                
-                
             },
             ordenadosDesc:function(prop){
                 this.ordenadosAsc(prop);
                 this.agentes.reverse();
-                
             }
         },
         computed:{
             searchAgentes: function(){
                 if (this.nombre) {
-                    return this.agentes.filter((agente)=>agente.NOMBRE.toUpperCase().includes(this.nombre.toUpperCase())
-                    )
+                    return this.agentes.filter((agente)=>agente.NOMBRE.toUpperCase().includes(this.nombre.toUpperCase()))
                 }
                 if(this.servicio){
                     return this.agentes.filter((agente)=>agente.SERVICIO.toUpperCase().includes(this.servicio.toUpperCase()))
@@ -287,9 +271,7 @@
                 if(this.sector){
                     return this.agentes.filter((agente)=>agente.SECTOR.toString().includes(this.sector.toString()))
                 }
-
                 return this.agentes
-                
             }
         }
     }

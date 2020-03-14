@@ -47,5 +47,7 @@ Route::get('/servicios','servicios@index');
 
 Route::get('/sectores','sectores@index');
 
+Route::get('/incisos','incisos@index');
+
 
 
