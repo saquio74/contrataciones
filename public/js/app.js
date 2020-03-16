@@ -2032,27 +2032,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2148,8 +2127,10 @@ __webpack_require__.r(__webpack_exports__);
         });
       }
     },
+    speakMethod: function speakMethod() {
+      this.getAgentes;
+    },
     ordenadosAsc: function ordenadosAsc(prop) {
-      // Set slice() to avoid to generate an infinite loop!
       this.agentes.sort(function (a, b) {
         if (prop === 'LEGAJO') {
           return a.LEGAJO - b.LEGAJO;
@@ -2338,8 +2319,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
+var bus = new Vue();
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2347,13 +2333,19 @@ __webpack_require__.r(__webpack_exports__);
       servicios: [],
       sectores: [],
       incisos: [],
-      legajo: '',
-      dni: '',
-      nombre: '',
-      hospital: {},
-      servicio: '',
-      sector: '',
-      activo: '',
+      agente: {
+        legajo: '',
+        dni: '',
+        nombre: '',
+        telefono: '',
+        idhosp: '',
+        inciso: [],
+        sec: '',
+        idservicio: '',
+        horario: '',
+        activo: 0
+      },
+      errors: [],
       auxiliar: 0
     };
   },
@@ -2397,7 +2389,16 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     crearAgente: function crearAgente() {
-      var url = '';
+      var _this5 = this;
+
+      var url = 'store';
+      axios.post(url, this.agente).then(function (response) {
+        _this5.agente = null;
+        $('#create').modal('hide');
+        toastr__WEBPACK_IMPORTED_MODULE_0___default.a.success('contenido cargado satisfactoriamente');
+      })["catch"](function (errors) {
+        _this5.errors = errors.response.data;
+      });
     }
   }
 });
@@ -49340,181 +49341,549 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "div",
+    "form",
     {
-      staticClass: "modal fade",
-      attrs: {
-        id: "NuevoAgente",
-        tabindex: "-1",
-        role: "dialog",
-        "aria-hidden": "true"
+      attrs: { method: "post" },
+      on: {
+        submit: function($event) {
+          $event.preventDefault()
+          return _vm.crearAgente($event)
+        }
       }
     },
     [
-      _c("div", { staticClass: "modal-dialog", attrs: { role: "document" } }, [
-        _c("div", { staticClass: "modal-content" }, [
-          _vm._m(0),
-          _vm._v(" "),
-          _c("div", { staticClass: "modal-body badge-dark" }, [
-            _c("hr"),
-            _vm._v(" "),
-            _c("input", {
-              attrs: {
-                type: "hidden",
-                value: "0",
-                id: "legajo",
-                name: "activo"
-              }
-            }),
-            _vm._v(" "),
-            _vm._m(1),
-            _vm._v(" "),
-            _vm._m(2),
-            _vm._v(" "),
-            _vm._m(3),
-            _vm._v(" "),
-            _vm._m(4),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group row" }, [
-              _c(
-                "label",
-                {
-                  staticClass: "col-sm-4 col-form-label text-center ",
-                  attrs: { for: "legajo" }
-                },
-                [_vm._v("HOSPITAL ")]
-              ),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-sm-8" }, [
+      _c(
+        "div",
+        {
+          staticClass: "modal fade",
+          attrs: {
+            id: "NuevoAgente",
+            tabindex: "-1",
+            role: "dialog",
+            "aria-hidden": "true"
+          }
+        },
+        [
+          _c(
+            "div",
+            { staticClass: "modal-dialog", attrs: { role: "document" } },
+            [
+              _c("div", { staticClass: "modal-content" }, [
+                _vm._m(0),
+                _vm._v(" "),
                 _c(
-                  "select",
-                  {
-                    staticClass: "form-control badge-secondary",
-                    attrs: { id: "hospitales", name: "idhosp" }
-                  },
+                  "div",
+                  { staticClass: "modal-body badge-dark" },
                   [
-                    _c("option", { attrs: { value: "" } }, [
-                      _vm._v("Seleccione")
+                    _c("hr"),
+                    _vm._v(" "),
+                    _c("p", [_vm._v(_vm._s(_vm.agente))]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-sm-4 col-form-label text-center",
+                          attrs: { for: "legajo" }
+                        },
+                        [_vm._v("LEGAJO   ")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-sm-8" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.agente.legajo,
+                              expression: "agente.legajo"
+                            }
+                          ],
+                          staticClass: "form-control badge-secondary",
+                          attrs: {
+                            type: "text",
+                            id: "legajo",
+                            name: "legajo",
+                            value: ""
+                          },
+                          domProps: { value: _vm.agente.legajo },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.agente,
+                                "legajo",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        })
+                      ])
                     ]),
                     _vm._v(" "),
-                    _vm._l(_vm.hospitales, function(hosp) {
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-sm-4 col-form-label text-center ",
+                          attrs: { for: "documento" }
+                        },
+                        [_vm._v("DNI      ")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-sm-8" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.agente.dni,
+                              expression: "agente.dni"
+                            }
+                          ],
+                          staticClass: "form-control badge-secondary",
+                          attrs: {
+                            type: "text",
+                            id: "dni",
+                            name: "dni",
+                            value: ""
+                          },
+                          domProps: { value: _vm.agente.dni },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(_vm.agente, "dni", $event.target.value)
+                            }
+                          }
+                        })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-sm-4 col-form-label text-center ",
+                          attrs: { for: "horario" }
+                        },
+                        [_vm._v("NOMBRE   ")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-sm-8" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.agente.nombre,
+                              expression: "agente.nombre"
+                            }
+                          ],
+                          staticClass: "form-control badge-secondary",
+                          attrs: {
+                            type: "text",
+                            id: "nombre",
+                            name: "nombre",
+                            value: ""
+                          },
+                          domProps: { value: _vm.agente.nombre },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.agente,
+                                "nombre",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-sm-4 col-form-label text-center ",
+                          attrs: { for: "horario" }
+                        },
+                        [_vm._v("TELEFONO ")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-sm-8" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.agente.telefono,
+                              expression: "agente.telefono"
+                            }
+                          ],
+                          staticClass: "form-control badge-secondary",
+                          attrs: {
+                            type: "text",
+                            id: "telefono",
+                            name: "telefono",
+                            value: ""
+                          },
+                          domProps: { value: _vm.agente.telefono },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.agente,
+                                "telefono",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-sm-4 col-form-label text-center ",
+                          attrs: { for: "legajo" }
+                        },
+                        [_vm._v("HOSPITAL ")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-sm-8" }, [
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.agente.idhosp,
+                                expression: "agente.idhosp"
+                              }
+                            ],
+                            staticClass: "form-control badge-secondary",
+                            attrs: { id: "hospitales", name: "idhosp" },
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.$set(
+                                  _vm.agente,
+                                  "idhosp",
+                                  $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                )
+                              }
+                            }
+                          },
+                          [
+                            _c("option", { attrs: { value: "" } }, [
+                              _vm._v("Seleccione")
+                            ]),
+                            _vm._v(" "),
+                            _vm._l(_vm.hospitales, function(hosp) {
+                              return _c(
+                                "option",
+                                { key: hosp.ID, domProps: { value: hosp.ID } },
+                                [_vm._v(_vm._s(hosp.HOSPITAL))]
+                              )
+                            })
+                          ],
+                          2
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-sm-4 col-form-label text-center ",
+                          attrs: { for: "legajo" }
+                        },
+                        [_vm._v("INCISO     ")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-sm-8" }, [
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.agente.inciso,
+                                expression: "agente.inciso"
+                              }
+                            ],
+                            staticClass: "form-control badge-secondary",
+                            attrs: {
+                              multiple: "",
+                              id: "inciso",
+                              name: "inciso[]"
+                            },
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.$set(
+                                  _vm.agente,
+                                  "inciso",
+                                  $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                )
+                              }
+                            }
+                          },
+                          _vm._l(_vm.incisos, function(inc) {
+                            return _c(
+                              "option",
+                              { key: inc.ID, domProps: { value: inc } },
+                              [_vm._v(_vm._s(inc.INCISO))]
+                            )
+                          }),
+                          0
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-sm-4 col-form-label text-center ",
+                          attrs: { for: "legajo" }
+                        },
+                        [_vm._v("SERVICIO     ")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-sm-8" }, [
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.agente.idservicio,
+                                expression: "agente.idservicio"
+                              }
+                            ],
+                            staticClass: "form-control badge-secondary",
+                            attrs: { id: "sector", name: "sec" },
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.$set(
+                                  _vm.agente,
+                                  "idservicio",
+                                  $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                )
+                              }
+                            }
+                          },
+                          [
+                            _c("option", { attrs: { value: "" } }, [
+                              _vm._v("Seleccione")
+                            ]),
+                            _vm._v(" "),
+                            _vm._l(_vm.servicios, function(serv) {
+                              return _c(
+                                "option",
+                                { key: serv.ID, domProps: { value: serv.ID } },
+                                [_vm._v(_vm._s(serv.SERVICIO))]
+                              )
+                            })
+                          ],
+                          2
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-sm-4 col-form-label text-center ",
+                          attrs: { for: "legajo" }
+                        },
+                        [_vm._v("SECTOR ")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-sm-8" }, [
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.agente.sec,
+                                expression: "agente.sec"
+                              }
+                            ],
+                            staticClass: "form-control badge-secondary",
+                            attrs: { id: "servicio", name: "idservicio" },
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.$set(
+                                  _vm.agente,
+                                  "sec",
+                                  $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                )
+                              }
+                            }
+                          },
+                          [
+                            _c("option", { attrs: { value: "" } }, [
+                              _vm._v("Seleccione")
+                            ]),
+                            _vm._v(" "),
+                            _vm._l(_vm.sectores, function(sect) {
+                              return _c(
+                                "option",
+                                {
+                                  key: sect.SECTOR,
+                                  domProps: { value: sect.ID }
+                                },
+                                [_vm._v(_vm._s(sect.SECTOR))]
+                              )
+                            })
+                          ],
+                          2
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-sm-4 col-form-label text-center ",
+                          attrs: { for: "horario" }
+                        },
+                        [_vm._v("HORARIO ")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-sm-8" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.agente.horario,
+                              expression: "agente.horario"
+                            }
+                          ],
+                          staticClass: "form-control badge-secondary",
+                          attrs: {
+                            type: "text",
+                            id: "horario",
+                            name: "horario",
+                            value: ""
+                          },
+                          domProps: { value: _vm.agente.horario },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.agente,
+                                "horario",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _vm._l(_vm.errors, function(error) {
                       return _c(
-                        "option",
-                        { key: hosp.ID, domProps: { value: hosp } },
-                        [_vm._v(_vm._s(hosp.HOSPITAL))]
+                        "span",
+                        { key: error, staticClass: "text-danger" },
+                        [_vm._v(_vm._s(error))]
                       )
                     })
                   ],
                   2
-                )
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-footer badge-secondary" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-outline-danger",
+                      attrs: { type: "button", "data-dismiss": "modal" }
+                    },
+                    [_vm._v("Close")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary",
+                      attrs: { type: "submit" },
+                      on: {
+                        click: function($event) {
+                          return _vm.$emit("speak")
+                        }
+                      }
+                    },
+                    [_vm._v("Agregar Agente")]
+                  )
+                ])
               ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group row" }, [
-              _c(
-                "label",
-                {
-                  staticClass: "col-sm-4 col-form-label text-center ",
-                  attrs: { for: "legajo" }
-                },
-                [_vm._v("INCISO     ")]
-              ),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-sm-8" }, [
-                _c(
-                  "select",
-                  {
-                    staticClass: "form-control badge-secondary",
-                    attrs: { multiple: "", id: "inciso", name: "inciso[]" }
-                  },
-                  _vm._l(_vm.incisos, function(inc) {
-                    return _c(
-                      "option",
-                      { key: inc.ID, domProps: { value: inc.INCISO } },
-                      [_vm._v(_vm._s(inc.INCISO))]
-                    )
-                  }),
-                  0
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group row" }, [
-              _c(
-                "label",
-                {
-                  staticClass: "col-sm-4 col-form-label text-center ",
-                  attrs: { for: "legajo" }
-                },
-                [_vm._v("SECTOR     ")]
-              ),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-sm-8" }, [
-                _c(
-                  "select",
-                  {
-                    staticClass: "form-control badge-secondary",
-                    attrs: { id: "sector", name: "sec" }
-                  },
-                  [
-                    _c("option", { attrs: { value: "" } }, [
-                      _vm._v("Seleccione")
-                    ]),
-                    _vm._v(" "),
-                    _vm._l(_vm.servicios, function(serv) {
-                      return _c(
-                        "option",
-                        { key: serv.ID, domProps: { value: serv.SERVICIO } },
-                        [_vm._v(_vm._s(serv.SERVICIO))]
-                      )
-                    })
-                  ],
-                  2
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group row" }, [
-              _c(
-                "label",
-                {
-                  staticClass: "col-sm-4 col-form-label text-center ",
-                  attrs: { for: "legajo" }
-                },
-                [_vm._v("SERVICIO ")]
-              ),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-sm-8" }, [
-                _c(
-                  "select",
-                  {
-                    staticClass: "form-control badge-secondary",
-                    attrs: { id: "servicio", name: "idservicio" }
-                  },
-                  [
-                    _c("option", { attrs: { value: "" } }, [
-                      _vm._v("Seleccione")
-                    ]),
-                    _vm._v(" "),
-                    _vm._l(_vm.sectores, function(sect) {
-                      return _c(
-                        "option",
-                        { key: sect.SECTOR, domProps: { value: sect.SECTOR } },
-                        [_vm._v(_vm._s(sect.SECTOR))]
-                      )
-                    })
-                  ],
-                  2
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _vm._m(5)
-          ]),
-          _vm._v(" "),
-          _vm._m(6)
-        ])
-      ])
+            ]
+          )
+        ]
+      )
     ]
   )
 }
@@ -49539,137 +49908,6 @@ var staticRenderFns = [
           }
         },
         [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group row" }, [
-      _c(
-        "label",
-        {
-          staticClass: "col-sm-4 col-form-label text-center",
-          attrs: { for: "legajo" }
-        },
-        [_vm._v("LEGAJO   ")]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-sm-8" }, [
-        _c("input", {
-          staticClass: "form-control badge-secondary",
-          attrs: { type: "text", id: "legajo", name: "legajo", value: "" }
-        })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group row" }, [
-      _c(
-        "label",
-        {
-          staticClass: "col-sm-4 col-form-label text-center ",
-          attrs: { for: "documento" }
-        },
-        [_vm._v("DNI      ")]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-sm-8" }, [
-        _c("input", {
-          staticClass: "form-control badge-secondary",
-          attrs: { type: "text", id: "dni", name: "dni", value: "" }
-        })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group row" }, [
-      _c(
-        "label",
-        {
-          staticClass: "col-sm-4 col-form-label text-center ",
-          attrs: { for: "horario" }
-        },
-        [_vm._v("NOMBRE   ")]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-sm-8" }, [
-        _c("input", {
-          staticClass: "form-control badge-secondary",
-          attrs: { type: "text", id: "nombre", name: "nombre", value: "" }
-        })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group row" }, [
-      _c(
-        "label",
-        {
-          staticClass: "col-sm-4 col-form-label text-center ",
-          attrs: { for: "horario" }
-        },
-        [_vm._v("TELEFONO ")]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-sm-8" }, [
-        _c("input", {
-          staticClass: "form-control badge-secondary",
-          attrs: { type: "text", id: "telefono", name: "telefono", value: "" }
-        })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group row" }, [
-      _c(
-        "label",
-        {
-          staticClass: "col-sm-4 col-form-label text-center ",
-          attrs: { for: "horario" }
-        },
-        [_vm._v("HORARIO ")]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-sm-8" }, [
-        _c("input", {
-          staticClass: "form-control badge-secondary",
-          attrs: { type: "text", id: "horario", name: "horario", value: "" }
-        })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-footer badge-secondary" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-outline-danger",
-          attrs: { type: "button", "data-dismiss": "modal" }
-        },
-        [_vm._v("Close")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        { staticClass: "btn btn-primary", attrs: { type: "button" } },
-        [_vm._v("Save changes")]
       )
     ])
   }
@@ -62002,15 +62240,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!**********************************************************!*\
   !*** ./resources/js/components/NuevoAgenteComponent.vue ***!
   \**********************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _NuevoAgenteComponent_vue_vue_type_template_id_72598d11___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./NuevoAgenteComponent.vue?vue&type=template&id=72598d11& */ "./resources/js/components/NuevoAgenteComponent.vue?vue&type=template&id=72598d11&");
 /* harmony import */ var _NuevoAgenteComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NuevoAgenteComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/NuevoAgenteComponent.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _NuevoAgenteComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _NuevoAgenteComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -62040,7 +62277,7 @@ component.options.__file = "resources/js/components/NuevoAgenteComponent.vue"
 /*!***********************************************************************************!*\
   !*** ./resources/js/components/NuevoAgenteComponent.vue?vue&type=script&lang=js& ***!
   \***********************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

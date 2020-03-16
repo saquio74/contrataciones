@@ -1,5 +1,6 @@
 <template >
-    <div class="modal fade" id="NuevoAgente" tabindex="-1" role="dialog"  aria-hidden="true">
+    <form v-on:submit.prevent="crearAgente" method="post">
+        <div class="modal fade" id="NuevoAgente" tabindex="-1" role="dialog"  aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                 <div class="modal-header badge-dark">
@@ -9,45 +10,47 @@
                     </button>
                 </div>
                 <div class="modal-body badge-dark">
+                   
                     <hr>
+                    <p>{{agente}}</p>
                     
-                    <input type="hidden" value='0' id="legajo" name='activo'>
+                    
                     
                     <div class="form-group row">
                         
                         <label for="legajo"    class="col-sm-4 col-form-label text-center">LEGAJO   </label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control badge-secondary" id="legajo" name='legajo' value=''>
+                            <input type="text" class="form-control badge-secondary" v-model="agente.legajo" id="legajo" name='legajo' value=''>
                         </div>
                     </div>
                     <div class="form-group row">
                         
                         <label for="documento" class="col-sm-4 col-form-label text-center ">DNI      </label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control badge-secondary" id="dni" name='dni' value=''>
+                            <input type="text" class="form-control badge-secondary" v-model="agente.dni" id="dni" name='dni' value=''>
                         </div>
                     </div>
                     <div class="form-group row">
                         
                         <label for="horario"   class="col-sm-4 col-form-label text-center ">NOMBRE   </label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control badge-secondary" id="nombre" name='nombre' value=''>
+                            <input type="text" class="form-control badge-secondary" v-model="agente.nombre" id="nombre" name='nombre' value=''>
                         </div>
                     </div>
                     <div class="form-group row">
                         
                         <label for="horario"   class="col-sm-4 col-form-label text-center ">TELEFONO </label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control badge-secondary" id="telefono" name='telefono' value=''>
+                            <input type="text" class="form-control badge-secondary" v-model="agente.telefono" id="telefono" name='telefono' value=''>
                         </div>
                     </div>
                     <div class="form-group row">
                         
                         <label for="legajo"    class="col-sm-4 col-form-label text-center ">HOSPITAL </label>
                         <div class="col-sm-8">
-                            <select  class="form-control badge-secondary" id="hospitales" name='idhosp'>
+                            <select  class="form-control badge-secondary" v-model="agente.idhosp" id="hospitales" name='idhosp'>
                                 <option value="">Seleccione</option>
-                                <option v-for="hosp in hospitales" :key="hosp.ID" :value="hosp" >{{hosp.HOSPITAL}}</option>
+                                <option v-for="hosp in hospitales" :key="hosp.ID" :value="hosp.ID" >{{hosp.HOSPITAL}}</option>
                             </select>
                         </div>
                     </div>
@@ -55,30 +58,30 @@
                         
                         <label for="legajo" class="col-sm-4 col-form-label text-center ">INCISO     </label>
                         <div class="col-sm-8">
-                            <select multiple class="form-control badge-secondary" id="inciso" name='inciso[]'>
-                            <option v-for="inc in incisos" :value="inc.INCISO" :key="inc.ID">{{inc.INCISO}}</option>       
+                            <select multiple class="form-control badge-secondary" v-model="agente.inciso" id="inciso" name='inciso[]'>
+                            <option v-for="inc in incisos" :value="inc" :key="inc.ID">{{inc.INCISO}}</option>       
                                 
                                         
                             </select>
                         </div>
-                    </div>
+                    </div>  
                     <div class="form-group row">
                         
-                        <label for="legajo" class="col-sm-4 col-form-label text-center ">SECTOR     </label>
+                        <label for="legajo" class="col-sm-4 col-form-label text-center ">SERVICIO     </label>
                         <div class="col-sm-8">
-                            <select  class="form-control badge-secondary" id="sector" name='sec'>
+                            <select  class="form-control badge-secondary" v-model="agente.idservicio" id="sector" name='sec'>
                                 <option value="">Seleccione</option>
-                                <option v-for="serv in servicios" :value="serv.SERVICIO" :key="serv.ID">{{serv.SERVICIO}}</option>
+                                <option v-for="serv in servicios" :value="serv.ID" :key="serv.ID">{{serv.SERVICIO}}</option>
                             </select>
                         </div>
                     </div>
                     <div class="form-group row">
                         
-                        <label for="legajo"   class="col-sm-4 col-form-label text-center ">SERVICIO </label>
+                        <label for="legajo"   class="col-sm-4 col-form-label text-center ">SECTOR </label>
                         <div class="col-sm-8">
-                            <select  class="form-control badge-secondary" id="servicio" name='idservicio'>
+                            <select  class="form-control badge-secondary" v-model="agente.sec" id="servicio" name='idservicio'>
                                 <option value="">Seleccione</option>
-                                <option v-for="sect in sectores" :value="sect.SECTOR" :key="sect.SECTOR">{{sect.SECTOR}}</option>
+                                <option v-for="sect in sectores" :value="sect.ID" :key="sect.SECTOR">{{sect.SECTOR}}</option>
                                         
                             </select>
                         </div>
@@ -87,23 +90,25 @@
                         
                         <label for="horario"   class="col-sm-4 col-form-label text-center ">HORARIO </label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control badge-secondary" id="horario" name='horario' value=''>
+                            <input type="text" class="form-control badge-secondary" v-model="agente.horario" id="horario" name='horario' value=''>
                         </div>
                     </div>
-                    
+                    <span v-for="error in errors" :key="error" class="text-danger">{{error}}</span>
                     
                 </div>
                 <div class="modal-footer badge-secondary">
                     <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="submit" class="btn btn-primary" @click="$emit('speak')">Agregar Agente</button>
                 </div>
                 </div>
             </div>
         </div>
+     </form>
 </template>
 <script>
     import toastr from 'toastr'
     import moment from 'moment'
+    var bus = new Vue()
     export default {
         data(){
             return {
@@ -112,13 +117,19 @@
                 servicios:[],
                 sectores:[],
                 incisos:[],
-                legajo: '',
-                dni:'',
-                nombre:'',
-                hospital:{},
-                servicio:'',
-                sector:'',
-                activo:'',
+                agente:{
+                    legajo: '',
+                    dni:'',
+                    nombre:'',
+                    telefono:'',
+                    idhosp:'',
+                    inciso:[],
+                    sec:'',
+                    idservicio:'',
+                    horario:'',
+                    activo:0,
+                },
+                errors:[],
                 auxiliar:0,
             }
         },
@@ -156,7 +167,14 @@
 
             },
             crearAgente:function(){
-                var url = '';
+                var url = 'store';
+                axios.post(url,this.agente).then(response=>{
+                    this.agente = null;
+                    $('#create').modal('hide');
+                    toastr.success('contenido cargado satisfactoriamente');
+                }).catch(errors=>{
+                    this.errors = errors.response.data
+                });
             }
             
         }

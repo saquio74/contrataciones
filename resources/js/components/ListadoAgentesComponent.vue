@@ -1,6 +1,5 @@
 <template>
     <div class="panel panel-default   col-sm-12">
-
         <h1 class="text-center">Listado General de agentes</h1>
         <div class="badge-black row col-sm-12">
             <button v-on:click="getActivos" type="submit" class="btn btn-outline-dark">ALTAS</button>
@@ -8,11 +7,9 @@
             <button v-on:click="getAgentes"  type="submit" class="btn btn-outline-dark">TODOS</button>
             <button type="submit" class="btn btn-outline-dark">VACACIONES</button>
         </div>
-        
         <div class="form-group row badge-dark col-sm-12">
             <hr>
             <hr>
-
             <button v-on:click="getAgentes" class="btn btn-primary" v-if="!agentes.length">Listar</button>
             <div class="col-sm-2">
                 <label class="text"> legajo      </label>
@@ -31,20 +28,14 @@
                 <select class="form-control badge-secondary" @change="getPorHospital" v-model="hospital" id="hospital" name='hospital'>
                     <option value=''>seleccione</option>
                     <option v-for="hosp in hospitales" :key="hosp.ID" :value="hosp" >{{hosp.HOSPITAL}}</option>
-                
                 </select>
-                
             </div>
-            
-            
             <div class="col-sm-2">
                 <label class="text"> servicio    </label>
                 <select class="form-control badge-secondary" v-model="servicio" id="servicio" name='servicio'>
                     <option value=''>seleccione</option>
                     <option v-for="serv in servicios" :value="serv.SERVICIO" :key="serv.ID">{{serv.SERVICIO}}</option>
-
                 </select>
-
             </div>
             <div class="col-sm-2">
                 <label class="text"> sectores    </label>
@@ -53,20 +44,13 @@
                     <option v-for="sect in sectores" :value="sect.SECTOR" :key="sect.SECTOR">{{sect.SECTOR}}</option>
 
                 </select>
-
             </div>
-            
-            
-            
             <hr>
             <hr>
             <div class="col-sm-6">
                 <label class="text">TOTAL DE AGENTES:</label>
-                
                 <P>  {{searchAgentes.length}}</P>
             </div>
-            
-                   
         </div>
         <div class="form-group row badge-dark col-sm-12">
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#NuevoAgente">
@@ -92,7 +76,6 @@
                     <th scope="col">FECHA DE INGRESO</th>
                 </tr>
             </thead>
-                    
             <tbody>
                 <tr  v-for="agente in searchAgentes" :key="agente.LEGAJO" >
                     <th>
@@ -128,14 +111,10 @@
                     <th width="10px">
                         <a href="#" class="btn btn-primary btn-small">Datos</a>
                     </th>
-                    
                 </tr>
             </tbody>
         </table>
         <nuevo-agente></nuevo-agente>
-
-        
-        
     </div>
 </template>
 
@@ -223,11 +202,12 @@
                     });
                 }
             },
+            speakMethod: function () {
+               this.getAgentes
+            },
             
             
             ordenadosAsc: function(prop) {
-                // Set slice() to avoid to generate an infinite loop!
-                
                 this.agentes.sort(function(a,b){
                     if(prop === 'LEGAJO'){
                         return (a.LEGAJO - b.LEGAJO)

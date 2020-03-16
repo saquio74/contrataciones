@@ -96,14 +96,14 @@ class agentes extends Controller
     {
 
         $this->validate($request,[
-            'legajo'=>'required',
-            'dni'=>'required',
-            'nombre'=>'required',
-            'idhosp'=>'required',
-            'inciso'=>'required',
-            'sec'=>'required',
+            'legajo'    =>'required',
+            'dni'       =>'required',
+            'nombre'    =>'required',
+            'idhosp'    =>'required',
+            'inciso'    =>'required',
+            'sec'       =>'required',
             'idservicio'=>'required',
-            'horario'=>'required'
+            'horario'   =>'required'
         ]);
         
         $agente = agente::where('legajo',$request->legajo)->get();
