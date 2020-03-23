@@ -106,26 +106,29 @@
                         {{since(agente.fecha_ingreso)}}
                     </th>
                     <th width="10px">
-                        <a href="#" class="btn btn-success btn-small">Editar</a>
-                    </th>
-                    <th width="10px">
+                        <button type="button" class="btn btn-success" v-on:click="getLegajo(agente.LEGAJO)" data-toggle="modal" data-target="#ModificarAgente">
+                            editar
+                        </button>
                         <a href="#" class="btn btn-primary btn-small">Datos</a>
                     </th>
                 </tr>
             </tbody>
         </table>
-        <nuevo-agente></nuevo-agente>
+        <nuevo-agente @speak="speakMethod()"/>
+        <modificar-agente :listaHospitales="hospitales" :listaServicios="servicios" :listaSectores="sectores" :agenteModificar="legAux" />
     </div>
 </template>
 
 <script>
     import toastr from 'toastr'
     import moment from 'moment'
+    import axios  from 'axios'
     
     export default{
         
         data(){
             return {
+                legAux:'',
                 agentes:  [],
                 hospitales: [],
                 servicios:[],
@@ -203,10 +206,12 @@
                 }
             },
             speakMethod: function () {
-               this.getAgentes
+                setTimeout(this.getAgentes(),5000)
+                
             },
-            
-            
+            getLegajo: function(legajo){
+                this.legAux = legajo
+            },
             ordenadosAsc: function(prop) {
                 this.agentes.sort(function(a,b){
                     if(prop === 'LEGAJO'){
