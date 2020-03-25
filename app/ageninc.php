@@ -8,6 +8,6 @@ class ageninc extends Model
 {
     protected $table = 'ageninc';
 
-    protected $primaryKey = 'ID';
+    protected $primaryKey = 'IDINT';
     protected $fillable=['idagente','idinc'];
 }

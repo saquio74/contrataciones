@@ -106,7 +106,7 @@
                         {{since(agente.fecha_ingreso)}}
                     </th>
                     <th width="10px">
-                        <button type="button" class="btn btn-success" v-on:click="getLegajo(agente.LEGAJO)" data-toggle="modal" data-target="#ModificarAgente">
+                        <button type="button" class="btn btn-success" v-on:click="getLegajo(agente)" data-toggle="modal" data-target="#ModificarAgente">
                             editar
                         </button>
                         <a href="#" class="btn btn-primary btn-small">Datos</a>
@@ -115,7 +115,7 @@
             </tbody>
         </table>
         <nuevo-agente @speak="speakMethod()"/>
-        <modificar-agente :listaHospitales="hospitales" :listaServicios="servicios" :listaSectores="sectores" :agenteModificar="legAux" />
+        <modificar-agente :listaHospitales="hospitales" :listaServicios="servicios" :listaSectores="sectores" :agenteModificar="agenteAux"  />
     </div>
 </template>
 
@@ -128,7 +128,7 @@
         
         data(){
             return {
-                legAux:'',
+                agenteAux: [],
                 agentes:  [],
                 hospitales: [],
                 servicios:[],
@@ -209,8 +209,8 @@
                 setTimeout(this.getAgentes(),5000)
                 
             },
-            getLegajo: function(legajo){
-                this.legAux = legajo
+            getLegajo: function(agent){
+                this.agenteAux = agent
             },
             ordenadosAsc: function(prop) {
                 this.agentes.sort(function(a,b){

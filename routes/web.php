@@ -35,9 +35,9 @@ Route::post('/agente', 'agentes@update');
 
 Route::post('/agente/store', 'agentes@store');
 
-Route::post('/agentes', 'agentes@modificar');
+Route::post('/agente/update', 'agentes@modificar');
 
-Route::get('/agentes/{legajo}', 'agentes@show');
+Route::get('/agente/{legajo}', 'agentes@show');
 
 Route::get('/hospitales','hospitales@index');
 

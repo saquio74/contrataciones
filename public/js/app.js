@@ -1993,7 +1993,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      legAux: '',
+      agenteAux: [],
       agentes: [],
       hospitales: [],
       servicios: [],
@@ -2087,8 +2087,8 @@ __webpack_require__.r(__webpack_exports__);
     speakMethod: function speakMethod() {
       setTimeout(this.getAgentes(), 5000);
     },
-    getLegajo: function getLegajo(legajo) {
-      this.legAux = legajo;
+    getLegajo: function getLegajo(agent) {
+      this.agenteAux = agent;
     },
     ordenadosAsc: function ordenadosAsc(prop) {
       this.agentes.sort(function (a, b) {
@@ -2280,11 +2280,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
 
 
 
@@ -2301,6 +2296,7 @@ __webpack_require__.r(__webpack_exports__);
       servicios: [],
       sectores: [],
       incisos: [],
+      hospitalAux: [],
       agente: {
         legajo: '',
         dni: '',
@@ -2334,7 +2330,6 @@ __webpack_require__.r(__webpack_exports__);
 
       var url = 'update';
       axios__WEBPACK_IMPORTED_MODULE_2___default.a.post(url, this.agente).then(function (response) {
-        _this2.agente = null;
         $('#create').modal('hide');
         toastr__WEBPACK_IMPORTED_MODULE_0___default.a.success('contenido cargado satisfactoriamente');
       })["catch"](function (errors) {
@@ -2342,7 +2337,27 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     buscarAgente: function buscarAgente() {
-      var url = '';
+      this.agente.legajo = this.agenteModificar.LEGAJO;
+      this.agente.dni = this.agenteModificar.DNI;
+      this.agente.nombre = this.agenteModificar.NOMBRE;
+      this.agente.telefono = this.agenteModificar.TELEFONO;
+      this.hospitalAux = this.buscarIgual(this.agenteModificar.IDHOSP);
+      console.log(this.hospitalAux);
+    },
+    buscarIgual: function buscarIgual(hospital) {
+      this.listaHospitales.forEach(function (key) {
+        if (key.ID == hospital) {
+          console.log(key.ID, key.HOSPITAL);
+          return [kei.ID, key.HOSPITAL];
+        }
+      });
+    }
+  },
+  watch: {
+    agenteModificar: {
+      handler: function handler() {
+        this.buscarAgente();
+      }
     }
   }
 });
@@ -32311,7 +32326,7 @@ var render = function() {
                       },
                       on: {
                         click: function($event) {
-                          return _vm.getLegajo(agente.LEGAJO)
+                          return _vm.getLegajo(agente)
                         }
                       }
                     },
@@ -32351,7 +32366,7 @@ var render = function() {
           listaHospitales: _vm.hospitales,
           listaServicios: _vm.servicios,
           listaSectores: _vm.sectores,
-          agenteModificar: _vm.legAux
+          agenteModificar: _vm.agenteAux
         }
       })
     ],
@@ -32436,8 +32451,6 @@ var render = function() {
                   { staticClass: "modal-body badge-dark" },
                   [
                     _c("hr"),
-                    _vm._v(" "),
-                    _c("p", [_vm._v("{{}}")]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row" }, [
                       _c(
@@ -32638,6 +32651,14 @@ var render = function() {
                             _c("option", { attrs: { value: "" } }, [
                               _vm._v("Seleccione")
                             ]),
+                            _vm._v(" "),
+                            _vm._l(_vm.hospitalAux, function(hosp) {
+                              return _c(
+                                "option",
+                                { key: hosp.ID, domProps: { value: hosp.ID } },
+                                [_vm._v(_vm._s(hosp.HOSPITAL))]
+                              )
+                            }),
                             _vm._v(" "),
                             _vm._l(_vm.listaHospitales, function(hosp) {
                               return _c(

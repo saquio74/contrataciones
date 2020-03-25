@@ -54,15 +54,15 @@
             <div class="col-sm-5">
                 <select  class="form-control badge-secondary" id="hospitales" name='idhosp'>
                         <option value="">Seleccione</option>
-                    @foreach ($hospitales as $hosp)
-                        @if ($gente->IDHOSP == $hosp->ID)
-                            
-                            <option value="{{$hosp->ID}}" id="{{$hosp->ID}}" selected>{{$hosp->HOSPITAL}}</option>
-                        @else
-                            <option value="{{$hosp->ID}}" id="{{$hosp->ID}}">{{$hosp->HOSPITAL}}</option>
-                        @endif
-                        
-                    @endforeach
+                            @foreach ($hospitales as $hosp)
+                                @if ($gente->IDHOSP == $hosp->ID)
+                                    
+                                    <option value="{{$hosp->ID}}" id="{{$hosp->ID}}" selected>{{$hosp->HOSPITAL}}</option>
+                                @else
+                                    <option value="{{$hosp->ID}}" id="{{$hosp->ID}}">{{$hosp->HOSPITAL}}</option>
+                                @endif
+                                
+                            @endforeach
                             
                 </select>
             </div>

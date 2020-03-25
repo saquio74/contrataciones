@@ -12,12 +12,8 @@
                 <div class="modal-body badge-dark">
                    
                     <hr>
-                    <p >{{}}</p>
-                    
-                    
                     
                     <div class="form-group row">
-                        
                         <label for="legajo"    class="col-sm-4 col-form-label text-center">LEGAJO   </label>
                         <div class="col-sm-8">
                             <input type="text" class="form-control badge-secondary" v-model="agente.legajo"  value=''>
@@ -50,6 +46,7 @@
                         <div class="col-sm-8">
                             <select  class="form-control badge-secondary" v-model="agente.idhosp" >
                                 <option value="">Seleccione</option>
+                                <option v-for="hosp in hospitalAux"     :key="hosp.ID" :value="hosp.ID" >{{hosp.HOSPITAL}}</option>
                                 <option v-for="hosp in listaHospitales" :key="hosp.ID" :value="hosp.ID" >{{hosp.HOSPITAL}}</option>
                             </select>
                         </div>
@@ -59,9 +56,7 @@
                         <label for="legajo" class="col-sm-4 col-form-label text-center ">INCISO     </label>
                         <div class="col-sm-8">
                             <select multiple class="form-control badge-secondary" v-model="agente.inciso">
-                            <option v-for="inc in incisos" :value="inc" :key="inc.ID">{{inc.INCISO}}</option>       
-                                
-                                        
+                            <option v-for="inc in incisos" :value="inc" :key="inc.ID" >{{inc.INCISO}}</option>       
                             </select>
                         </div>
                     </div>  
@@ -128,11 +123,11 @@
         data(){
             
             return {
-                              
                 hospitales:[],
                 servicios:[],
                 sectores:[],
                 incisos:[],
+                hospitalAux:[],
                 agente:{
                     legajo: '',
                     dni:'',
@@ -147,17 +142,13 @@
                 },
                 errors:[],
                 auxiliar:0,
-               
             }
         },
         
         created: function(){
-            
-            
             this.getIncisos();
         },
         methods:{
-            
             getIncisos:function(){
                 var urlIncisos = '/contrataciones-1/public/incisos';
                 axios.get(urlIncisos).then(Response=>{
@@ -168,7 +159,6 @@
             modificarAgente:function(){
                 var url = 'update';
                 axios.post(url,this.agente).then(response=>{
-                    this.agente = null;
                     $('#create').modal('hide');
                     toastr.success('contenido cargado satisfactoriamente');
                 }).catch(errors=>{
@@ -176,10 +166,33 @@
                 });
             },
             buscarAgente:function(){
-                var url = '';
+                this.agente.legajo  = this.agenteModificar.LEGAJO
+                this.agente.dni     = this.agenteModificar.DNI
+                this.agente.nombre  = this.agenteModificar.NOMBRE
+                this.agente.telefono= this.agenteModificar.TELEFONO
+                this.hospitalAux    = this.buscarIgual(this.agenteModificar.IDHOSP)
+                console.log(this.hospitalAux)
+            },
+            buscarIgual:function(hospital){
+                
+                this.listaHospitales.forEach(key => {
+                    
+                    if (key.ID == hospital) {
+                        console.log(key.ID,key.HOSPITAL)
+                        return [kei.ID,key.HOSPITAL]
+                    }
+                })
             }
-
-            
-        }
+        },
+        watch:{
+            agenteModificar:{
+                handler: function(){
+                    this.buscarAgente();
+                    
+                } 
+            }
+        },
+        
+    
     }
 </script>
