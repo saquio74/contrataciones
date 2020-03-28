@@ -20,12 +20,10 @@ class hospitales extends Controller
         $hospitales = hospital::where('id',$id)->get();
         
         //$hospitales = hospitales::find('ID');
+
+        $hospitales = json_encode($hospitales);
+        return $hospitales;
         
-        if($hospitales->isEmpty()){
-            return view('hospitales.show');
-        }else{
-            return view('hospitales.show', compact('hospitales'));
-        }
         
     }
     

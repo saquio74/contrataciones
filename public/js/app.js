@@ -2080,7 +2080,7 @@ __webpack_require__.r(__webpack_exports__);
       if (this.hospital != '') {
         var urlPorHospital = 'porhospital/' + this.hospital.ID;
         axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(urlPorHospital).then(function (Response) {
-          _this7.agentes = Response.data;
+          _this7.agentes = Response.data.IDINC;
         });
       }
     },
@@ -2295,8 +2295,9 @@ __webpack_require__.r(__webpack_exports__);
       hospitales: [],
       servicios: [],
       sectores: [],
-      incisos: [],
       hospitalAux: [],
+      agenInc: [],
+      incisos: [],
       agente: {
         legajo: '',
         dni: '',
@@ -2325,15 +2326,54 @@ __webpack_require__.r(__webpack_exports__);
         _this.incisos = Response.data;
       });
     },
-    modificarAgente: function modificarAgente() {
+    resetInciso: function resetInciso() {
+      this.agente.inciso = [];
+    },
+    getAgenInc: function getAgenInc(inciso) {
       var _this2 = this;
 
-      var url = 'update';
-      axios__WEBPACK_IMPORTED_MODULE_2___default.a.post(url, this.agente).then(function (response) {
-        $('#create').modal('hide');
-        toastr__WEBPACK_IMPORTED_MODULE_0___default.a.success('contenido cargado satisfactoriamente');
+      var urlIncisos = '/contrataciones-1/public/agenincs/' + inciso;
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(urlIncisos).then(function (Response) {
+        _this2.resetInciso();
+
+        _this2.agenInc = Response.data;
+        var agen;
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
+
+        try {
+          for (var _iterator = _this2.agenInc[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            agen = _step.value;
+
+            _this2.agente.inciso.push(agen.ID);
+          }
+        } catch (err) {
+          _didIteratorError = true;
+          _iteratorError = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion && _iterator["return"] != null) {
+              _iterator["return"]();
+            }
+          } finally {
+            if (_didIteratorError) {
+              throw _iteratorError;
+            }
+          }
+        }
+      });
+    },
+    modificarAgente: function modificarAgente() {
+      var _this3 = this;
+
+      var urlAgentes = '/contrataciones-1/public/agente/update';
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.post(urlAgentes, this.agente).then(function (response) {
+        console.log(urlAgentes);
+        $('#ModificarAgente').modal('hide');
+        toastr__WEBPACK_IMPORTED_MODULE_0___default.a.success('agente modificado satisfactoriamente satisfactoriamente');
       })["catch"](function (errors) {
-        _this2.errors = errors.response.data;
+        _this3.errors = errors.response.data;
       });
     },
     buscarAgente: function buscarAgente() {
@@ -2341,16 +2381,11 @@ __webpack_require__.r(__webpack_exports__);
       this.agente.dni = this.agenteModificar.DNI;
       this.agente.nombre = this.agenteModificar.NOMBRE;
       this.agente.telefono = this.agenteModificar.TELEFONO;
-      this.hospitalAux = this.buscarIgual(this.agenteModificar.IDHOSP);
-      console.log(this.hospitalAux);
-    },
-    buscarIgual: function buscarIgual(hospital) {
-      this.listaHospitales.forEach(function (key) {
-        if (key.ID == hospital) {
-          console.log(key.ID, key.HOSPITAL);
-          return [kei.ID, key.HOSPITAL];
-        }
-      });
+      this.agente.idhosp = this.agenteModificar.IDHOSP;
+      this.agente.sec = this.agenteModificar.SEC;
+      this.agente.idservicio = this.agenteModificar.IDSERVICIO;
+      this.agente.horario = this.agenteModificar.HORARIO;
+      this.getAgenInc(this.agenteModificar.LEGAJO); //this.agente.inciso      = this.agenInc.id
     }
   },
   watch: {
@@ -2556,6 +2591,7 @@ __webpack_require__.r(__webpack_exports__);
 
       var url = 'store';
       axios__WEBPACK_IMPORTED_MODULE_2___default.a.post(url, this.agente).then(function (response) {
+        //console.log(this.agente.inciso)
         $('#NuevoAgente').modal('hide');
         _this5.agente.legajo = '';
         _this5.agente.dni = '';
@@ -32367,6 +32403,11 @@ var render = function() {
           listaServicios: _vm.servicios,
           listaSectores: _vm.sectores,
           agenteModificar: _vm.agenteAux
+        },
+        on: {
+          speak: function($event) {
+            return _vm.speakMethod()
+          }
         }
       })
     ],
@@ -32422,7 +32463,7 @@ var render = function() {
       on: {
         submit: function($event) {
           $event.preventDefault()
-          return _vm.crearAgente($event)
+          return _vm.modificarAgente($event)
         }
       }
     },
@@ -32451,6 +32492,8 @@ var render = function() {
                   { staticClass: "modal-body badge-dark" },
                   [
                     _c("hr"),
+                    _vm._v(" "),
+                    _c("p", [_vm._v(_vm._s(_vm.agente))]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row" }, [
                       _c(
@@ -32648,14 +32691,14 @@ var render = function() {
                             }
                           },
                           [
-                            _c("option", { attrs: { value: "" } }, [
-                              _vm._v("Seleccione")
-                            ]),
-                            _vm._v(" "),
                             _vm._l(_vm.hospitalAux, function(hosp) {
                               return _c(
                                 "option",
-                                { key: hosp.ID, domProps: { value: hosp.ID } },
+                                {
+                                  key: hosp.ID,
+                                  attrs: { selected: "" },
+                                  domProps: { value: hosp.ID }
+                                },
                                 [_vm._v(_vm._s(hosp.HOSPITAL))]
                               )
                             }),
@@ -32720,7 +32763,7 @@ var render = function() {
                           _vm._l(_vm.incisos, function(inc) {
                             return _c(
                               "option",
-                              { key: inc.ID, domProps: { value: inc } },
+                              { key: inc.ID, domProps: { value: inc.ID } },
                               [_vm._v(_vm._s(inc.INCISO))]
                             )
                           }),

@@ -1,5 +1,5 @@
 <template >
-    <form v-on:submit.prevent="crearAgente" method="post">
+    <form v-on:submit.prevent="modificarAgente" method="post">
         <div class="modal fade" id="ModificarAgente" tabindex="-1" role="dialog"  aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -10,8 +10,9 @@
                     </button>
                 </div>
                 <div class="modal-body badge-dark">
-                   
+                    
                     <hr>
+                    <p>{{agente}}</p>
                     
                     <div class="form-group row">
                         <label for="legajo"    class="col-sm-4 col-form-label text-center">LEGAJO   </label>
@@ -45,8 +46,7 @@
                         <label for="legajo"    class="col-sm-4 col-form-label text-center ">HOSPITAL </label>
                         <div class="col-sm-8">
                             <select  class="form-control badge-secondary" v-model="agente.idhosp" >
-                                <option value="">Seleccione</option>
-                                <option v-for="hosp in hospitalAux"     :key="hosp.ID" :value="hosp.ID" >{{hosp.HOSPITAL}}</option>
+                                <option selected v-for="hosp in hospitalAux"     :key="hosp.ID" :value="hosp.ID">{{hosp.HOSPITAL}}</option>
                                 <option v-for="hosp in listaHospitales" :key="hosp.ID" :value="hosp.ID" >{{hosp.HOSPITAL}}</option>
                             </select>
                         </div>
@@ -56,7 +56,7 @@
                         <label for="legajo" class="col-sm-4 col-form-label text-center ">INCISO     </label>
                         <div class="col-sm-8">
                             <select multiple class="form-control badge-secondary" v-model="agente.inciso">
-                            <option v-for="inc in incisos" :value="inc" :key="inc.ID" >{{inc.INCISO}}</option>       
+                            <option v-for="inc in incisos" :value="inc.ID" :key="inc.ID" >{{inc.INCISO}}</option>       
                             </select>
                         </div>
                     </div>  
@@ -126,8 +126,9 @@
                 hospitales:[],
                 servicios:[],
                 sectores:[],
-                incisos:[],
                 hospitalAux:[],
+                agenInc:[],
+                incisos:[],
                 agente:{
                     legajo: '',
                     dni:'',
@@ -156,33 +157,49 @@
                 });
 
             },
+            resetInciso:function(){
+                this.agente.inciso = []
+            },
+            getAgenInc:function(inciso){
+                var urlIncisos = '/contrataciones-1/public/agenincs/' + inciso;
+                axios.get(urlIncisos).then(Response=>{
+                    this.resetInciso()
+                    this.agenInc = Response.data
+                    var agen
+                    for(agen of this.agenInc){
+                        this.agente.inciso.push(agen.ID)
+                    }
+                });
+            },
             modificarAgente:function(){
-                var url = 'update';
-                axios.post(url,this.agente).then(response=>{
-                    $('#create').modal('hide');
-                    toastr.success('contenido cargado satisfactoriamente');
+                var urlAgentes = '/contrataciones-1/public/agente/update';
+                axios.post(urlAgentes,this.agente).then(response=>{
+                    console.log(urlAgentes);
+                    $('#ModificarAgente').modal('hide');
+                    toastr.success('agente modificado satisfactoriamente satisfactoriamente');
                 }).catch(errors=>{
                     this.errors = errors.response.data
                 });
             },
             buscarAgente:function(){
-                this.agente.legajo  = this.agenteModificar.LEGAJO
-                this.agente.dni     = this.agenteModificar.DNI
-                this.agente.nombre  = this.agenteModificar.NOMBRE
-                this.agente.telefono= this.agenteModificar.TELEFONO
-                this.hospitalAux    = this.buscarIgual(this.agenteModificar.IDHOSP)
-                console.log(this.hospitalAux)
-            },
-            buscarIgual:function(hospital){
+                this.agente.legajo      = this.agenteModificar.LEGAJO
+                this.agente.dni         = this.agenteModificar.DNI
+                this.agente.nombre      = this.agenteModificar.NOMBRE
+                this.agente.telefono    = this.agenteModificar.TELEFONO
+                this.agente.idhosp      = this.agenteModificar.IDHOSP
+                this.agente.sec         = this.agenteModificar.SEC
+                this.agente.idservicio  = this.agenteModificar.IDSERVICIO
+                this.agente.horario     = this.agenteModificar.HORARIO
+                this.getAgenInc(this.agenteModificar.LEGAJO);
+                //this.agente.inciso      = this.agenInc.id
                 
-                this.listaHospitales.forEach(key => {
-                    
-                    if (key.ID == hospital) {
-                        console.log(key.ID,key.HOSPITAL)
-                        return [kei.ID,key.HOSPITAL]
-                    }
-                })
-            }
+                
+
+                
+                
+            },
+            
+            
         },
         watch:{
             agenteModificar:{
@@ -192,6 +209,7 @@
                 } 
             }
         },
+        
         
     
     }

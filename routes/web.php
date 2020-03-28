@@ -31,11 +31,11 @@ Route::get('/agente/porservicio/{servicio}', 'agentes@porservicio');
 
 Route::get('/agente/modificar', 'agentes@modificar');
 
-Route::post('/agente', 'agentes@update');
+Route::post('/agente/update', 'agentes@update');
 
 Route::post('/agente/store', 'agentes@store');
 
-Route::post('/agente/update', 'agentes@modificar');
+Route::post('/agente', 'agentes@modificar');
 
 Route::get('/agente/{legajo}', 'agentes@show');
 
@@ -48,6 +48,10 @@ Route::get('/servicios','servicios@index');
 Route::get('/sectores','sectores@index');
 
 Route::get('/incisos','incisos@index');
+
+Route::get('/agenincs', 'agenincs@index');
+
+Route::get('/agenincs/{legajo}', 'agenincs@incisoPorAgente');
 
 
 

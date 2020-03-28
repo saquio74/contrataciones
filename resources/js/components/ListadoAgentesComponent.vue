@@ -115,7 +115,7 @@
             </tbody>
         </table>
         <nuevo-agente @speak="speakMethod()"/>
-        <modificar-agente :listaHospitales="hospitales" :listaServicios="servicios" :listaSectores="sectores" :agenteModificar="agenteAux"  />
+        <modificar-agente @speak="speakMethod()" :listaHospitales="hospitales" :listaServicios="servicios" :listaSectores="sectores" :agenteModificar="agenteAux"  />
     </div>
 </template>
 
@@ -201,7 +201,7 @@
                 if(this.hospital!=''){
                     var urlPorHospital = 'porhospital/' + this.hospital.ID; 
                     axios.get(urlPorHospital).then(Response=>{
-                    this.agentes = Response.data
+                    this.agentes = Response.data.IDINC
                     });
                 }
             },

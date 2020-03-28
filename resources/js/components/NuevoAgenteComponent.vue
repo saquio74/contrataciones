@@ -170,6 +170,7 @@
             crearAgente:function(){
                 var url = 'store';
                 axios.post(url,this.agente).then(response=>{
+                    //console.log(this.agente.inciso)
                     $('#NuevoAgente').modal('hide');
                     this.agente.legajo      = '';
                     this.agente.dni         = '';
