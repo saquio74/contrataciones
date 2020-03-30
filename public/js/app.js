@@ -1851,6 +1851,102 @@ module.exports = function isBuffer (obj) {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CargarVacaciones.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/CargarVacaciones.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! toastr */ "./node_modules/toastr/toastr.js");
+/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(toastr__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      vacaciones: {
+        legajo: '',
+        anio: 0,
+        fecha_inicio: '',
+        fecha_fin: ''
+      },
+      agentes: [],
+      errors: []
+    };
+  },
+  created: function created() {
+    this.getAgentes();
+  },
+  methods: {
+    getAgentes: function getAgentes() {
+      var _this = this;
+
+      var url = '/contrataciones-1/public/agente/agente';
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(url).then(function (Response) {
+        _this.agentes = Response.data;
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ListadoAgentesComponent.vue?vue&type=script&lang=js&":
 /*!**********************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ListadoAgentesComponent.vue?vue&type=script&lang=js& ***!
@@ -2085,7 +2181,11 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     speakMethod: function speakMethod() {
-      setTimeout(this.getAgentes(), 5000);
+      var _this8 = this;
+
+      setTimeout(function () {
+        _this8.getAgentes();
+      }, 5000);
     },
     getLegajo: function getLegajo(agent) {
       this.agenteAux = agent;
@@ -2124,39 +2224,212 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     searchAgentes: function searchAgentes() {
-      var _this8 = this;
+      var _this9 = this;
 
       if (this.nombre) {
         return this.agentes.filter(function (agente) {
-          return agente.NOMBRE.toUpperCase().includes(_this8.nombre.toUpperCase());
+          return agente.NOMBRE.toUpperCase().includes(_this9.nombre.toUpperCase());
         });
       }
 
       if (this.servicio) {
         return this.agentes.filter(function (agente) {
-          return agente.SERVICIO.toUpperCase().includes(_this8.servicio.toUpperCase());
+          return agente.SERVICIO.toUpperCase().includes(_this9.servicio.toUpperCase());
         });
       }
 
       if (this.legajo) {
         return this.agentes.filter(function (agente) {
-          return agente.LEGAJO.toString().includes(_this8.legajo.toString());
+          return agente.LEGAJO.toString().includes(_this9.legajo.toString());
         });
       }
 
       if (this.dni) {
         return this.agentes.filter(function (agente) {
-          return agente.DNI.toString().includes(_this8.dni.toString());
+          return agente.DNI.toString().includes(_this9.dni.toString());
         });
       }
 
       if (this.sector) {
         return this.agentes.filter(function (agente) {
-          return agente.SECTOR.toString().includes(_this8.sector.toString());
+          return agente.SECTOR.toString().includes(_this9.sector.toString());
         });
       }
 
       return this.agentes;
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ListadoVacaciones.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ListadoVacaciones.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! toastr */ "./node_modules/toastr/toastr.js");
+/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(toastr__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      vacaciones: [],
+      legajo: '',
+      dni: '',
+      nombre: '',
+      agentes: [],
+      auxiliar: 0
+    };
+  },
+  created: function created() {
+    this.getVacaciones();
+  },
+  methods: {
+    getVacaciones: function getVacaciones() {
+      var _this = this;
+
+      var urlVacaciones = 'vacaciones/vacaciones';
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(urlVacaciones).then(function (Response) {
+        _this.vacaciones = Response.data;
+        console.log(Response.data);
+      });
+    },
+    formatoFecha: function formatoFecha(d) {
+      return moment__WEBPACK_IMPORTED_MODULE_1___default()(d).format("DD-MM-YY");
+    }
+  },
+  computed: {
+    searchAgentes: function searchAgentes() {
+      var _this2 = this;
+
+      if (this.nombre) {
+        return this.vacaciones.filter(function (vacacion) {
+          return vaciones.NOMBRE.toUpperCase().includes(_this2.nombre.toUpperCase());
+        });
+      }
+
+      if (this.legajo) {
+        return this.vacaciones.filter(function (vacacion) {
+          return vaciones.LEGAJO.toString().includes(_this2.legajo.toString());
+        });
+      }
+
+      if (this.dni) {
+        return this.vacaciones.filter(function (vacacion) {
+          return vaciones.DNI.toString().includes(_this2.dni.toString());
+        });
+      }
+
+      return this.vacaciones;
     }
   }
 });
@@ -2178,6 +2451,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2369,7 +2653,6 @@ __webpack_require__.r(__webpack_exports__);
 
       var urlAgentes = '/contrataciones-1/public/agente/update';
       axios__WEBPACK_IMPORTED_MODULE_2___default.a.post(urlAgentes, this.agente).then(function (response) {
-        console.log(urlAgentes);
         $('#ModificarAgente').modal('hide');
         toastr__WEBPACK_IMPORTED_MODULE_0___default.a.success('agente modificado satisfactoriamente satisfactoriamente');
       })["catch"](function (errors) {
@@ -2385,7 +2668,8 @@ __webpack_require__.r(__webpack_exports__);
       this.agente.sec = this.agenteModificar.SEC;
       this.agente.idservicio = this.agenteModificar.IDSERVICIO;
       this.agente.horario = this.agenteModificar.HORARIO;
-      this.getAgenInc(this.agenteModificar.LEGAJO); //this.agente.inciso      = this.agenInc.id
+      this.agente.activo = this.agenteModificar.ACTIVO;
+      this.getAgenInc(this.agenteModificar.LEGAJO);
     }
   },
   watch: {
@@ -31777,6 +32061,217 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CargarVacaciones.vue?vue&type=template&id=be39fc6a&":
+/*!*******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/CargarVacaciones.vue?vue&type=template&id=be39fc6a& ***!
+  \*******************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "form",
+    {
+      attrs: { method: "post" },
+      on: {
+        submit: function($event) {
+          $event.preventDefault()
+          return _vm.crearAgente($event)
+        }
+      }
+    },
+    [
+      _c(
+        "div",
+        {
+          staticClass: "modal fade",
+          attrs: {
+            id: "cargarVacaciones",
+            tabindex: "-1",
+            role: "dialog",
+            "aria-hidden": "true"
+          }
+        },
+        [
+          _c(
+            "div",
+            { staticClass: "modal-dialog", attrs: { role: "document" } },
+            [
+              _c("div", { staticClass: "modal-content" }, [
+                _vm._m(0),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "modal-body badge-dark" },
+                  [
+                    _c("hr"),
+                    _vm._v(" "),
+                    _c("p", [_vm._v(_vm._s(_vm.vacaciones))]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-sm-4 col-form-label text-center",
+                          attrs: { for: "legajo" }
+                        },
+                        [_vm._v("LEGAJO   ")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-sm-8" }, [
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.vacaciones.legajo,
+                                expression: "vacaciones.legajo"
+                              }
+                            ],
+                            staticClass: "form-control badge-secondary",
+                            attrs: { id: "legajo", name: "legajo" },
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.$set(
+                                  _vm.vacaciones,
+                                  "legajo",
+                                  $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                )
+                              }
+                            }
+                          },
+                          _vm._l(_vm.agentes, function(agente) {
+                            return _c(
+                              "option",
+                              {
+                                key: agente.LEGAJO,
+                                domProps: { value: agente.LEGAJO }
+                              },
+                              [_vm._v(_vm._s(agente.LEGAJO))]
+                            )
+                          }),
+                          0
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _vm._m(1),
+                    _vm._v(" "),
+                    _vm._l(_vm.errors, function(error) {
+                      return _c(
+                        "span",
+                        { key: error, staticClass: "text-danger" },
+                        [_vm._v(_vm._s(error))]
+                      )
+                    })
+                  ],
+                  2
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-footer badge-secondary" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-outline-danger",
+                      attrs: { type: "button", "data-dismiss": "modal" }
+                    },
+                    [_vm._v("Close")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary",
+                      attrs: { type: "submit" },
+                      on: {
+                        click: function($event) {
+                          return _vm.$emit("speak")
+                        }
+                      }
+                    },
+                    [_vm._v("Agregar Agente")]
+                  )
+                ])
+              ])
+            ]
+          )
+        ]
+      )
+    ]
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header badge-dark" }, [
+      _c("h5", { staticClass: "Nuevo Agente", attrs: { id: "nuevo" } }, [
+        _vm._v("Nuevo Agente")
+      ]),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row" }, [
+      _c(
+        "label",
+        {
+          staticClass: "col-sm-4 col-form-label text-center ",
+          attrs: { for: "horario" }
+        },
+        [_vm._v("NOMBRE   ")]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-sm-8" }, [
+        _c("input", {
+          staticClass: "form-control badge-secondary",
+          attrs: { disabled: "", type: "text" }
+        })
+      ])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ListadoAgentesComponent.vue?vue&type=template&id=047e7ac6&":
 /*!**************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ListadoAgentesComponent.vue?vue&type=template&id=047e7ac6& ***!
@@ -32321,7 +32816,7 @@ var render = function() {
                 _c("th", [
                   _vm._v(
                     "\n                    " +
-                      _vm._s(agente.SERVICIO) +
+                      _vm._s(agente.SERVICIO.toUpperCase()) +
                       "\n                "
                   )
                 ]),
@@ -32329,7 +32824,7 @@ var render = function() {
                 _c("th", [
                   _vm._v(
                     "\n                    " +
-                      _vm._s(agente.SECTOR) +
+                      _vm._s(agente.SECTOR.toUpperCase()) +
                       "\n                "
                   )
                 ]),
@@ -32431,6 +32926,283 @@ var staticRenderFns = [
           }
         },
         [_vm._v("\n            Nuevo Agente\n        ")]
+      )
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ListadoVacaciones.vue?vue&type=template&id=9826c062&":
+/*!********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ListadoVacaciones.vue?vue&type=template&id=9826c062& ***!
+  \********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "panel panel-default   col-sm-12" },
+    [
+      _c("h1", { staticClass: "text-center" }, [
+        _vm._v("Listado General de vacaciones")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-group row badge-dark col-sm-12" }, [
+        _c("hr"),
+        _vm._v(" "),
+        _c("hr"),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-sm-2" }, [
+          _c("label", { staticClass: "text" }, [_vm._v(" legajo      ")]),
+          _vm._v(" "),
+          _vm.vacaciones.length
+            ? _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.legajo,
+                    expression: "legajo"
+                  }
+                ],
+                staticClass: "form-control badge-secondary",
+                attrs: { type: "int", id: "legajo", name: "legajo" },
+                domProps: { value: _vm.legajo },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.legajo = $event.target.value
+                  }
+                }
+              })
+            : _vm._e()
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-sm-2" }, [
+          _c("label", { staticClass: "text" }, [_vm._v(" DNI      ")]),
+          _vm._v(" "),
+          _vm.vacaciones.length
+            ? _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.dni,
+                    expression: "dni"
+                  }
+                ],
+                staticClass: "form-control badge-secondary",
+                attrs: { type: "int", id: "legajo", name: "legajo" },
+                domProps: { value: _vm.dni },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.dni = $event.target.value
+                  }
+                }
+              })
+            : _vm._e()
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-sm-2" }, [
+          _c("label", { staticClass: "text" }, [_vm._v(" nombre      ")]),
+          _vm._v(" "),
+          _vm.vacaciones.length
+            ? _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.nombre,
+                    expression: "nombre"
+                  }
+                ],
+                staticClass: "form-control badge-secondary",
+                attrs: { type: "text", id: "nombre", name: "nombre" },
+                domProps: { value: _vm.nombre },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.nombre = $event.target.value
+                  }
+                }
+              })
+            : _vm._e()
+        ]),
+        _vm._v(" "),
+        _c("hr"),
+        _vm._v(" "),
+        _c("hr"),
+        _vm._v(" "),
+        _c("hr")
+      ]),
+      _vm._v(" "),
+      _vm._m(0),
+      _vm._v(" "),
+      _c(
+        "table",
+        {
+          staticClass:
+            "table table-striped table-dark table-bordered table-hover"
+        },
+        [
+          _vm._m(1),
+          _vm._v(" "),
+          _c(
+            "tbody",
+            _vm._l(_vm.vacaciones, function(vacacion) {
+              return _c("tr", { key: vacacion.LEGAJO }, [
+                _c("th", [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(vacacion.LEGAJO) +
+                      "\n                "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("th", [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(vacacion.DNI) +
+                      "\n                "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("th", [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(vacacion.NOMBRE.toUpperCase()) +
+                      "\n                "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("th", [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(vacacion.HOSPITAL.toUpperCase()) +
+                      "\n                "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("th", [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(_vm.formatoFecha(vacacion.fecha_inicio)) +
+                      "\n                "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("th", [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(_vm.formatoFecha(vacacion.fecha_final)) +
+                      "\n                "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("th", [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(vacacion.anio) +
+                      "\n                "
+                  )
+                ]),
+                _vm._v(" "),
+                _vm._m(2, true)
+              ])
+            }),
+            0
+          )
+        ]
+      ),
+      _vm._v(" "),
+      _c("cargar-vacaciones")
+    ],
+    1
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row badge-dark col-sm-12" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-primary",
+          attrs: {
+            type: "button",
+            "data-toggle": "modal",
+            "data-target": "#cargarVacaciones"
+          }
+        },
+        [_vm._v("\n                Cargar Vacaciones\n            ")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("LEGAJO")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("DNI")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("NOMBRE")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("DEPENDENCIA")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("COMIENZA")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("FINALIZA-")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("AÑO")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("th", { attrs: { width: "10px" } }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-success",
+          attrs: {
+            type: "button",
+            "data-toggle": "modal",
+            "data-target": "#ModificarAgente"
+          }
+        },
+        [_vm._v("\n                        editar\n                    ")]
+      ),
+      _vm._v(" "),
+      _c(
+        "a",
+        { staticClass: "btn btn-primary btn-small", attrs: { href: "#" } },
+        [_vm._v("Datos")]
       )
     ])
   }
@@ -32933,6 +33705,62 @@ var render = function() {
                             }
                           }
                         })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-sm-4 col-form-label text-center ",
+                          attrs: { for: "legajo" }
+                        },
+                        [_vm._v("SECTOR ")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-sm-8" }, [
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.agente.activo,
+                                expression: "agente.activo"
+                              }
+                            ],
+                            staticClass: "form-control badge-secondary",
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.$set(
+                                  _vm.agente,
+                                  "activo",
+                                  $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                )
+                              }
+                            }
+                          },
+                          [
+                            _c("option", { attrs: { value: "0" } }, [
+                              _vm._v("activo")
+                            ]),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "1" } }, [
+                              _vm._v("baja")
+                            ])
+                          ]
+                        )
                       ])
                     ]),
                     _vm._v(" "),
@@ -45807,7 +46635,9 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 moment__WEBPACK_IMPORTED_MODULE_0___default.a.locale('es');
 Vue.component('listado-agentes-component', __webpack_require__(/*! ./components/ListadoAgentesComponent.vue */ "./resources/js/components/ListadoAgentesComponent.vue")["default"]);
 Vue.component('nuevo-agente', __webpack_require__(/*! ./components/NuevoAgenteComponent.vue */ "./resources/js/components/NuevoAgenteComponent.vue")["default"]);
-Vue.component('modificar-agente', __webpack_require__(/*! ./components/ModificarAgenteComponent.vue */ "./resources/js/components/ModificarAgenteComponent.vue")["default"]); //Vue.component('agente-compontent', require('./components/AgentesComponent.vue'));
+Vue.component('modificar-agente', __webpack_require__(/*! ./components/ModificarAgenteComponent.vue */ "./resources/js/components/ModificarAgenteComponent.vue")["default"]);
+Vue.component('vacaciones-agente', __webpack_require__(/*! ./components/ListadoVacaciones.vue */ "./resources/js/components/ListadoVacaciones.vue")["default"]);
+Vue.component('cargar-vacaciones', __webpack_require__(/*! ./components/CargarVacaciones.vue */ "./resources/js/components/CargarVacaciones.vue")["default"]); //Vue.component('agente-compontent', require('./components/AgentesComponent.vue'));
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -45818,6 +46648,75 @@ Vue.component('modificar-agente', __webpack_require__(/*! ./components/Modificar
 var app = new Vue({
   el: '#app'
 });
+
+/***/ }),
+
+/***/ "./resources/js/components/CargarVacaciones.vue":
+/*!******************************************************!*\
+  !*** ./resources/js/components/CargarVacaciones.vue ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _CargarVacaciones_vue_vue_type_template_id_be39fc6a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CargarVacaciones.vue?vue&type=template&id=be39fc6a& */ "./resources/js/components/CargarVacaciones.vue?vue&type=template&id=be39fc6a&");
+/* harmony import */ var _CargarVacaciones_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CargarVacaciones.vue?vue&type=script&lang=js& */ "./resources/js/components/CargarVacaciones.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _CargarVacaciones_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _CargarVacaciones_vue_vue_type_template_id_be39fc6a___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _CargarVacaciones_vue_vue_type_template_id_be39fc6a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/CargarVacaciones.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/CargarVacaciones.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/components/CargarVacaciones.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CargarVacaciones_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./CargarVacaciones.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CargarVacaciones.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CargarVacaciones_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/CargarVacaciones.vue?vue&type=template&id=be39fc6a&":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/components/CargarVacaciones.vue?vue&type=template&id=be39fc6a& ***!
+  \*************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CargarVacaciones_vue_vue_type_template_id_be39fc6a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./CargarVacaciones.vue?vue&type=template&id=be39fc6a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CargarVacaciones.vue?vue&type=template&id=be39fc6a&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CargarVacaciones_vue_vue_type_template_id_be39fc6a___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CargarVacaciones_vue_vue_type_template_id_be39fc6a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
 
 /***/ }),
 
@@ -45885,6 +46784,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ListadoAgentesComponent_vue_vue_type_template_id_047e7ac6___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ListadoAgentesComponent_vue_vue_type_template_id_047e7ac6___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/ListadoVacaciones.vue":
+/*!*******************************************************!*\
+  !*** ./resources/js/components/ListadoVacaciones.vue ***!
+  \*******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ListadoVacaciones_vue_vue_type_template_id_9826c062___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ListadoVacaciones.vue?vue&type=template&id=9826c062& */ "./resources/js/components/ListadoVacaciones.vue?vue&type=template&id=9826c062&");
+/* harmony import */ var _ListadoVacaciones_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ListadoVacaciones.vue?vue&type=script&lang=js& */ "./resources/js/components/ListadoVacaciones.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ListadoVacaciones_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ListadoVacaciones_vue_vue_type_template_id_9826c062___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ListadoVacaciones_vue_vue_type_template_id_9826c062___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/ListadoVacaciones.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/ListadoVacaciones.vue?vue&type=script&lang=js&":
+/*!********************************************************************************!*\
+  !*** ./resources/js/components/ListadoVacaciones.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ListadoVacaciones_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./ListadoVacaciones.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ListadoVacaciones.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ListadoVacaciones_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/ListadoVacaciones.vue?vue&type=template&id=9826c062&":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/components/ListadoVacaciones.vue?vue&type=template&id=9826c062& ***!
+  \**************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ListadoVacaciones_vue_vue_type_template_id_9826c062___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./ListadoVacaciones.vue?vue&type=template&id=9826c062& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ListadoVacaciones.vue?vue&type=template&id=9826c062&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ListadoVacaciones_vue_vue_type_template_id_9826c062___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ListadoVacaciones_vue_vue_type_template_id_9826c062___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

@@ -53,5 +53,9 @@ Route::get('/agenincs', 'agenincs@index');
 
 Route::get('/agenincs/{legajo}', 'agenincs@incisoPorAgente');
 
+Route::get('/vacaciones', 'vacacion@vistaVacaciones');
+
+Route::get('/vacaciones/vacaciones', 'vacacion@listadoVacaciones');
+
 
 

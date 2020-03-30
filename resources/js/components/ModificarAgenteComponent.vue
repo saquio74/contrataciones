@@ -81,11 +81,22 @@
                             </select>
                         </div>
                     </div>
+                    
                     <div class="form-group row">
                         
                         <label for="horario"   class="col-sm-4 col-form-label text-center ">HORARIO </label>
                         <div class="col-sm-8">
                             <input type="text" class="form-control badge-secondary" v-model="agente.horario"  value=''>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        
+                        <label for="legajo"   class="col-sm-4 col-form-label text-center ">SECTOR </label>
+                        <div class="col-sm-8">
+                            <select  class="form-control badge-secondary" v-model="agente.activo" >
+                                <option value="0">activo</option>
+                                <option value="1">baja</option>                                        
+                            </select>
                         </div>
                     </div>
                     <span v-for="error in errors" :key="error" class="text-danger">{{error}}</span>
@@ -174,7 +185,7 @@
             modificarAgente:function(){
                 var urlAgentes = '/contrataciones-1/public/agente/update';
                 axios.post(urlAgentes,this.agente).then(response=>{
-                    console.log(urlAgentes);
+                    
                     $('#ModificarAgente').modal('hide');
                     toastr.success('agente modificado satisfactoriamente satisfactoriamente');
                 }).catch(errors=>{
@@ -190,22 +201,14 @@
                 this.agente.sec         = this.agenteModificar.SEC
                 this.agente.idservicio  = this.agenteModificar.IDSERVICIO
                 this.agente.horario     = this.agenteModificar.HORARIO
+                this.agente.activo      = this.agenteModificar.ACTIVO
                 this.getAgenInc(this.agenteModificar.LEGAJO);
-                //this.agente.inciso      = this.agenInc.id
-                
-                
-
-                
-                
             },
-            
-            
         },
         watch:{
             agenteModificar:{
                 handler: function(){
                     this.buscarAgente();
-                    
                 } 
             }
         },

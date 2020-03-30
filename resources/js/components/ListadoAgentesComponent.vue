@@ -91,10 +91,10 @@
                         {{agente.HOSPITAL.toUpperCase()}}
                     </th>
                     <th>
-                        {{agente.SERVICIO}}
+                        {{agente.SERVICIO.toUpperCase()}}
                     </th>
                     <th>
-                        {{agente.SECTOR}}
+                        {{agente.SECTOR.toUpperCase()}}
                     </th >
                     <th v-if="agente.ACTIVO==0">
                         ACTIVO
@@ -206,7 +206,9 @@
                 }
             },
             speakMethod: function () {
-                setTimeout(this.getAgentes(),5000)
+                setTimeout(()=>{
+                    this.getAgentes()
+                },5000)
                 
             },
             getLegajo: function(agent){

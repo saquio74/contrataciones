@@ -24,9 +24,12 @@ window.Vue = require('vue');
 import moment  from 'moment'
 moment.locale('es');
 
-Vue.component('listado-agentes-component', require('./components/ListadoAgentesComponent.vue').default);
-Vue.component('nuevo-agente', require('./components/NuevoAgenteComponent.vue').default);
-Vue.component('modificar-agente', require('./components/ModificarAgenteComponent.vue').default);
+Vue.component('listado-agentes-component', require('./components/ListadoAgentesComponent.vue' ).default);
+Vue.component('nuevo-agente',              require('./components/NuevoAgenteComponent.vue'    ).default);
+Vue.component('modificar-agente',          require('./components/ModificarAgenteComponent.vue').default);
+Vue.component('vacaciones-agente',         require('./components/ListadoVacaciones.vue'       ).default);
+Vue.component('cargar-vacaciones',         require('./components/CargarVacaciones.vue'        ).default);
+
 //Vue.component('agente-compontent', require('./components/AgentesComponent.vue'));
 
 
