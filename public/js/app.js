@@ -2487,9 +2487,10 @@ __webpack_require__.r(__webpack_exports__);
     borrarVacaciones: function borrarVacaciones(id) {
       var _this3 = this;
 
-      var borrar = '/contrataciones-1/vacaciones/delete/' + id;
+      var borrar = '/contrataciones-1/public/vacaciones/delete/' + id;
       axios__WEBPACK_IMPORTED_MODULE_2___default.a["delete"](borrar).then(function (Response) {
-        _this3.getVacaciones;
+        _this3.getVacaciones();
+
         toastr__WEBPACK_IMPORTED_MODULE_0___default.a.success('eliminado satisfactoriamente');
       });
     }
