@@ -1914,6 +1914,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -1921,12 +1937,13 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       vacaciones: {
-        legajo: '',
+        agente_id: '',
         anio: 0,
         fecha_inicio: '',
         fecha_fin: ''
       },
       agentes: [],
+      agenteAux: [],
       errors: []
     };
   },
@@ -1940,6 +1957,25 @@ __webpack_require__.r(__webpack_exports__);
       var url = '/contrataciones-1/public/agente/agente';
       axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(url).then(function (Response) {
         _this.agentes = Response.data;
+      });
+    },
+    mostrarDatos: function mostrarDatos() {
+      this.vacaciones.agente_id = this.agenteAux.LEGAJO;
+    },
+    crearVacaciones: function crearVacaciones() {
+      var _this2 = this;
+
+      var url = '/contrataciones-1/public/vacaciones/store';
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.post(url, this.vacaciones).then(function (Response) {
+        $('#cargar').modal('hide');
+        _this2.vacaciones.agente_id = '';
+        _this2.vacaciones.anio = 0;
+        _this2.vacaciones.fecha_inicio = '';
+        _this2.vacaciones.fecha_fin = '';
+        toastr__WEBPACK_IMPORTED_MODULE_0___default.a.success('vacaciones cargaradas correctamente');
+      })["catch"](function (errors) {
+        _this2.errors = errors.response.data;
+        toastr__WEBPACK_IMPORTED_MODULE_0___default.a.error('error');
       });
     }
   }
@@ -1962,6 +1998,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_3__);
 //
 //
 //
@@ -2083,6 +2121,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 
@@ -2405,27 +2444,75 @@ __webpack_require__.r(__webpack_exports__);
     },
     formatoFecha: function formatoFecha(d) {
       return moment__WEBPACK_IMPORTED_MODULE_1___default()(d).format("DD-MM-YY");
+    },
+    speakMethod: function speakMethod() {
+      var _this2 = this;
+
+      setTimeout(function () {
+        _this2.getVacaciones();
+      }, 5000);
+    },
+    ordenadosAsc: function ordenadosAsc(prop) {
+      this.vacaciones.sort(function (a, b) {
+        if (prop === 'LEGAJO') {
+          console.log(a);
+          return a.LEGAJO - b.LEGAJO;
+        }
+
+        if (prop === 'DNI') {
+          return a.DNI - b.DNI;
+        }
+
+        if (prop === 'NOMBRE') {
+          return a.NOMBRE.localeCompare(b.NOMBRE);
+        }
+
+        if (prop === 'HOSPITAL') {
+          return a.HOSPITAL.localeCompare(b.HOSPITAL);
+        }
+
+        if (prop === 'SERVICIO') {
+          return a.SERVICIO.localeCompare(b.SERVICIO);
+        }
+
+        if (prop === 'SECTOR') {
+          return a.SECTOR.localeCompare(b.SECTOR);
+        }
+      });
+    },
+    ordenadosDesc: function ordenadosDesc(prop) {
+      this.ordenadosAsc(prop);
+      this.vacaciones.reverse();
+    },
+    borrarVacaciones: function borrarVacaciones(id) {
+      var _this3 = this;
+
+      var borrar = '/contrataciones-1/vacaciones/delete/' + id;
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a["delete"](borrar).then(function (Response) {
+        _this3.getVacaciones;
+        toastr__WEBPACK_IMPORTED_MODULE_0___default.a.success('eliminado satisfactoriamente');
+      });
     }
   },
   computed: {
-    searchAgentes: function searchAgentes() {
-      var _this2 = this;
+    searchVacaciones: function searchVacaciones() {
+      var _this4 = this;
 
       if (this.nombre) {
         return this.vacaciones.filter(function (vacacion) {
-          return vaciones.NOMBRE.toUpperCase().includes(_this2.nombre.toUpperCase());
+          return vacacion.NOMBRE.toUpperCase().includes(_this4.nombre.toUpperCase());
         });
       }
 
       if (this.legajo) {
         return this.vacaciones.filter(function (vacacion) {
-          return vaciones.LEGAJO.toString().includes(_this2.legajo.toString());
+          return vacacion.LEGAJO.toString().includes(_this4.legajo.toString());
         });
       }
 
       if (this.dni) {
         return this.vacaciones.filter(function (vacacion) {
-          return vaciones.DNI.toString().includes(_this2.dni.toString());
+          return vacacion.DNI.toString().includes(_this4.dni.toString());
         });
       }
 
@@ -32083,7 +32170,7 @@ var render = function() {
       on: {
         submit: function($event) {
           $event.preventDefault()
-          return _vm.crearAgente($event)
+          return _vm.crearVacaciones($event)
         }
       }
     },
@@ -32093,7 +32180,7 @@ var render = function() {
         {
           staticClass: "modal fade",
           attrs: {
-            id: "cargarVacaciones",
+            id: "cargar",
             tabindex: "-1",
             role: "dialog",
             "aria-hidden": "true"
@@ -32133,30 +32220,32 @@ var render = function() {
                               {
                                 name: "model",
                                 rawName: "v-model",
-                                value: _vm.vacaciones.legajo,
-                                expression: "vacaciones.legajo"
+                                value: _vm.agenteAux,
+                                expression: "agenteAux"
                               }
                             ],
                             staticClass: "form-control badge-secondary",
                             attrs: { id: "legajo", name: "legajo" },
                             on: {
-                              change: function($event) {
-                                var $$selectedVal = Array.prototype.filter
-                                  .call($event.target.options, function(o) {
-                                    return o.selected
-                                  })
-                                  .map(function(o) {
-                                    var val = "_value" in o ? o._value : o.value
-                                    return val
-                                  })
-                                _vm.$set(
-                                  _vm.vacaciones,
-                                  "legajo",
-                                  $event.target.multiple
+                              change: [
+                                function($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function(o) {
+                                      return o.selected
+                                    })
+                                    .map(function(o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.agenteAux = $event.target.multiple
                                     ? $$selectedVal
                                     : $$selectedVal[0]
-                                )
-                              }
+                                },
+                                function($event) {
+                                  return _vm.mostrarDatos()
+                                }
+                              ]
                             }
                           },
                           _vm._l(_vm.agentes, function(agente) {
@@ -32164,7 +32253,7 @@ var render = function() {
                               "option",
                               {
                                 key: agente.LEGAJO,
-                                domProps: { value: agente.LEGAJO }
+                                domProps: { value: agente }
                               },
                               [_vm._v(_vm._s(agente.LEGAJO))]
                             )
@@ -32174,7 +32263,142 @@ var render = function() {
                       ])
                     ]),
                     _vm._v(" "),
-                    _vm._m(1),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-sm-4 col-form-label text-center ",
+                          attrs: { for: "horario" }
+                        },
+                        [_vm._v("NOMBRE   ")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-sm-8" }, [
+                        _c("input", {
+                          staticClass:
+                            "form-control text-danger badge-secondary",
+                          attrs: { disabled: "", type: "text" },
+                          domProps: { value: _vm.agenteAux.NOMBRE }
+                        })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-sm-4 col-form-label text-center ",
+                          attrs: { for: "documento" }
+                        },
+                        [_vm._v("AÑO      ")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-sm-8" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.vacaciones.anio,
+                              expression: "vacaciones.anio"
+                            }
+                          ],
+                          staticClass: "form-control badge-secondary",
+                          attrs: { type: "text", value: "" },
+                          domProps: { value: _vm.vacaciones.anio },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.vacaciones,
+                                "anio",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-sm-4 col-form-label text-center ",
+                          attrs: { for: "documento" }
+                        },
+                        [_vm._v("FECHA DE INICIO")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-sm-8" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.vacaciones.fecha_inicio,
+                              expression: "vacaciones.fecha_inicio"
+                            }
+                          ],
+                          staticClass: "form-control badge-secondary",
+                          attrs: { type: "date", value: "" },
+                          domProps: { value: _vm.vacaciones.fecha_inicio },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.vacaciones,
+                                "fecha_inicio",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-sm-4 col-form-label text-center ",
+                          attrs: { for: "documento" }
+                        },
+                        [_vm._v("FECHA FIN")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-sm-8" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.vacaciones.fecha_fin,
+                              expression: "vacaciones.fecha_fin"
+                            }
+                          ],
+                          staticClass: "form-control badge-secondary",
+                          attrs: { type: "date", value: "" },
+                          domProps: { value: _vm.vacaciones.fecha_fin },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.vacaciones,
+                                "fecha_fin",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        })
+                      ])
+                    ]),
                     _vm._v(" "),
                     _vm._l(_vm.errors, function(error) {
                       return _c(
@@ -32241,28 +32465,6 @@ var staticRenderFns = [
         },
         [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
       )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group row" }, [
-      _c(
-        "label",
-        {
-          staticClass: "col-sm-4 col-form-label text-center ",
-          attrs: { for: "horario" }
-        },
-        [_vm._v("NOMBRE   ")]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-sm-8" }, [
-        _c("input", {
-          staticClass: "form-control badge-secondary",
-          attrs: { disabled: "", type: "text" }
-        })
-      ])
     ])
   }
 ]
@@ -33052,7 +33254,9 @@ var render = function() {
         _vm._v(" "),
         _c("hr"),
         _vm._v(" "),
-        _c("hr")
+        _c("hr"),
+        _vm._v(" "),
+        _c("p", [_vm._v(_vm._s(_vm.auxiliar))])
       ]),
       _vm._v(" "),
       _vm._m(0),
@@ -33064,12 +33268,132 @@ var render = function() {
             "table table-striped table-dark table-bordered table-hover"
         },
         [
-          _vm._m(1),
+          _c("thead", [
+            _c("tr", [
+              _vm.auxiliar === 0
+                ? _c(
+                    "th",
+                    {
+                      attrs: { scope: "col" },
+                      on: {
+                        click: function($event) {
+                          _vm.ordenadosDesc("LEGAJO")
+                          _vm.auxiliar++
+                        }
+                      }
+                    },
+                    [_vm._v("LEGAJO")]
+                  )
+                : _c(
+                    "th",
+                    {
+                      attrs: { scope: "col" },
+                      on: {
+                        click: function($event) {
+                          _vm.ordenadosAsc("LEGAJO")
+                          _vm.auxiliar--
+                        }
+                      }
+                    },
+                    [_vm._v("LEGAJO")]
+                  ),
+              _vm._v(" "),
+              _vm.auxiliar === 0
+                ? _c(
+                    "th",
+                    {
+                      attrs: { scope: "col" },
+                      on: {
+                        click: function($event) {
+                          _vm.ordenadosDesc("DNI")
+                          _vm.auxiliar++
+                        }
+                      }
+                    },
+                    [_vm._v("DNI")]
+                  )
+                : _c(
+                    "th",
+                    {
+                      attrs: { scope: "col" },
+                      on: {
+                        click: function($event) {
+                          _vm.ordenadosAsc("DNI")
+                          _vm.auxiliar--
+                        }
+                      }
+                    },
+                    [_vm._v("DNI")]
+                  ),
+              _vm._v(" "),
+              _vm.auxiliar === 0
+                ? _c(
+                    "th",
+                    {
+                      attrs: { scope: "col" },
+                      on: {
+                        click: function($event) {
+                          _vm.ordenadosDesc("NOMBRE")
+                          _vm.auxiliar++
+                        }
+                      }
+                    },
+                    [_vm._v("NOMBRE")]
+                  )
+                : _c(
+                    "th",
+                    {
+                      attrs: { scope: "col" },
+                      on: {
+                        click: function($event) {
+                          _vm.ordenadosAsc("NOMBRE")
+                          _vm.auxiliar--
+                        }
+                      }
+                    },
+                    [_vm._v("NOMBRE")]
+                  ),
+              _vm._v(" "),
+              _vm.auxiliar === 0
+                ? _c(
+                    "th",
+                    {
+                      attrs: { scope: "col" },
+                      on: {
+                        click: function($event) {
+                          _vm.ordenadosDesc("HOSPITAL")
+                          _vm.auxiliar++
+                        }
+                      }
+                    },
+                    [_vm._v("DEPENDENCIA")]
+                  )
+                : _c(
+                    "th",
+                    {
+                      attrs: { scope: "col" },
+                      on: {
+                        click: function($event) {
+                          _vm.ordenadosAsc("HOSPITAL")
+                          _vm.auxiliar--
+                        }
+                      }
+                    },
+                    [_vm._v("DEPENDENCIA")]
+                  ),
+              _vm._v(" "),
+              _c("th", [_vm._v("COMIENZA")]),
+              _vm._v(" "),
+              _c("th", [_vm._v("FINALIZA-")]),
+              _vm._v(" "),
+              _c("th", [_vm._v("AÑO")])
+            ])
+          ]),
           _vm._v(" "),
           _c(
             "tbody",
-            _vm._l(_vm.vacaciones, function(vacacion) {
-              return _c("tr", { key: vacacion.LEGAJO }, [
+            _vm._l(_vm.searchVacaciones, function(vacacion) {
+              return _c("tr", { key: vacacion.ID }, [
                 _c("th", [
                   _vm._v(
                     "\n                    " +
@@ -33126,7 +33450,43 @@ var render = function() {
                   )
                 ]),
                 _vm._v(" "),
-                _vm._m(2, true)
+                _c("th", { attrs: { width: "10px" } }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-success",
+                      attrs: {
+                        type: "button",
+                        "data-toggle": "modal",
+                        "data-target": "#ModificarAgente"
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                        editar\n                    "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-danger",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.borrarVacaciones(vacacion.id)
+                        }
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                        borrar\n                    "
+                      )
+                    ]
+                  )
+                ])
               ])
             }),
             0
@@ -33134,7 +33494,13 @@ var render = function() {
         ]
       ),
       _vm._v(" "),
-      _c("cargar-vacaciones")
+      _c("cargar-vacaciones", {
+        on: {
+          speak: function($event) {
+            return _vm.speakMethod()
+          }
+        }
+      })
     ],
     1
   )
@@ -33152,57 +33518,10 @@ var staticRenderFns = [
           attrs: {
             type: "button",
             "data-toggle": "modal",
-            "data-target": "#cargarVacaciones"
+            "data-target": "#cargar"
           }
         },
         [_vm._v("\n                Cargar Vacaciones\n            ")]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", [_vm._v("LEGAJO")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("DNI")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("NOMBRE")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("DEPENDENCIA")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("COMIENZA")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("FINALIZA-")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("AÑO")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("th", { attrs: { width: "10px" } }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-success",
-          attrs: {
-            type: "button",
-            "data-toggle": "modal",
-            "data-target": "#ModificarAgente"
-          }
-        },
-        [_vm._v("\n                        editar\n                    ")]
-      ),
-      _vm._v(" "),
-      _c(
-        "a",
-        { staticClass: "btn btn-primary btn-small", attrs: { href: "#" } },
-        [_vm._v("Datos")]
       )
     ])
   }

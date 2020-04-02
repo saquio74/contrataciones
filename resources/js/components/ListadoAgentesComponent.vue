@@ -123,6 +123,8 @@
     import toastr from 'toastr'
     import moment from 'moment'
     import axios  from 'axios'
+    import jquery from 'jquery'
+    
     
     export default{
         

@@ -20,33 +20,30 @@
             <hr>
             <hr>
             <hr>
-            
+            <p>{{auxiliar}}</p>
             
         </div>
         <div class="form-group row badge-dark col-sm-12">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cargarVacaciones">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cargar">
                     Cargar Vacaciones
                 </button>
             </div>
         <table class="table table-striped table-dark table-bordered table-hover">
             <thead>
                 <tr>
-                    <th>LEGAJO</th>
-                    <th>DNI</th>
-                    <th>NOMBRE</th>
-                    <th>DEPENDENCIA</th>
-                    <th>COMIENZA</th>
-                    <th>FINALIZA-</th>
-                    <th>AÑO</th>
-                    <!--<th scope="col" v-if="auxiliar===0" v-on:click="ordenadosDesc('LEGAJO');auxiliar++"  >LEGAJO</th>
+                    
+                    <th scope="col" v-if="auxiliar===0" v-on:click="ordenadosDesc('LEGAJO');auxiliar++"  >LEGAJO</th>
                     <th scope="col" v-else v-on:click="ordenadosAsc('LEGAJO');auxiliar--" >LEGAJO</th>
                     <th scope="col" v-if="auxiliar===0" v-on:click="ordenadosDesc('DNI');auxiliar++"  >DNI</th>
                     <th scope="col" v-else v-on:click="ordenadosAsc('DNI');auxiliar--" >DNI</th>
                     <th scope="col" v-if="auxiliar===0" v-on:click="ordenadosDesc('NOMBRE');auxiliar++"  >NOMBRE</th>
                     <th scope="col" v-else v-on:click="ordenadosAsc('NOMBRE');auxiliar--" >NOMBRE</th>
-                    <th scope="col" v-if="auxiliar===0" v-on:click="ordenadosDesc('HOSPITAL');auxiliar++"  >HOSPITAL</th>
-                    <th scope="col" v-else v-on:click="ordenadosAsc('HOSPITAL');auxiliar--" >HOSPITAL</th>
-                    <th scope="col" v-if="auxiliar===0" v-on:click="ordenadosDesc('SERVICIO');auxiliar++"  >SERVICIO</th>
+                    <th scope="col" v-if="auxiliar===0" v-on:click="ordenadosDesc('HOSPITAL');auxiliar++"  >DEPENDENCIA</th>
+                    <th scope="col" v-else v-on:click="ordenadosAsc('HOSPITAL');auxiliar--" >DEPENDENCIA</th>
+                    <th>COMIENZA</th>
+                    <th>FINALIZA-</th>
+                    <th>AÑO</th>
+                    <!--<th scope="col" v-if="auxiliar===0" v-on:click="ordenadosDesc('SERVICIO');auxiliar++"  >SERVICIO</th>
                     <th scope="col" v-else v-on:click="ordenadosAsc('SERVICIO');auxiliar--" >SERVICIO</th>
                     <th scope="col" v-if="auxiliar===0" v-on:click="ordenadosDesc('SECTOR');auxiliar++"  >SECTOR</th>
                     <th scope="col" v-else v-on:click="ordenadosAsc('SECTOR');auxiliar--" >SECTOR</th>
@@ -55,7 +52,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr  v-for="vacacion in vacaciones" :key="vacacion.LEGAJO" >
+                <tr  v-for="vacacion in searchVacaciones" :key="vacacion.ID" >
                     <th>
                         {{vacacion.LEGAJO}}
                     </th>
@@ -88,12 +85,15 @@
                         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#ModificarAgente">
                             editar
                         </button>
-                        <a href="#" class="btn btn-primary btn-small">Datos</a>
+                        <button type="button" class="btn btn-danger" v-on:click.prevent="borrarVacaciones(vacacion.id)" >
+                            borrar
+                        </button>
+                        
                     </th>
                 </tr>
             </tbody>
         </table>
-        <cargar-vacaciones/>            
+        <cargar-vacaciones @speak="speakMethod()"/>            
     </div>
 </template>
 <script>
@@ -125,18 +125,58 @@
             },
             formatoFecha:function(d){
                 return moment(d).format("DD-MM-YY")
-            }
+            },
+            speakMethod:function(){
+                setTimeout(()=>{
+                    this.getVacaciones()
+                },5000)
+            },
+            ordenadosAsc: function(prop) {
+                this.vacaciones.sort(function(a,b){
+                    if(prop === 'LEGAJO'){
+                        console.log(a)
+                        return (a.LEGAJO - b.LEGAJO)
+                    }
+                    if(prop === 'DNI'){
+                        return (a.DNI - b.DNI)
+                    }
+                    if(prop ==='NOMBRE'){
+                        return (a.NOMBRE.localeCompare(b.NOMBRE))
+                    }
+                    if(prop ==='HOSPITAL'){
+                        return (a.HOSPITAL.localeCompare(b.HOSPITAL))
+                    }
+                    if(prop ==='SERVICIO'){
+                        return (a.SERVICIO.localeCompare(b.SERVICIO))
+                    }
+                    if(prop ==='SECTOR'){
+                        return (a.SECTOR.localeCompare(b.SECTOR))
+                    }
+                });
+            },
+            ordenadosDesc:function(prop){
+                this.ordenadosAsc(prop);
+                this.vacaciones.reverse();
+            },
+            borrarVacaciones:function(id){
+                var borrar = '/contrataciones-1/vacaciones/delete/' + id;
+                axios.delete(borrar).then(Response=>{
+                    this.getVacaciones;
+                    toastr.success('eliminado satisfactoriamente');
+                }) 
+            },
         },
+        
         computed:{
-            searchAgentes: function(){
+            searchVacaciones: function(){
                 if (this.nombre) {
-                    return this.vacaciones.filter((vacacion)=>vaciones.NOMBRE.toUpperCase().includes(this.nombre.toUpperCase()))
+                    return this.vacaciones.filter((vacacion)=>vacacion.NOMBRE.toUpperCase().includes(this.nombre.toUpperCase()))
                 }
                 if(this.legajo){
-                    return this.vacaciones.filter((vacacion)=>vaciones.LEGAJO.toString().includes(this.legajo.toString()))
+                    return this.vacaciones.filter((vacacion)=>vacacion.LEGAJO.toString().includes(this.legajo.toString()))
                 }
                 if(this.dni){
-                    return this.vacaciones.filter((vacacion)=>vaciones.DNI.toString().includes(this.dni.toString()))
+                    return this.vacaciones.filter((vacacion)=>vacacion.DNI.toString().includes(this.dni.toString()))
                 }
                 return this.vacaciones
             }

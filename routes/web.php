@@ -57,5 +57,9 @@ Route::get('/vacaciones', 'vacacion@vistaVacaciones');
 
 Route::get('/vacaciones/vacaciones', 'vacacion@listadoVacaciones');
 
+Route::post('/vacaciones/store', 'vacacion@store');
+
+Route::delete('/vacaciones/delete/{id}', 'vacacion@delete');
+
 
 
