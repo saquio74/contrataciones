@@ -123,14 +123,14 @@
                 var urlVacaciones = 'vacaciones/vacaciones';
                 axios.get(urlVacaciones).then(Response=>{
                     this.vacaciones = Response.data
-                    console.log(Response.data)
+                    
                 });
             },
             formatoFecha:function(d){
                 return moment(d).format("DD-MM-YY")
             },
             buscarDatos:function(datos){
-                console.log(datos)
+                
                 this.vacacionAux = datos
                 
             },
@@ -142,7 +142,7 @@
             ordenadosAsc: function(prop) {
                 this.vacaciones.sort(function(a,b){
                     if(prop === 'LEGAJO'){
-                        console.log(a)
+                       
                         return (a.LEGAJO - b.LEGAJO)
                     }
                     if(prop === 'DNI'){

@@ -11,55 +11,58 @@
 |
 */
 
-Route::get('/', 'PagesController@index');
+Route::get('/',                              'PagesController@index');
 
-Route::get('/agente/agente','agentes@index');
+Route::get('/agente/agente',                 'agentes@index');
 
-Route::get('/agente/activos','agentes@activos');
+Route::get('/agente/activos',                'agentes@activos');
 
-Route::get('/agente/bajas','agentes@bajas');
+Route::get('/agente/bajas',                  'agentes@bajas');
 
-Route::get('/agente/agentes','agentes@vistaAgentes');
+Route::get('/agente/agentes',                'agentes@vistaAgentes');
 
-Route::get('/agentes/nuevo', 'agentes@nuevo');
+Route::get('/agentes/nuevo',                 'agentes@nuevo');
 
-Route::get('/agentes/buscar', 'agentes@buscar');
+Route::get('/agentes/buscar',                'agentes@buscar');
 
 Route::get('/agente/porhospital/{hospital}', 'agentes@porHospital');
 
 Route::get('/agente/porservicio/{servicio}', 'agentes@porservicio');
 
-Route::get('/agente/modificar', 'agentes@modificar');
+Route::get('/agente/modificar',              'agentes@modificar');
 
-Route::post('/agente/update', 'agentes@update');
+Route::post('/agente/update',                'agentes@update');
 
-Route::post('/agente/store', 'agentes@store');
+Route::post('/agente/store',                 'agentes@store');
 
-Route::post('/agente', 'agentes@modificar');
+Route::post('/agente',                       'agentes@modificar');
 
-Route::get('/agente/{legajo}', 'agentes@show');
+Route::get('/agente/{legajo}',               'agentes@show');
 
-Route::get('/hospitales','hospitales@index');
+Route::get('/hospitales',                    'hospitales@index');
 
-Route::get('/hospitales/{id}','hospitales@show');
+Route::get('/hospitales/{id}',               'hospitales@show');
 
-Route::get('/servicios','servicios@index');
+Route::get('/servicios',                     'servicios@index');
 
-Route::get('/sectores','sectores@index');
+Route::get('/sectores',                      'sectores@index');
 
-Route::get('/incisos','incisos@index');
+Route::get('/incisos',                       'incisos@index');
 
-Route::get('/agenincs', 'agenincs@index');
+Route::get('/agenincs',                      'agenincs@index');
 
-Route::get('/agenincs/{legajo}', 'agenincs@incisoPorAgente');
+Route::get('/agenincs/{legajo}',             'agenincs@incisoPorAgente');
 
-Route::get('/vacaciones', 'vacacion@vistaVacaciones');
+Route::get('/vacaciones',                    'vacacion@vistaVacaciones');
 
-Route::get('/vacaciones/vacaciones', 'vacacion@listadoVacaciones');
+Route::get('/vacaciones/vacaciones',         'vacacion@listadoVacaciones');
 
-Route::post('/vacaciones/store', 'vacacion@store');
+Route::post('/vacaciones/store',             'vacacion@store');
 
-Route::delete('/vacaciones/delete/{id}', 'vacacion@delete');
+Route::post('/vacaciones/update',            'vacacion@update');
+
+Route::delete('/vacaciones/delete/{id}',     'vacacion@delete');
+
 
 
 

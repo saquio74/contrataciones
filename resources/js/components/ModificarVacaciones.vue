@@ -1,5 +1,5 @@
 <template >
-    <form v-on:submit.prevent="crearVacaciones" method="post">
+    <form v-on:submit.prevent="actualizarVacaciones" method="post">
         <div class="modal fade" id="modificar" tabindex="-1" role="dialog"  aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -10,11 +10,12 @@
                     </button>
                 </div>
                 <div class="modal-body badge-dark">
+                    <p>{{vacaciones}}</p>
                     <hr>
                     <div class="form-group row">
                         <label for="legajo"    class="col-sm-4 col-form-label text-center">LEGAJO   </label>
                         <div class="col-sm-8">
-                            <input disabled type="text" class="form-control text-danger badge-secondary" :value="listaModificar.agente_id" >
+                            <input disabled type="text" class="form-control text-danger badge-secondary" v-model="vacaciones.agente_id" >
                         </div>
                     </div>
                     <div class="form-group row">
@@ -26,21 +27,22 @@
                     <div class="form-group row">
                         <label for="documento" class="col-sm-4 col-form-label text-center ">AÑO      </label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control badge-secondary"   :value="listaModificar.anio">
+                            <input type="text" class="form-control badge-secondary"   v-model="vacaciones.anio">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="documento" class="col-sm-4 col-form-label text-center ">FECHA DE INICIO</label>
                         <div class="col-sm-8">
-                            <input type="date" class="form-control badge-secondary"   :value="listaModificar.fecha_inicio">
+                            <input type="date" class="form-control badge-secondary"   v-model="vacaciones.fecha_inicio">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="documento" class="col-sm-4 col-form-label text-center ">FECHA FIN</label>
                         <div class="col-sm-8">
-                            <input type="date" class="form-control badge-secondary" :value="listaModificar.fecha_fin">
+                            <input type="date" class="form-control badge-secondary" v-model="vacaciones.fecha_fin">
                         </div>
                     </div>
+                    <span v-for="error in errors" :key="error" class="text-danger">{{error}}</span>
                 </div>
                 <div class="modal-footer badge-secondary">
                     <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
@@ -70,12 +72,35 @@
                     anio:            0,
                     fecha_inicio:   '',
                     fecha_fin:      '',
-                }
+                },
+                errors:'',
             }
         },
         methods:{
             mostrarData:function(){
-                console.log(this.listaModificar)
+                this.vacaciones.id           = this.listaModificar.id
+                this.vacaciones.agente_id    = this.listaModificar.agente_id
+                this.vacaciones.anio         = this.listaModificar.anio
+                this.vacaciones.fecha_inicio = this.listaModificar.fecha_inicio
+                this.vacaciones.fecha_fin    = this.listaModificar.fecha_fin
+                
+            },
+            actualizarVacaciones:function(){
+                var urlVacaciones= 'vacaciones/update';
+                
+                axios.post(urlVacaciones,this.vacaciones).then(Response=>{
+                    $('#modificar').modal('hide');
+                    toastr.success('agente modificado satisfactoriamente satisfactoriamente');
+                }).catch(errors=>{
+                    this.errors = errors.response.data
+                });
+            }
+        },
+        watch:{
+            listaModificar:{
+                handler:function(){
+                    this.mostrarData();
+                }
             }
         }
         
