@@ -1,6 +1,6 @@
 <template >
     <form v-on:submit.prevent="crearVacaciones" method="post">
-        <div class="modal fade" id="cargar" tabindex="-1" role="dialog"  aria-hidden="true">
+        <div class="modal fade" id="modificar" tabindex="-1" role="dialog"  aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                 <div class="modal-header badge-dark">
@@ -10,47 +10,37 @@
                     </button>
                 </div>
                 <div class="modal-body badge-dark">
-                   
                     <hr>
-                    <p>{{vacaciones}}</p>
-                    
                     <div class="form-group row">
-                        
                         <label for="legajo"    class="col-sm-4 col-form-label text-center">LEGAJO   </label>
                         <div class="col-sm-8">
-                        <select  class="form-control badge-secondary" v-model="agenteAux" @change="mostrarDatos()"  id="legajo" name='legajo'>
-                                <option v-for="agente in agentes" :value="agente" :key="agente.LEGAJO" >{{agente.LEGAJO}}</option>
-                            </select>
+                            <input disabled type="text" class="form-control text-danger badge-secondary" :value="listaModificar.agente_id" >
                         </div>
                     </div>
-                    
                     <div class="form-group row">
-                        
                         <label for="horario"   class="col-sm-4 col-form-label text-center ">NOMBRE   </label>
                         <div class="col-sm-8">
-                            <input disabled type="text" class="form-control text-danger badge-secondary" :value="agenteAux.NOMBRE" >
+                            <input disabled type="text" class="form-control text-danger badge-secondary" :value="listaModificar.NOMBRE">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="documento" class="col-sm-4 col-form-label text-center ">AÑO      </label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control badge-secondary" v-model="vacaciones.anio"  value=''>
+                            <input type="text" class="form-control badge-secondary"   :value="listaModificar.anio">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="documento" class="col-sm-4 col-form-label text-center ">FECHA DE INICIO</label>
                         <div class="col-sm-8">
-                            <input type="date" class="form-control badge-secondary" v-model="vacaciones.fecha_inicio"  value=''>
+                            <input type="date" class="form-control badge-secondary"   :value="listaModificar.fecha_inicio">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="documento" class="col-sm-4 col-form-label text-center ">FECHA FIN</label>
                         <div class="col-sm-8">
-                            <input type="date" class="form-control badge-secondary" v-model="vacaciones.fecha_fin"  value=''>
+                            <input type="date" class="form-control badge-secondary" :value="listaModificar.fecha_fin">
                         </div>
                     </div>
-                    <span v-for="error in errors" :key="error" class="text-danger">{{error}}</span>
-                    
                 </div>
                 <div class="modal-footer badge-secondary">
                     <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
@@ -65,52 +55,29 @@
 <script>
     import toastr from 'toastr'
     import moment from 'moment'
-    import axios  from 'axios'
+    import axios  from 'axios';
     export default {
+        props:{
+            listaModificar:{
+
+            },
+        },
         data(){
             return{
                 vacaciones:{
+                    id:              0,
                     agente_id:      '',
                     anio:            0,
                     fecha_inicio:   '',
                     fecha_fin:      '',
-                },
-                agentes:[],
-                agenteAux:[],
-                errors:[],
+                }
             }
         },
-        created:function(){
-            this.getAgentes();
-        },
         methods:{
-            getAgentes:function(){
-                var url = '/contrataciones-1/public/agente/agente';
-                axios.get(url).then(Response=>{
-                    this.agentes = Response.data
-                })
-            },
-            mostrarDatos:function(){
-                this.vacaciones.agente_id = this.agenteAux.LEGAJO
-
-            },
-            crearVacaciones:function(){
-                var url = '/contrataciones-1/public/vacaciones/store'
-                
-                axios.post(url, this.vacaciones).then(Response=>{   
-                    $('#cargar').modal('hide');
-                    this.vacaciones.agente_id     = '';
-                    this.vacaciones.anio          = 0 ;
-                    this.vacaciones.fecha_inicio  = '';
-                    this.vacaciones.fecha_fin     = '';
-                    toastr.success('vacaciones cargaradas correctamente');
-                }).catch(errors=>{
-                    this.errors = errors.response.data
-                    toastr.error('error');
-                });
-            },
-            
-            
+            mostrarData:function(){
+                console.log(this.listaModificar)
+            }
         }
+        
     }
 </script>

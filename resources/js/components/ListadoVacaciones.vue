@@ -82,7 +82,7 @@
                     </th>
                     
                     <th width="10px">
-                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#ModificarAgente">
+                        <button type="button" class="btn btn-success" v-on:click="buscarDatos(vacacion)"  data-toggle="modal" data-target="#modificar">
                             editar
                         </button>
                         <button type="button" class="btn btn-danger" v-on:click.prevent="borrarVacaciones(vacacion.id)" >
@@ -93,10 +93,12 @@
                 </tr>
             </tbody>
         </table>
-        <cargar-vacaciones @speak="speakMethod()"/>            
+        <cargar-vacaciones @speak="speakMethod()"/>
+        <modificar-vacaciones @speak="speakMethod()" :listaModificar="vacacionAux"/>           
     </div>
 </template>
 <script>
+    
     import toastr from 'toastr'
     import moment from 'moment'
     import axios  from 'axios'
@@ -110,6 +112,7 @@
                 nombre:     '',
                 agentes:    [],
                 auxiliar:    0,
+                vacacionAux:[],
             }
         },
         created:function(){
@@ -125,6 +128,11 @@
             },
             formatoFecha:function(d){
                 return moment(d).format("DD-MM-YY")
+            },
+            buscarDatos:function(datos){
+                console.log(datos)
+                this.vacacionAux = datos
+                
             },
             speakMethod:function(){
                 setTimeout(()=>{

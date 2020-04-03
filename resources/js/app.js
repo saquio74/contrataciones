@@ -4,6 +4,14 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
+try {
+    window.$ = window.jQuery = require('jquery');
+    //window.Popper = require('popper.js');
+
+    //require('bootstrap-sass');
+    require('bootstrap');
+} catch (e) {}
+
 
 window.Vue = require('vue');
 
@@ -29,6 +37,7 @@ Vue.component('nuevo-agente',              require('./components/NuevoAgenteComp
 Vue.component('modificar-agente',          require('./components/ModificarAgenteComponent.vue').default);
 Vue.component('vacaciones-agente',         require('./components/ListadoVacaciones.vue'       ).default);
 Vue.component('cargar-vacaciones',         require('./components/CargarVacaciones.vue'        ).default);
+Vue.component('modificar-vacaciones',      require('./components/ModificarVacaciones.vue'     ).default);
 
 //Vue.component('agente-compontent', require('./components/AgentesComponent.vue'));
 

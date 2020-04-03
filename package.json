@@ -25,6 +25,7 @@
         "vue-template-compiler": "^2.6.11"
     },
     "dependencies": {
+        "@popperjs/core": "^2.1.1",
         "eloquent": "^1.0.0",
         "gulp": "^4.0.2",
         "gulp-less": "^4.0.1",
