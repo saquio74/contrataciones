@@ -1,25 +1,21 @@
 <template>
     <div class="panel panel-default   col-sm-12">
         <h1 class="text-center">Listado General de agentes</h1>
-        <div class="badge-black row col-sm-12">
-            <button v-on:click="getActivos" type="submit" class="btn btn-outline-dark">ALTAS</button>
-            <button v-on:click="getBajas"   type="submit" class="btn btn-outline-dark">BAJAS</button>
-            <button v-on:click="getAgentes"  type="submit" class="btn btn-outline-dark">TODOS</button>
-        </div>
+        
         <div class="form-group row badge-dark col-sm-12">
             <hr>
             <hr>
             <button v-on:click="getAgentes" class="btn btn-primary" v-if="!agentes.length">Listar</button>
             <div class="col-sm-2">
-                <label class="text"> legajo      </label>
+                <label class="text"> LEGAJO      </label>
                 <input type="int" v-model="legajo"    v-if="agentes.length" class="form-control badge-secondary" id="legajo" name='legajo'>
             </div>
             <div class="col-sm-2">
-                <label class="text"> DNI         </label>
+                <label class="text"> DNI      </label>
                 <input type="int" v-model="dni"    v-if="agentes.length" class="form-control badge-secondary" id="legajo" name='legajo'>
             </div>
             <div class="col-sm-2">
-                <label class="text"> nombre      </label>
+                <label class="text"> LEGAJO      </label>
                 <input type="text" v-model="nombre"   v-if="agentes.length" class="form-control badge-secondary" id="nombre" name='nombre'>
             </div>
             <div class="col-sm-2">
@@ -152,22 +148,8 @@
         },
         methods:{
             getAgentes: function(){
-                var urlAgentes ='agente/agente';
+                var urlAgentes ='/contrataciones-1/public/agente/activos';
                 axios.get(urlAgentes).then(Response => {
-                    this.agentes = Response.data
-                    toastr.success('contenido cargado satisfactoriamente');
-                });
-            },
-            getActivos: function(){
-                var urlActivos ='agente/activos';
-                axios.get(urlActivos).then(Response => {
-                    this.agentes = Response.data
-                    toastr.success('contenido cargado satisfactoriamente');
-                });
-            },
-            getBajas: function(){
-                var urlBajas = 'agente/bajas';
-                axios.get(urlBajas).then(Response=>{
                     this.agentes = Response.data
                     toastr.success('contenido cargado satisfactoriamente');
                 });
@@ -180,27 +162,9 @@
                     return moment(d).fromNow();
                 }
             },
-            getHospitales:function(){
-                var urlHospitales = '/contrataciones-1/public/hospitales';
-                axios.get(urlHospitales).then(Response=>{
-                    this.hospitales = Response.data
-                });
-            },
-            getServicios:function(){
-                var urlServicios = '/contrataciones-1/public/servicios';
-                axios.get(urlServicios).then(Response=>{
-                    this.servicios = Response.data
-                });
-            },
-            getSectores:function(){
-                var urlSectores = '/contrataciones-1/public/sectores';
-                axios.get(urlSectores).then(Response=>{
-                    this.sectores = Response.data
-                });
-            },
             getPorHospital:function(){
                 if(this.hospital!=''){
-                    var urlPorHospital = 'porhospital/' + this.hospital.ID; 
+                    var urlPorHospital = '/contrataciones-1/public/agente/porhospital/' + this.hospital.ID; 
                     axios.get(urlPorHospital).then(Response=>{
                     this.agentes = Response.data.IDINC
                     });

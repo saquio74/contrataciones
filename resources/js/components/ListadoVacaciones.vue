@@ -20,7 +20,7 @@
             <hr>
             <hr>
             <hr>
-            <p>{{auxiliar}}</p>
+            <p>{{searchVacaciones.length}}</p>
             
         </div>
         <div class="form-group row badge-dark col-sm-12">
@@ -120,7 +120,7 @@
         },
         methods:{
             getVacaciones:function(){
-                var urlVacaciones = 'vacaciones/vacaciones';
+                var urlVacaciones = '/contrataciones-1/public/vacaciones/vacaciones';
                 axios.get(urlVacaciones).then(Response=>{
                     this.vacaciones = Response.data
                     

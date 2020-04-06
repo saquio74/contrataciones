@@ -1,39 +1,76 @@
-@extends('layout')
-
-@section('contenido')
-    <br>
-    <div class="col-sm-12">
-
-    
-        <div class="btn-group-vertical text-center text-light col-sm-5">
-            <button class="btn btn-default badge-dark text-white" type="button">MENU ADMINISTRATIVO</button>
-            <button class="btn btn-default badge-dark text-white" type="button" onclick="window.location.href='{{action('agentes@nuevo')}}'">Nuevo Agente</button>
-            <button class="btn btn-default badge-dark text-white" type="button" onclick="window.location.href='{{action('agentes@buscar')}}'" >Modificar Agente</button>
-            <button class="btn btn-default badge-dark text-white" type="button" onclick="window.location.href='liquidacionhospital.php'">Liquidacion</button>
-            <button class="btn btn-default badge-dark text-white" type="button" onclick="window.location.href='certificacion.html'">Certificaciones</button>
-            <button class="btn btn-default badge-dark text-white" type="button" onclick="window.location.href='modificarprestacion.php'" >Modificar y Borrar prestaciones</button>
-            <button class="btn btn-default badge-dark text-white" type="button" onclick="window.location.href='contaduria.php'" >contaduria</button>
-            <button class="btn btn-default badge-dark text-white" type="button" onclick="window.location.href='borrarliquidacion.php'" >borrar liquidacion</button>
-            <button class="btn btn-default badge-dark text-white" type="button" onclick="window.location.href='complementaria.php'" >Complementaria</button>
-            <button class="btn btn-default badge-dark text-white" type="button" onclick="window.location.href='personal.php'" >Agentes por Hospital</button>
-        </div>
-        <div class="btn-group-vertical text-center text-light col-sm-5">
-            <button class="btn btn-default badge-dark text-white" type="button">MENU ADMINISTRATIVO</button>
-            <button class="btn btn-default badge-dark text-white" type="button" onclick="window.location.href='nuevoagente.php' ">Agregar Hospital</button>
-            <button class="btn btn-default badge-dark text-white" type="button" onclick="window.location.href='buscaragente.php'" >Agregar Inciso</button>
-            <button class="btn btn-default badge-dark text-white" type="button" onclick="window.location.href='liquidacionhospital.php'">Agregar Servicio</button>
-            <button class="btn btn-default badge-dark text-white" type="button" onclick="window.location.href='certificacion.html'">Agregar Sector</button>
-            <button class="btn btn-default badge-dark text-white" type="button" onclick="window.location.href='modificarprestacion.php'" >Agregar Especialidad</button>
-            <button class="btn btn-default badge-dark text-white" type="button" onclick="window.location.href='contaduria.php'" >Agregar Prestacion</button>
-            <button class="btn btn-default badge-dark text-white" type="button" onclick="window.location.href='borrarliquidacion.php'" >Agregar Profesional</button>
-            <button class="btn btn-default badge-dark text-white" type="button" onclick="window.location.href='complementaria.php'" >Generar Excel Liquidacion</button>
-            <button class="btn btn-default badge-dark text-secondary" type="button" onclick="window.location.href='{{action('agentes@vistaAgentes')}}'" >-</button>
-        </div>
-
+<!DOCTYPE html>
+    <html>
+    <head>
+        <title>Home</title>
         
+        <link rel="stylesheet" href="{{asset('css/app.css')}}">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
         
-    </div>    
-    <br>
-
+    </head>
+    <body style="font-size:14px" class="bg-dark" >
+        @include('header')
+        <div class="container col-sm-12">
+            <div class="col-sm-6 offset-3">
+                <h2 class="text-center text-light">Menu General</h2>    
+            </div>
+            
+        </div>
+        <div class="container-fluid">
+            <div class="row" id='app'>
+                <div class="col-sm-2">
+                    <nav class="navbar navbar-expand-md navbar-dark bg-dark col-sm-4">
+                        <div class="collapse navbar-collapse secondary" id="navbarCollapse">
+                            <ul class="nav column">
+                                <li class="nav-item active">
+                                    <button type="submit" class="btn btn-outline-primary">
+                                        
+                                    <router-link class="nav-link" :to="{name: 'Home'}"> INICIO <span class="sr-only">(current)</span></router-link>
+                                    </button>
+                                    
+                                </li>
+                                <li class="nav-item active">
+                                    <a class="nav-link" href="#">Certificar</a>
+                                </li>
+                                <li class="nav-item">
+                                    <router-link class="nav-link" :to="{name: 'Foo'}"> Altas y Bajas       </router-link>
+                                </li>
+                                <li class="nav-item">
+                                    <router-link class="nav-link" :to="{name: 'Bar'}"> Vacaciones          </router-link>
+                                </li>
+                                <li class="nav-item">
+                                    <router-link class="nav-link" :to="{name: 'paraLiquidar'}"> Liquidar   </router-link>
+                                </li>
+                                
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
                 
-@endsection
+                <div class="col-sm-10">
+                    <div class="bg-secondary">
+                        <div class="col-sm-12">
+                            <div>
+                            
+                            
+                            
+                                    
+                        
+                            <router-view></router-view>
+                            <br>
+                                @yield('contenido')    
+                            </div> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <!--<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/js/toastr.min.js"></script>
+        -->        
+
+        <script src="{{asset('js/app.js')}}"></script>
+    </body>
+</html>

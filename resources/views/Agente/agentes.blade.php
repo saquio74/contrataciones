@@ -1,8 +1,9 @@
-@extends('layout')
+@extends('welcome')
 
 @section('contenido')
-    <listado-agentes-component></listado-agentes-component>
-
+    
+    
+    
     
      
     
