@@ -25,4 +25,23 @@ class agenincs extends Controller
         $inciso = json_encode($inciso);
         return $inciso;
     }
+    public function incisoAgente(Request $datos)
+    {
+        
+        
+        $inciso = DB::table('ageninc')
+                    ->join('inciso','idinc','=','inciso.id')
+                    ->join('agentes','idagente','=','agentes.LEGAJO')
+                    ->select('inciso.ID','inciso.INCISO','inciso.VALOR','agentes.IDSERVICIO','agentes.SEC','agentes.IDHOSP','ageninc.IDAGENTE','agentes.NOMBRE')
+                    ->orderBy('IDAGENTE', 'asc')
+                    ->where('agentes.IDHOSP','=',$datos->hospitalId)
+                    ->where('agentes.SEC','=',$datos->sectorId)
+                    ->where('agentes.IDSERVICIO','=',$datos->servicioId)
+                    ->where('agentes.ACTIVO','=',0)
+                    ->get();
+        $inciso = json_encode($inciso);
+
+        return $inciso;
+
+    }
 }

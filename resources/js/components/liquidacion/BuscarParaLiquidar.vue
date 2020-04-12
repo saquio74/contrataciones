@@ -1,33 +1,42 @@
 <template>
-    <div class="form-group row badge-dark col-sm-12">
+    <div>
+        <div class="form-group row badge-dark col-sm-12">
+            <h2 class="text-center">Buscar Agentes</h2>
             <hr>
-            <hr>
+            
             <br>
-            <div class="col-sm-2">
+            <div class="col-sm-3 ">
                 <label class="text"> hospital    </label>
                 <select class="form-control badge-secondary" v-model="hospital" id="hospital" name='hospital'>
                     <option value=''>seleccione</option>
-                    <option v-for="hosp in hospitales" :key="hosp.ID" :value="hosp" >{{hosp.HOSPITAL}}</option>
+                    <option v-for="hosp in hospitales" :key="hosp.ID" :value="hosp.ID" >{{hosp.HOSPITAL}}</option>
                 </select>
             </div>
-            <div class="col-sm-2">
+            <div class="col-sm-3">
                 <label class="text"> servicio    </label>
                 <select class="form-control badge-secondary" v-model="servicio" id="servicio" name='servicio'>
                     <option value=''>seleccione</option>
-                    <option v-for="serv in servicios" :value="serv.SERVICIO" :key="serv.ID">{{serv.SERVICIO}}</option>
+                    <option v-for="serv in servicios" :value="serv.ID" :key="serv.ID">{{serv.SERVICIO}}</option>
                 </select>
             </div>
-            <div class="col-sm-2">
+            <div class="col-sm-3">
                 <label class="text"> sectores    </label>
-                <select class="form-control badge-secondary" v-model="sector" id="servicio" name='servicio'>
+                <select class="form-control badge-secondary" v-model="sector" id="sector" name='sector'>
                     <option value=''>seleccione</option>
-                    <option v-for="sect in sectores" :value="sect.SECTOR" :key="sect.SECTOR">{{sect.SECTOR}}</option>
+                    <option v-for="sect in sectores" :value="sect.ID" :key="sect.SECTOR">{{sect.SECTOR}}</option>
 
                 </select>
+                <br>
             </div>
-            <hr>
-            <hr>
+            
+            <br>
+            <br>
         </div>
+        <div class="form-group row badge-secondary col-sm-12">
+
+            <liquidacion @speak="speakMethod()" :hospitalId="hospital" :servicioId="servicio" :sectorId="sector" />
+        </div>
+    </div>
 </template>
 <script>
     import toastr from 'toastr'
@@ -72,6 +81,7 @@
                     this.sectores = Response.data
                 });
             },
+            
         },
     }
 </script>

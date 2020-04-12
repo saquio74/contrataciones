@@ -30,6 +30,7 @@ const vacaciones   =Vue.component('vacaciones-agente',         require('./compon
                     Vue.component('cargar-vacaciones',         require('./components/CargarVacaciones.vue'                   ).default);
                     Vue.component('modificar-vacaciones',      require('./components/ModificarVacaciones.vue'                ).default);
 const paraLiquidar =Vue.component('agente-liquidar',           require('./components/liquidacion/BuscarParaLiquidar.vue'     ).default);
+const horas        =Vue.component('horas-ingresar',            require('./components/liquidacion/horas.vue'                  ).default);
 const liquidacion  =Vue.component('liquidacion',               require('./components/liquidacion/liquidacion.vue'            ).default);
 const home         =Vue.component('home',                      require('./components/Home.vue'                               ).default);
 

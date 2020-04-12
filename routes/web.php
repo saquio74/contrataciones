@@ -51,6 +51,8 @@ Route::get('/incisos',                       'incisos@index');
 
 Route::get('/agenincs',                      'agenincs@index');
 
+Route::post('/agenincs/hosp',                 'agenincs@incisoAgente');
+
 Route::get('/agenincs/{legajo}',             'agenincs@incisoPorAgente');
 
 Route::get('/vacaciones',                    'vacacion@vistaVacaciones');
@@ -63,6 +65,6 @@ Route::post('/vacaciones/update',            'vacacion@update');
 
 Route::delete('/vacaciones/delete/{id}',     'vacacion@delete');
 
+Route::get('/agenfac',                       'agenfacs@index');
 
-
-
+Route::post('/agenfac/store',                'agenfacs@store');

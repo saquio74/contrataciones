@@ -47,9 +47,9 @@
                 </div>
                 
                 <div class="col-sm-10">
-                    <div class="bg-secondary">
-                        <div class="col-sm-12">
-                            <div>
+                    <div class=" col-sm-12 bg-secondary">
+                        
+                            <br>
                             
                             
                             
@@ -58,8 +58,8 @@
                             <router-view></router-view>
                             <br>
                                 @yield('contenido')    
-                            </div> 
-                        </div>
+                             
+                        
                     </div>
                 </div>
             </div>
