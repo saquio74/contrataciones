@@ -27,7 +27,7 @@
     </th>
 </template>
 <script>
-    import Axios from 'axios';
+    import Axios  from 'axios';
     import toastr from 'toastr';
     export default {
         props:{
@@ -56,42 +56,62 @@
                     TOTAL:           0,
                     HOSPITAL:       '',
                 },
+                agenteAux:{
+                    leg:        0,
+                    periodo:    0,
+                    anio:       0,
+                },
+                agenfac:[],
                 cambiar: 0,
                 
             }
         },
         created:function(){
-            //this.pasarDatos();
+            this.pasarDatos();
         },
         methods:{
-            liquidar:function(){
+            liquidar:function(){//calcula los valores a ingresar
+                
+                this.agenteIngresar.SUBTOT      = this.agenteIngresar.HORAS    *    this.datosAgente.VALOR
+                this.agenteIngresar.BONVALOR    = this.agenteIngresar.SUBTOT   *    this.agenteIngresar.BONIFICACION/100
+                this.agenteIngresar.TOTAL       = this.agenteIngresar.SUBTOT   +    this.agenteIngresar.BONVALOR
+            },
+            pasarDatos:function(){//set datos pasados por prop a objeto a ingresar
                 this.agenteIngresar.LEG         = this.datosAgente.IDAGENTE
                 this.agenteIngresar.PERIODO     = this.periodo.mes
                 this.agenteIngresar.ANIO        = this.periodo.anio
                 this.agenteIngresar.INC         = this.datosAgente.ID
                 this.agenteIngresar.VALOR       = this.datosAgente.VALOR
                 this.agenteIngresar.HOSPITAL    = this.datosAgente.IDHOSP
-                this.agenteIngresar.SUBTOT      = this.agenteIngresar.HORAS    *    this.datosAgente.VALOR
-                this.agenteIngresar.BONVALOR    = this.agenteIngresar.SUBTOT   *    this.agenteIngresar.BONIFICACION/100
-                this.agenteIngresar.TOTAL       = this.agenteIngresar.SUBTOT   +    this.agenteIngresar.BONVALOR
             },
-            pasarDatos:function(){
-                
-            },
-            guardarDatos:function(){
+            guardarDatos:function(){//ingresa los datos
                 var urlAgeninc = '/contrataciones-1/public/agenfac/store'
                 Axios.post(urlAgeninc,this.agenteIngresar).then(Response => {
                     toastr.success('contenido cargado satisfactoriamente');
+                    this.agenteIngresar.HORAS       =   0
+                    this.agenteIngresar.SUBTOT      =   0
+                    this.agenteIngresar.BONVALOR    =   0
+                    this.agenteIngresar.TOTAL       =   0
                 })     
+            },
+            buscarLiquidacion:function(){
+                var urlLiquidacion      = '/contrataciones-1/public/agenfac/verificar';
+                this.agenteAux.leg      = this.agenteIngresar.LEG
+                this.agenteAux.periodo  = this.agenteIngresar.PERIODO
+                this.agenteAux.anio     = this.agenteIngresar.ANIO 
+                Axios.post(urlLiquidacion,this.agenteAux).then(Response=>{
+                    this.agenfac = Response.data
+                    toastr.warning('agente existe')
+                })
             }
         },
         watch:{
             auxiliar:{
                 handler:function(){
-                    //console.log(this.datosAgente)
-                    console.log(this.agenteIngresar)
-                    if(this.auxiliar === 1){
+                    if(this.auxiliar === 1 && this.agenteIngresar.TOTAL){
+                        this.buscarLiquidacion()
                         this.guardarDatos()
+                        
                     }
                 }
             }

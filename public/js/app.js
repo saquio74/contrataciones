@@ -3278,39 +3278,67 @@ __webpack_require__.r(__webpack_exports__);
         TOTAL: 0,
         HOSPITAL: ''
       },
+      agenteAux: {
+        leg: 0,
+        periodo: 0,
+        anio: 0
+      },
+      agenfac: [],
       cambiar: 0
     };
   },
-  created: function created() {//this.pasarDatos();
+  created: function created() {
+    this.pasarDatos();
   },
   methods: {
     liquidar: function liquidar() {
+      //calcula los valores a ingresar
+      this.agenteIngresar.SUBTOT = this.agenteIngresar.HORAS * this.datosAgente.VALOR;
+      this.agenteIngresar.BONVALOR = this.agenteIngresar.SUBTOT * this.agenteIngresar.BONIFICACION / 100;
+      this.agenteIngresar.TOTAL = this.agenteIngresar.SUBTOT + this.agenteIngresar.BONVALOR;
+    },
+    pasarDatos: function pasarDatos() {
+      //set datos pasados por prop a objeto a ingresar
       this.agenteIngresar.LEG = this.datosAgente.IDAGENTE;
       this.agenteIngresar.PERIODO = this.periodo.mes;
       this.agenteIngresar.ANIO = this.periodo.anio;
       this.agenteIngresar.INC = this.datosAgente.ID;
       this.agenteIngresar.VALOR = this.datosAgente.VALOR;
       this.agenteIngresar.HOSPITAL = this.datosAgente.IDHOSP;
-      this.agenteIngresar.SUBTOT = this.agenteIngresar.HORAS * this.datosAgente.VALOR;
-      this.agenteIngresar.BONVALOR = this.agenteIngresar.SUBTOT * this.agenteIngresar.BONIFICACION / 100;
-      this.agenteIngresar.TOTAL = this.agenteIngresar.SUBTOT + this.agenteIngresar.BONVALOR;
     },
-    pasarDatos: function pasarDatos() {},
     guardarDatos: function guardarDatos() {
+      var _this = this;
+
+      //ingresa los datos
       var urlAgeninc = '/contrataciones-1/public/agenfac/store';
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post(urlAgeninc, this.agenteIngresar).then(function (Response) {
         toastr__WEBPACK_IMPORTED_MODULE_1___default.a.success('contenido cargado satisfactoriamente');
+        _this.agenteIngresar.HORAS = 0;
+        _this.agenteIngresar.SUBTOT = 0;
+        _this.agenteIngresar.BONVALOR = 0;
+        _this.agenteIngresar.TOTAL = 0;
+      });
+    },
+    buscarLiquidacion: function buscarLiquidacion() {
+      var _this2 = this;
+
+      var urlLiquidacion = '/contrataciones-1/public/agenfac/verificar';
+      this.agenteAux.leg = this.agenteIngresar.LEG;
+      this.agenteAux.periodo = this.agenteIngresar.PERIODO;
+      this.agenteAux.anio = this.agenteIngresar.ANIO;
+      console.log(this.agenteAux);
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post(urlLiquidacion, this.agenteAux).then(function (Response) {
+        _this2.agenfac = Response.data;
+        console.log(Response.data);
+        toastr__WEBPACK_IMPORTED_MODULE_1___default.a.warning('agente existe');
       });
     }
   },
   watch: {
     auxiliar: {
       handler: function handler() {
-        //console.log(this.datosAgente)
-        console.log(this.agenteIngresar);
-
-        if (this.auxiliar === 1) {
-          this.guardarDatos();
+        if (this.auxiliar === 1 && this.agenteIngresar.TOTAL) {
+          this.buscarLiquidacion(); //this.guardarDatos()
         }
       }
     }
@@ -3432,6 +3460,13 @@ __webpack_require__.r(__webpack_exports__);
       } else {
         this.periodo.mes = this.meses[moment__WEBPACK_IMPORTED_MODULE_1___default()().month() - 1];
         this.periodo.anio = moment__WEBPACK_IMPORTED_MODULE_1___default()().year();
+      }
+    }
+  },
+  watch: {
+    sectorId: {
+      handler: function handler() {
+        this.auxiliar = 0;
       }
     }
   }

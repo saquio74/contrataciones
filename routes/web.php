@@ -68,3 +68,5 @@ Route::delete('/vacaciones/delete/{id}',     'vacacion@delete');
 Route::get('/agenfac',                       'agenfacs@index');
 
 Route::post('/agenfac/store',                'agenfacs@store');
+
+Route::post('/agenfac/verificar',            'agenfacs@getFacturacion');

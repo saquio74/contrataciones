@@ -17,10 +17,10 @@ class agenfacs extends Controller
     public function getFacturacion(Request $datos)
     {
         $agenfac =DB::table('agenfac')
-                    ->where('LEG', '=', $datos->legajo)
-                    ->where('PERIODO', '=', $datos->legajo)
-                    ->where('ANIO', '=', $datos->legajo)
-                    ->where('LEG', '=', $datos->legajo)
+                    ->where('LEG', '=', $datos->leg)
+                    ->where('PERIODO', '=', $datos->periodo)
+                    ->where('ANIO', '=', $datos->anio)
+                    //->where('HORAS', '=', $datos->HORAS)
                     ->get();
     }
 

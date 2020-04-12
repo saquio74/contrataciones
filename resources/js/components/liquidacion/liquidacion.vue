@@ -119,6 +119,13 @@
             },
 
         },
+        watch:{
+            sectorId:{
+                handler:function(){
+                    this.auxiliar = 0
+                }
+            }
+        }
     }
     
 </script>
