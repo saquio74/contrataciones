@@ -12,7 +12,7 @@ class agenincs extends Controller
     {
         //$hospitales = \DB::table('hospitales')->select('hospital')->get();
         $ageninc = ageninc::all();
-        $ageninc = json_encode($ageninc);
+        
         return $ageninc;
     }
     public function incisoPorAgente($legajo){
@@ -22,7 +22,7 @@ class agenincs extends Controller
                     ->where('idagente','=',$legajo)
                     ->get();
         
-        $inciso = json_encode($inciso);
+        
         return $inciso;
     }
     public function incisoAgente(Request $datos)
@@ -39,7 +39,7 @@ class agenincs extends Controller
                     ->where('agentes.IDSERVICIO','=',$datos->servicioId)
                     ->where('agentes.ACTIVO','=',0)
                     ->get();
-        $inciso = json_encode($inciso);
+        
 
         return $inciso;
 

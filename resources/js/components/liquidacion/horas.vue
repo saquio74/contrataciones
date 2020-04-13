@@ -68,6 +68,8 @@
         },
         created:function(){
             this.pasarDatos();
+            this.buscarLiquidacion();
+            
         },
         methods:{
             liquidar:function(){//calcula los valores a ingresar
@@ -101,17 +103,24 @@
                 this.agenteAux.anio     = this.agenteIngresar.ANIO 
                 Axios.post(urlLiquidacion,this.agenteAux).then(Response=>{
                     this.agenfac = Response.data
-                    toastr.warning('agente existe')
                 })
-            }
+            },
+            
         },
         watch:{
             auxiliar:{
                 handler:function(){
-                    if(this.auxiliar === 1 && this.agenteIngresar.TOTAL){
-                        this.buscarLiquidacion()
+                    this.buscarLiquidacion()
+                    if(this.auxiliar === 1 && this.agenteIngresar.TOTAL && this.agenfac.length === 0 ){
                         this.guardarDatos()
-                        
+                    }
+                    if(this.agenfac.length>0 && this.auxiliar < 2){
+                        toastr.warning('El Agente con legajo ' + 
+                        this.agenteAux.leg + 
+                        ' ya existe vuelva a presionar para liquidarlo')
+                    }
+                    if(this.auxiliar === 2 && this.agenteIngresar.TOTAL){
+                        this.guardarDatos()
                     }
                 }
             }

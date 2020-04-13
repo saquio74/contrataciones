@@ -10,7 +10,6 @@ class agenfacs extends Controller
     public function index()
     {
         $agenfac = agenfac::all();
-        $agenfac = json_encode($agenfac);
         return $agenfac;
     }
 
@@ -22,6 +21,8 @@ class agenfacs extends Controller
                     ->where('ANIO', '=', $datos->anio)
                     //->where('HORAS', '=', $datos->HORAS)
                     ->get();
+        
+        return $agenfac; 
     }
 
     public function store(Request $facturacion)

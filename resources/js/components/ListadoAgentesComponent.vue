@@ -200,7 +200,7 @@
             },
             getPorHospital:function(){
                 if(this.hospital!=''){
-                    var urlPorHospital = 'porhospital/' + this.hospital.ID; 
+                    var urlPorHospital = '/agente/porhospital/' + this.hospital.ID; 
                     axios.get(urlPorHospital).then(Response=>{
                     this.agentes = Response.data.IDINC
                     });

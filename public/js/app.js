@@ -2212,7 +2212,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this7 = this;
 
       if (this.hospital != '') {
-        var urlPorHospital = 'porhospital/' + this.hospital.ID;
+        var urlPorHospital = '/agente/porhospital/' + this.hospital.ID;
         axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(urlPorHospital).then(function (Response) {
           _this7.agentes = Response.data.IDINC;
         });
@@ -3289,6 +3289,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {
     this.pasarDatos();
+    this.buscarLiquidacion();
   },
   methods: {
     liquidar: function liquidar() {
@@ -3326,19 +3327,26 @@ __webpack_require__.r(__webpack_exports__);
       this.agenteAux.leg = this.agenteIngresar.LEG;
       this.agenteAux.periodo = this.agenteIngresar.PERIODO;
       this.agenteAux.anio = this.agenteIngresar.ANIO;
-      console.log(this.agenteAux);
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post(urlLiquidacion, this.agenteAux).then(function (Response) {
         _this2.agenfac = Response.data;
-        console.log(Response.data);
-        toastr__WEBPACK_IMPORTED_MODULE_1___default.a.warning('agente existe');
       });
     }
   },
   watch: {
     auxiliar: {
       handler: function handler() {
-        if (this.auxiliar === 1 && this.agenteIngresar.TOTAL) {
-          this.buscarLiquidacion(); //this.guardarDatos()
+        this.buscarLiquidacion();
+
+        if (this.auxiliar === 1 && this.agenteIngresar.TOTAL && this.agenfac.length === 0) {
+          this.guardarDatos();
+        }
+
+        if (this.agenfac.length > 0 && this.auxiliar < 2) {
+          toastr__WEBPACK_IMPORTED_MODULE_1___default.a.warning('El Agente con legajo ' + this.agenteAux.leg + ' ya existe vuelva a presionar para liquidarlo');
+        }
+
+        if (this.auxiliar === 2 && this.agenteIngresar.TOTAL) {
+          this.guardarDatos();
         }
       }
     }
