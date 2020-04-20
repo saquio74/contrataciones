@@ -1,0 +1,37 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateProveedorsTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('proveedors', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->integer('proveedor');
+            $table->string('nombre');
+            $table->string('apellido');
+            $table->integer('dni');
+            $table->integer('cuil');
+            $table->integer('matricula');
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('proveedors');
+    }
+}

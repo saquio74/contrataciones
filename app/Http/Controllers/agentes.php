@@ -18,7 +18,7 @@ class agentes extends Controller
                     ->join('sector','sec','=','sector.id')
                     ->orderBy('legajo', 'asc')
                     ->get();
-        $agente = json_encode($agente);
+        //$agente = json_encode($agente);
         return $agente;
         
     }
@@ -30,7 +30,7 @@ class agentes extends Controller
                     ->where('agentes.activo','=',0)
                     ->orderBy('legajo', 'desc')
                     ->get();
-        $agente = json_encode($agente);
+        //$agente = json_encode($agente);
         return $agente;
         
     }
@@ -42,7 +42,7 @@ class agentes extends Controller
                     ->where('agentes.activo','=',1)
                     ->orderBy('legajo', 'desc')
                     ->get();
-        $agente = json_encode($agente);
+        //$agente = json_encode($agente);
         return $agente;
         
     }
@@ -55,7 +55,7 @@ class agentes extends Controller
                     ->where('agentes.activo','=',0)
                     ->orderBy('legajo', 'asc')
                     ->get();
-        $agente = json_encode($agente);
+        //$agente = json_encode($agente);
         return $agente;
         
     }
@@ -68,7 +68,7 @@ class agentes extends Controller
                     ->where('agentes.activo','=',0)
                     ->orderBy('legajo', 'asc')
                     ->get();
-        $agente = json_encode($agente);
+        //$agente = json_encode($agente);
         return $agente;
         
     }

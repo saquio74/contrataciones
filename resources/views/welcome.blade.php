@@ -31,14 +31,17 @@
                                 <li class="nav-item active">
                                     <a class="nav-link" href="#">Certificar</a>
                                 </li>
-                                <li class="nav-item">
+                                <li class="nav-item active">
                                     <router-link class="nav-link" :to="{name: 'Foo'}"> Altas y Bajas       </router-link>
                                 </li>
-                                <li class="nav-item">
+                                <li class="nav-item active">
                                     <router-link class="nav-link" :to="{name: 'Bar'}"> Vacaciones          </router-link>
                                 </li>
-                                <li class="nav-item">
+                                <li class="nav-item active">
                                     <router-link class="nav-link" :to="{name: 'paraLiquidar'}"> Liquidar   </router-link>
+                                </li>
+                                <li class="nav-item active">
+                                    <router-link class="nav-link" :to="{name: 'libros'}"> Libros   </router-link>
                                 </li>
                                 
                             </ul>

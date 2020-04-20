@@ -10,7 +10,7 @@ class incisos extends Controller
     {
         //$hospitales = \DB::table('hospitales')->select('hospital')->get();
         $incisos = inciso::all();
-        $incisos = json_encode($incisos);
+        
         return $incisos;
     }
 }

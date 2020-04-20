@@ -1,22 +1,5 @@
-
-try {
-    window.$ = window.jQuery = require('jquery');
-    require('bootstrap');
-} catch (e) {}
-
-
-window.Vue = require('vue');
-import Vuex from 'vuex'
 import VueRouter from 'vue-router'
-
-import {store} from './store/store'
-
 Vue.use(VueRouter);
-Vue.use(Vuex)
-
-
-import moment  from 'moment'
-moment.locale('es');
 
 const agente       =Vue.component('listado-agentes-component', require('./components/ListadoAgentesComponent.vue'            ).default);
 const nuevo        =Vue.component('nuevo-agente',              require('./components/NuevoAgenteComponent.vue'               ).default);
@@ -28,23 +11,17 @@ const paraLiquidar =Vue.component('agente-liquidar',           require('./compon
 const horas        =Vue.component('horas-ingresar',            require('./components/liquidacion/horas.vue'                  ).default);
 const liquidacion  =Vue.component('liquidacion',               require('./components/liquidacion/liquidacion.vue'            ).default);
 const home         =Vue.component('home',                      require('./components/Home.vue'                               ).default);
-const libro        =Vue.component('libro',                     require('./components/libros/VistaLibros.vue'                 ).default);
+
 
 const routes = [
     { path: '/'             ,name: 'Home'            , component: home         },
     { path: '/agente'       ,name: 'Foo'             , component: agente       },
     { path: '/vacaciones'   ,name: 'Bar'             , component: vacaciones   },
-    { path: '/paraLiquidar' ,name: 'paraLiquidar'    , component: paraLiquidar },
-    { path: '/libros'       ,name: 'libros'          , component: libro        }
+    { path: '/paraLiquidar' ,name: 'paraLiquidar'    , component: paraLiquidar }
   ]
 
-const router = new VueRouter({
+export const router = new VueRouter({
     routes
+
+
 });
-
-
-const app = new Vue({
-    store:store,    
-    el: '#app',
-    router,
-}).$mount('#app');

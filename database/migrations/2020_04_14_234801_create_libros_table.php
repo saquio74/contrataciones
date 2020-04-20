@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Vacaciones extends Migration
+class CreateLibrosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,13 @@ class Vacaciones extends Migration
      */
     public function up()
     {
-        Schema::create('vacaciones', function (Blueprint $table) {
+        Schema::create('libros', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('agente_id');
             $table->foreign('agente_id')->references('legajo')->on('agentes')->onDelete('cascade');
-            $table->integer('anio');
-            $table->integer('estado');
-            $table->date('fecha_inicio');
-            $table->date('fecha_fin');
+            $table->integer('hospital_id');
+            $table->foreign('hospital_id')->references('id')->on('hospitales')->onDelete('cascade');
+            $table->timestamp('added_on');
             $table->timestamps();
         });
     }
@@ -32,6 +31,6 @@ class Vacaciones extends Migration
      */
     public function down()
     {
-        Schema::drop('vacaciones');
+        Schema::dropIfExists('libros');
     }
 }

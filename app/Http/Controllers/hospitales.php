@@ -11,7 +11,7 @@ class hospitales extends Controller
     {
         //$hospitales = \DB::table('hospitales')->select('hospital')->get();
         $hospitales = hospital::all();
-        $hospitales = json_encode($hospitales);
+        //$hospitales = json_encode($hospitales);
         return $hospitales;
     }
     public function show($id)
@@ -21,7 +21,7 @@ class hospitales extends Controller
         
         //$hospitales = hospitales::find('ID');
 
-        $hospitales = json_encode($hospitales);
+        //$hospitales = json_encode($hospitales);
         return $hospitales;
         
         
