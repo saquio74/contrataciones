@@ -1,16 +1,5 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
 Route::get('/',                              'PagesController@index');
 
 Route::get('/agente/agente',                 'agentes@index');
@@ -76,3 +65,17 @@ Route::get('/libro',                         'libroController@index');
 Route::get('/especialidad/vistaExcel',       'especialidadController@vistaExcel');
 
 Route::post('/especialidad/excelImport',     'especialidadController@importExcel');
+
+Route::get('/proveedor/vistaExcel',          'proveedorController@VistaExcel');
+
+Route::post('/proveedor/excelImport',        'proveedorController@importExcel');
+
+Route::get('/contrato/vistaExcel',          'contratoController@VistaExcel');
+
+Route::post('/contrato/excelImport',        'contratoController@importExcel');
+
+Route::get('/provhosp/vistaExcel',          'provhospController@VistaExcel');
+
+Route::post('/provhosp/excelImport',        'provhospController@importExcel');
+
+Route::get('/contrato/activos',        'contratoController@activos');

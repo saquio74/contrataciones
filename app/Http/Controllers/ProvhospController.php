@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\provhosp;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\facades\Excel;
+use App\imports\provhospImport;
 
 class ProvhospController extends Controller
 {
@@ -15,6 +17,19 @@ class ProvhospController extends Controller
     public function index()
     {
         //
+    }
+
+    public function importExcel(Request $request)
+    {
+        
+        
+        $file = $request->file('files');
+        //dd($file);
+        Excel::import(new provhospImport,$file);
+    }
+    public function vistaExcel()
+    {
+        return view('importProvhosp');
     }
 
     /**

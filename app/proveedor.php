@@ -6,8 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class proveedor extends Model
 {
-    public function importExcel($request)
-    {
-        # code...
-    }
+    protected $table        = 'proveedors';
+    protected $primaryKey   = 'id';
+    protected $fillable     = ['proveedor','nombre','apellido','dni','cuil','matricula','genero'];
 }

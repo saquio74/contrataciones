@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\proveedor;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\facades\Excel;
+use App\imports\proveedorImport;
 
 class ProveedorController extends Controller
 {
@@ -14,7 +16,21 @@ class ProveedorController extends Controller
      */
     public function index()
     {
-        //
+        $proveedor = proveedor::all();
+
+        return $proveedor;
+    }
+    public function importExcel(Request $request)
+    {
+        
+        
+        $file = $request->file('files');
+        //dd($file);
+        Excel::import(new proveedorImport,$file);
+    }
+    public function vistaExcel()
+    {
+        return view('importProveedores');
     }
 
     /**

@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\contrato;
 use Illuminate\Http\Request;
-
+use Maatwebsite\Excel\facades\Excel;
+use App\imports\contratoImport;
+use DB;
+use Carbon;
 class ContratoController extends Controller
 {
     /**
@@ -14,72 +17,39 @@ class ContratoController extends Controller
      */
     public function index()
     {
-        //
+        $contrato = contrato::all();
+        return $contrato;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+   
+
+    public function importExcel(Request $request)
     {
-        //
+        $file = $request->file('files');
+        Excel::import(new contratoImport,$file);
+    }
+    public function vistaExcel()
+    {
+        return view('importContrato');
+    }
+    public function activos(Request $request)
+    {
+        $mytime = \Carbon\Carbon::now();
+        
+        $mytime = $mytime->format('Y-m-d');
+        
+        
+        $contrato = DB::table('contratos')
+                        ->join('proveedors','proveedor_id','=','proveedors.id')
+                        ->join('especialidad','especialidad_id','=','especialidad.id')
+                        ->select('proveedors.proveedor','proveedors.dni','proveedors.cuil',
+                        'proveedors.nombre','proveedors.apellido','contratos.contrato',
+                        'especialidad.especialidad','contratos.fecha_fin')
+                        ->where('fecha_fin','>=',$mytime)
+                        ->get();
+        //dump($contrato,$mytime);
+        return $contrato;
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\contrato  $contrato
-     * @return \Illuminate\Http\Response
-     */
-    public function show(contrato $contrato)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\contrato  $contrato
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(contrato $contrato)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\contrato  $contrato
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, contrato $contrato)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\contrato  $contrato
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(contrato $contrato)
-    {
-        //
-    }
+    
 }
