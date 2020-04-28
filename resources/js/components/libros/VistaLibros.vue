@@ -35,39 +35,39 @@
                         </button>
                     </div>
                     <div class="modal-body badge-dark">
-                        <p>{{vacaciones}}</p>
+                        <p>{{}}</p>
                         <hr>
                         <div class="form-group row">
                             <label for="legajo"    class="col-sm-4 col-form-label text-center">LEGAJO   </label>
                             <div class="col-sm-8">
-                                <input disabled type="text" class="form-control text-danger badge-secondary" v-model="vacaciones.agente_id" >
+                                <input disabled type="text" class="form-control text-danger badge-secondary" >
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="horario"   class="col-sm-4 col-form-label text-center ">NOMBRE   </label>
                             <div class="col-sm-8">
-                                <input disabled type="text" class="form-control text-danger badge-secondary" :value="listaModificar.NOMBRE">
+                                <input disabled type="text" class="form-control text-danger badge-secondary" >
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="documento" class="col-sm-4 col-form-label text-center ">AÑO      </label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control badge-secondary"   v-model="vacaciones.anio">
+                                <input type="text" class="form-control badge-secondary">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="documento" class="col-sm-4 col-form-label text-center ">FECHA DE INICIO</label>
                             <div class="col-sm-8">
-                                <input type="date" class="form-control badge-secondary"   v-model="vacaciones.fecha_inicio">
+                                <input type="date" class="form-control badge-secondary" >
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="documento" class="col-sm-4 col-form-label text-center ">FECHA FIN</label>
                             <div class="col-sm-8">
-                                <input type="date" class="form-control badge-secondary" v-model="vacaciones.fecha_fin">
+                                <input type="date" class="form-control badge-secondary" >
                             </div>
                         </div>
-                        <span v-for="error in errors" :key="error" class="text-danger">{{error}}</span>
+                        <!--<span v-for="error in errors" :key="error" class="text-danger">{{error}}</span>-->
                     </div>
                     <div class="modal-footer badge-secondary">
                         <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>

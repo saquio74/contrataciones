@@ -35,20 +35,37 @@ class ContratoController extends Controller
     public function activos(Request $request)
     {
         $mytime = \Carbon\Carbon::now();
-        
         $mytime = $mytime->format('Y-m-d');
-        
         
         $contrato = DB::table('contratos')
                         ->join('proveedors','proveedor_id','=','proveedors.id')
                         ->join('especialidad','especialidad_id','=','especialidad.id')
-                        ->select('proveedors.proveedor','proveedors.dni','proveedors.cuil',
+                        ->select('proveedors.id','proveedors.proveedor','proveedors.dni','proveedors.cuil',
                         'proveedors.nombre','proveedors.apellido','contratos.contrato',
                         'especialidad.especialidad','contratos.fecha_fin')
                         ->where('fecha_fin','>=',$mytime)
                         ->get();
-        //dump($contrato,$mytime);
+        
         return $contrato;
+    }
+    public function bajas(Request $request)
+    {
+        $mytime = \Carbon\Carbon::now();
+        $mytime = $mytime->format('Y-m-d');
+        
+        $contrato = DB::table('proveedors')
+                        ->leftJoin('contratos','proveedor_id','=','proveedors.id')
+                        ->select('proveedors.id','proveedors.proveedor','proveedors.dni','proveedors.cuil',
+                        'proveedors.nombre','proveedors.apellido','contratos.contrato','contratos.fecha_fin')
+                        ->whereNull('contratos.contrato')
+                        ->orWhere('fecha_fin','<=',$mytime)
+                        ->get();
+        
+        return $contrato;
+    }
+    public function store(Request $proveedor)
+    {
+        
     }
 
     

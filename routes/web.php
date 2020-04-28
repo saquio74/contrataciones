@@ -78,4 +78,8 @@ Route::get('/provhosp/vistaExcel',          'provhospController@VistaExcel');
 
 Route::post('/provhosp/excelImport',        'provhospController@importExcel');
 
-Route::get('/contrato/activos',        'contratoController@activos');
+Route::get('/contrato/activos',             'contratoController@activos');
+
+Route::get('/contrato/bajas',               'contratoController@bajas');
+
+Route::post('/proveedor/nuevo',              'proveedorController@store');

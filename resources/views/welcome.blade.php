@@ -43,6 +43,9 @@
                                 <li class="nav-item active">
                                     <router-link class="nav-link" :to="{name: 'libros'}"> Libros   </router-link>
                                 </li>
+                                <li class="nav-item active">
+                                    <router-link class="nav-link" :to="{name: 'contratos'}"> Contratados</router-link>
+                                </li>
                                 
                             </ul>
                         </div>

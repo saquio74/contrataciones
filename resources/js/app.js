@@ -29,13 +29,16 @@ const horas        =Vue.component('horas-ingresar',            require('./compon
 const liquidacion  =Vue.component('liquidacion',               require('./components/liquidacion/liquidacion.vue'            ).default);
 const home         =Vue.component('home',                      require('./components/Home.vue'                               ).default);
 const libro        =Vue.component('libro',                     require('./components/libros/VistaLibros.vue'                 ).default);
+const listProv     =Vue.component('listado-proveedores',       require('./components/contratos/ListadoContratos.vue'         ).default);
+const cargarCont   =Vue.component('nuevo-proveedor',           require('./components/contratos/NuevoContrato.vue'            ).default);
 
 const routes = [
     { path: '/'             ,name: 'Home'            , component: home         },
     { path: '/agente'       ,name: 'Foo'             , component: agente       },
     { path: '/vacaciones'   ,name: 'Bar'             , component: vacaciones   },
     { path: '/paraLiquidar' ,name: 'paraLiquidar'    , component: paraLiquidar },
-    { path: '/libros'       ,name: 'libros'          , component: libro        }
+    { path: '/libros'       ,name: 'libros'          , component: libro        },
+    { path: '/contratos'    ,name: 'contratos'       , component: listProv     }
   ]
 
 const router = new VueRouter({

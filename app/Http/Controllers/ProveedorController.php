@@ -3,17 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\proveedor;
+Use App\provhosp;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\facades\Excel;
 use App\imports\proveedorImport;
 
 class ProveedorController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function index()
     {
         $proveedor = proveedor::all();
@@ -33,36 +30,35 @@ class ProveedorController extends Controller
         return view('importProveedores');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'proveedor'     =>'required',
+            'nombre'        =>'required',
+            'apellido'      =>'required',
+            'dni'           =>'required',
+            'cuil'          =>'required',
+            'genero'        =>'required',
+            'matricula'     =>'required',
+            'hospital'      =>'required'
+            
+        ]);
+        proveedor::create($request->all());
+        $proveedor = proveedor::where('dni',$request->dni)->get();
+        $hospital_id    = $request->hospital;
+        $proveedor_id   = $proveedor[0]->id;
+        
+        $provhosp = new provhosp;
+        $provhosp->proveedor_id = $proveedor_id;
+        $provhosp->hospital_id  = $hospital_id;
+        $provhosp->save();
+        return $proveedor_id;
+        
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\proveedor  $proveedor
-     * @return \Illuminate\Http\Response
-     */
-    public function show(proveedor $proveedor)
+    public function show($proveedor)
     {
-        //
+        $proveedor = proveedor::where('proveedor',$proveedor)->get();
+        return $proveedor;
     }
 
     /**
