@@ -49,7 +49,7 @@
                     <div class="form-group row">
                         <label for="documento" class="col-sm-4 col-form-label text-center ">GENERO      </label>
                         <div class="col-sm-8">
-                            <select name="" id="genero" class="form-control badge-secondary" v-model="proveedor.genero">
+                            <select name=""  class="form-control badge-secondary" v-model="proveedor.genero">
                                 <option value="">SELECCIONE</option>
                                 <option value="F">FEMENINO</option>
                                 <option value="M">MASCULINO</option>
@@ -119,7 +119,10 @@ export default {
                     console.log(url)
                     console.log(response.data)
                     toastr.success('contenido cargado satisfactoriamente');
-                    this.verificador =0
+                    this.verificador = 0
+                    this.cont()
+                    this.contBajas()
+                    $('#cargar').modal('hide');
                 }).catch(errors=>{
                     this.errors = errors.response.data
                 });
@@ -153,6 +156,12 @@ export default {
                 })
             }
             return contratado
+        },
+        cont(){
+            return this.$store.dispatch('getContratos')
+        },
+        contBajas(){
+            return this.$store.dispatch('getContratosBajas')
         },
         
     },

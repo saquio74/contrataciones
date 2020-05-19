@@ -11,6 +11,8 @@ export const store = new Vuex.Store({
         servicios:      [],
         sectores:       [],
         contratosBajas: [],
+        especialidades: [],
+        proveedor:      [],
     },
     mutations: {
         llenarHospitales(state,hosp){
@@ -30,6 +32,12 @@ export const store = new Vuex.Store({
         },
         llenarContratosBajas(state,contratosBajas){
             state.contratosBajas    = contratosBajas
+        },
+        llenarEspecialidades(state,especialidades){
+            state.especialidades    = especialidades
+        },
+        llenarProveedores(state,proveedor){
+            state.proveedor         = proveedor
         }
         
     },
@@ -55,7 +63,11 @@ export const store = new Vuex.Store({
             const contratosBajas    = await dataBajas.json()
             commit('llenarContratosBajas',contratosBajas)
         },
-
+        getEspecialidades: async function({commit}){
+            const data                   = await fetch('/contrataciones-1/public/especialidades')
+            const especialidades         = await data.json()
+            commit('llenarEspecialidades',especialidades)
+        },
         getServicios: async function({commit}){
             const data              = await fetch('/contrataciones-1/public/servicios')
             const servicios         = await data.json()
@@ -65,6 +77,11 @@ export const store = new Vuex.Store({
             const data              = await fetch('/contrataciones-1/public/sectores')
             const sectores          = await data.json()
             commit('llenarSectores', sectores)
-        }
+        },
+        getProveedores:  async function ({commit}){
+            const data              = await fetch('/contrataciones-1/public/proveedor')
+            const proveedor          = await data.json()
+            commit('llenarProveedores', proveedor)
+        },
     }
 });

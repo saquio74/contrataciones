@@ -3234,6 +3234,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! toastr */ "./node_modules/toastr/toastr.js");
+/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(toastr__WEBPACK_IMPORTED_MODULE_1__);
 //
 //
 //
@@ -3353,42 +3357,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       auxiliar: 0,
-      ver: 0
+      ver: 0,
+      errors: []
     };
   },
   created: function created() {
     this.hosp();
     this.cont();
-    this.contBajas(); //this.onFileChange();
+    this.contBajas();
+    this.especialidades();
+    this.proveedores(); //this.onFileChange();
   },
   methods: {
     hosp: function hosp() {
@@ -3399,6 +3383,12 @@ __webpack_require__.r(__webpack_exports__);
     },
     contBajas: function contBajas() {
       return this.$store.dispatch('getContratosBajas');
+    },
+    especialidades: function especialidades() {
+      return this.$store.dispatch('getEspecialidades');
+    },
+    proveedores: function proveedores() {
+      return this.$store.dispatch('getProveedores');
     },
     ordenadosAsc: function ordenadosAsc(prop) {
       if (this.ver === 0) {
@@ -3463,6 +3453,22 @@ __webpack_require__.r(__webpack_exports__);
       } else {
         this.contratosBajas.reverse();
       }
+    },
+    deleteContrato: function deleteContrato(id) {
+      var _this = this;
+
+      var url = '/contrataciones-1/public/contrato/delete/' + id;
+      console.log(url);
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a["delete"](url).then(function (response) {
+        _this.cont();
+
+        _this.contBajas();
+
+        toastr__WEBPACK_IMPORTED_MODULE_1___default.a.success('eliminado satisfactoriamente');
+      })["catch"](function (errors) {
+        _this.errors = errors.response.data;
+        toastr__WEBPACK_IMPORTED_MODULE_1___default.a.error('error');
+      });
     }
   },
   computed: {
@@ -3474,7 +3480,88 @@ __webpack_require__.r(__webpack_exports__);
     },
     contratosBajas: function contratosBajas() {
       return this.$store.state.contratosBajas;
+    },
+    especialidad: function especialidad() {
+      return this.$store.state.especialidades;
+    },
+    proveedor: function proveedor() {
+      return this.$store.state.proveedor;
     }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/contratos/ModificarContratos.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/contratos/ModificarContratos.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      proveedor: {},
+      error: ''
+    };
   }
 });
 
@@ -3616,6 +3703,12 @@ __webpack_require__.r(__webpack_exports__);
           console.log(response.data);
           toastr__WEBPACK_IMPORTED_MODULE_1___default.a.success('contenido cargado satisfactoriamente');
           _this.verificador = 0;
+
+          _this.cont();
+
+          _this.contBajas();
+
+          $('#cargar').modal('hide');
         })["catch"](function (errors) {
           _this.errors = errors.response.data;
         });
@@ -3655,6 +3748,12 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       return contratado;
+    },
+    cont: function cont() {
+      return this.$store.dispatch('getContratos');
+    },
+    contBajas: function contBajas() {
+      return this.$store.dispatch('getContratosBajas');
     }
   },
   computed: {
@@ -3666,6 +3765,205 @@ __webpack_require__.r(__webpack_exports__);
     },
     contratosBajas: function contratosBajas() {
       return this.$store.state.contratosBajas;
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/contratos/NuevoNumeroContrato.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/contratos/NuevoNumeroContrato.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! toastr */ "./node_modules/toastr/toastr.js");
+/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(toastr__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_2__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+ //import Axios    from 'axios'
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      contrato: {
+        proveedor_id: 0,
+        especialidad_id: '',
+        contrato: '',
+        fecha_inicio: '',
+        fecha_fin: ''
+      },
+      errors: '',
+      verificador: 0,
+      proveedores: [],
+      proveedorAux: [],
+      contratoAux: []
+    };
+  },
+  methods: {
+    setProveedorId: function setProveedorId() {
+      this.contrato.proveedor_id = this.proveedorAux.id;
+    },
+    guardarContrato: function guardarContrato() {
+      var _this = this;
+
+      var url = "/contrataciones-1/public/contratos/store";
+      this.contrato.fecha_inicio = moment__WEBPACK_IMPORTED_MODULE_2___default()(this.contrato.fecha_inicio).format("YYYY-MM-DD");
+      this.contrato.fecha_fin = moment__WEBPACK_IMPORTED_MODULE_2___default()(this.contrato.fecha_fin).format("YYYY-MM-DD");
+      var c_fecha_inicio = moment__WEBPACK_IMPORTED_MODULE_2___default()(this.contrato.fecha_inicio).toDate();
+      var c_fecha_fin = moment__WEBPACK_IMPORTED_MODULE_2___default()(this.contrato.fecha_fin).toDate();
+      var existeContrato = this.buscar(this.contrato.contrato);
+
+      if (c_fecha_inicio > c_fecha_fin) {
+        toastr__WEBPACK_IMPORTED_MODULE_1___default.a.warning('la fecha de inicio no puede ser mayor a la de finalizacion');
+      } else if (existeContrato) {
+        toastr__WEBPACK_IMPORTED_MODULE_1___default.a.warning('ya existe contrato activo');
+      } else {
+        axios__WEBPACK_IMPORTED_MODULE_0___default.a.post(url, this.contrato).then(function (Response) {
+          $('#cargarContrato').modal('hide');
+          _this.contrato.proveedor_id = 0;
+          _this.contrato.especialidad_id = '';
+          _this.contrato.contrato = '';
+          _this.contrato.fecha_inicio = '';
+          _this.contrato.fecha_fin = '';
+          _this.proveedorAux = [];
+
+          _this.cont();
+
+          _this.contBajas();
+
+          toastr__WEBPACK_IMPORTED_MODULE_1___default.a.success('contrato cargado correctamente');
+        })["catch"](function (errors) {
+          toastr__WEBPACK_IMPORTED_MODULE_1___default.a.error('error', errors);
+        });
+      }
+    },
+    cont: function cont() {
+      return this.$store.dispatch('getContratos');
+    },
+    contBajas: function contBajas() {
+      return this.$store.dispatch('getContratosBajas');
+    },
+    buscar: function buscar(contratos) {
+      var auxiliar = 0;
+      this.contratoAux = this.contratosActivos;
+      this.contratoAux.find(function (Response) {
+        if (Response.contrato == contratos) {
+          auxiliar = 1;
+        }
+      });
+      return auxiliar;
+    }
+  },
+  computed: {
+    hospitales: function hospitales() {
+      return this.$store.state.hospitales;
+    },
+    contratosActivos: function contratosActivos() {
+      return this.$store.state.contratos;
+    },
+    contratosBajas: function contratosBajas() {
+      return this.$store.state.contratosBajas;
+    },
+    especialidades: function especialidades() {
+      return this.$store.state.especialidades;
+    },
+    proveedoress: function proveedoress() {
+      return this.$store.state.proveedor;
+    },
+    proveedor: function proveedor() {
+      this.proveedores = this.proveedoress;
+      this.proveedores = this.proveedores.sort(function (a, b) {
+        return a.proveedor - b.proveedor;
+      });
+      return this.proveedores;
     }
   }
 });
@@ -46598,13 +46896,11 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _vm._m(0),
-      _vm._v(" "),
       _c("div", { staticClass: "form-group row badge-dark col-sm-12" }, [
         _c(
           "button",
           {
-            staticClass: "btn btn-primary",
+            staticClass: "button2 btn",
             attrs: {
               type: "button",
               "data-toggle": "modal",
@@ -46612,6 +46908,19 @@ var render = function() {
             }
           },
           [_vm._v("\n            Nuevo contratado\n        ")]
+        ),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "button1 btn",
+            attrs: {
+              type: "button",
+              "data-toggle": "modal",
+              "data-target": "#cargarContrato"
+            }
+          },
+          [_vm._v("\n            Nuevo contrato\n        ")]
         ),
         _vm._v(" "),
         _c("p", [
@@ -46807,7 +47116,11 @@ var render = function() {
                           }
                         },
                         [_vm._v("ESPECIALIDAD")]
-                      )
+                      ),
+                  _vm._v(" "),
+                  _c("th", { attrs: { scope: "col" } }, [_vm._v("CONTRATADO")]),
+                  _vm._v(" "),
+                  _c("th", { attrs: { scope: "col" } }, [_vm._v("CONTRATO")])
                 ])
               ])
             : _c("thead", [
@@ -46928,7 +47241,7 @@ var render = function() {
             ? _c(
                 "tbody",
                 _vm._l(_vm.contratosActivos, function(contratado) {
-                  return _c("tr", { key: contratado.id }, [
+                  return _c("tr", { key: contratado.contrato }, [
                     _c("th", [
                       _vm._v(
                         "\n                    " +
@@ -46965,7 +47278,7 @@ var render = function() {
                       _vm._v(
                         "\n                    " +
                           _vm._s(contratado.contrato) +
-                          "\n                "
+                          "\n                    \n                "
                       )
                     ]),
                     _vm._v(" "),
@@ -46977,7 +47290,37 @@ var render = function() {
                       )
                     ]),
                     _vm._v(" "),
-                    _vm._m(1, true)
+                    _vm._m(0, true),
+                    _vm._v(" "),
+                    _c("th", { attrs: { width: "10px" } }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: " btn btn-small button1",
+                          attrs: {
+                            type: "button",
+                            "data-toggle": "modal",
+                            "data-target": "#modificar"
+                          }
+                        },
+                        [_vm._v("Cambiar")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: " btn btn-small btn-danger",
+                          attrs: { type: "button" },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.deleteContrato(contratado.contrato_id)
+                            }
+                          }
+                        },
+                        [_vm._v("Borrar")]
+                      )
+                    ])
                   ])
                 }),
                 0
@@ -47018,6 +47361,8 @@ var render = function() {
                       )
                     ]),
                     _vm._v(" "),
+                    _vm._m(1, true),
+                    _vm._v(" "),
                     _vm._m(2, true)
                   ])
                 }),
@@ -47026,7 +47371,11 @@ var render = function() {
         ]
       ),
       _vm._v(" "),
-      _c("nuevo-proveedor")
+      _c("nuevo-proveedor"),
+      _vm._v(" "),
+      _c("modificar-proveedor"),
+      _vm._v(" "),
+      _c("nuevo-contrato")
     ],
     1
   )
@@ -47036,35 +47385,214 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group row badge-dark col-sm-12" }, [
-      _c("hr"),
+    return _c("th", { attrs: { width: "10px" } }, [
+      _c(
+        "button",
+        {
+          staticClass: " btn btn-small button1",
+          attrs: {
+            type: "button",
+            "data-toggle": "modal",
+            "data-target": "#modificar"
+          }
+        },
+        [_vm._v("Cambiar")]
+      ),
       _vm._v(" "),
-      _c("hr"),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-sm-2" }, [
-        _c("label", { staticClass: "text" }, [_vm._v(" proveedor      ")]),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "form-control badge-secondary",
-          attrs: { type: "int", id: "legajo", name: "legajo" }
-        })
+      _c(
+        "button",
+        { staticClass: " btn btn-small button2", attrs: { type: "button" } },
+        [_vm._v("Datos")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("th", { attrs: { width: "10px" } }, [
+      _c(
+        "button",
+        {
+          staticClass: " btn btn-small button1",
+          attrs: {
+            type: "button",
+            "data-toggle": "modal",
+            "data-target": "#modificar"
+          }
+        },
+        [_vm._v("Cambiar")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("th", { attrs: { width: "10px" } }, [
+      _c(
+        "button",
+        { staticClass: " btn btn-small button2", attrs: { type: "button" } },
+        [_vm._v("Datos")]
+      )
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/contratos/ModificarContratos.vue?vue&type=template&id=9c2a3ea0&":
+/*!*******************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/contratos/ModificarContratos.vue?vue&type=template&id=9c2a3ea0& ***!
+  \*******************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "form",
+    {
+      attrs: { method: "post" },
+      on: {
+        submit: function($event) {
+          $event.preventDefault()
+          return _vm.actualizarVacaciones($event)
+        }
+      }
+    },
+    [
+      _c(
+        "div",
+        {
+          staticClass: "modal fade",
+          attrs: {
+            id: "modificar",
+            tabindex: "-1",
+            role: "dialog",
+            "aria-hidden": "true"
+          }
+        },
+        [
+          _c(
+            "div",
+            { staticClass: "modal-dialog", attrs: { role: "document" } },
+            [
+              _c("div", { staticClass: "modal-content" }, [
+                _vm._m(0),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "modal-body badge-dark" },
+                  [
+                    _c("p", [_vm._v(_vm._s(_vm.proveedor))]),
+                    _vm._v(" "),
+                    _c("hr"),
+                    _vm._v(" "),
+                    _vm._m(1),
+                    _vm._v(" "),
+                    _vm._m(2),
+                    _vm._v(" "),
+                    _vm._m(3),
+                    _vm._v(" "),
+                    _vm._m(4),
+                    _vm._v(" "),
+                    _vm._m(5),
+                    _vm._v(" "),
+                    _vm._l(_vm.errors, function(error) {
+                      return _c(
+                        "span",
+                        { key: error, staticClass: "text-danger" },
+                        [_vm._v(_vm._s(error))]
+                      )
+                    })
+                  ],
+                  2
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-footer badge-secondary" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-outline-danger",
+                      attrs: { type: "button", "data-dismiss": "modal" }
+                    },
+                    [_vm._v("Close")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary",
+                      attrs: { type: "submit" },
+                      on: {
+                        click: function($event) {
+                          return _vm.$emit("speak")
+                        }
+                      }
+                    },
+                    [_vm._v("Agregar Vacaciones")]
+                  )
+                ])
+              ])
+            ]
+          )
+        ]
+      )
+    ]
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header badge-dark" }, [
+      _c("h5", { staticClass: "Nuevo Agente", attrs: { id: "nuevo" } }, [
+        _vm._v("Modificar proveedor")
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "col-sm-2" }, [
-        _c("label", { staticClass: "text" }, [_vm._v(" DNI         ")]),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "form-control badge-secondary",
-          attrs: { type: "int", id: "legajo", name: "legajo" }
-        })
-      ]),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row" }, [
+      _c(
+        "label",
+        {
+          staticClass: "col-sm-4 col-form-label text-center",
+          attrs: { for: "legajo" }
+        },
+        [_vm._v("PROVEEDOR   ")]
+      ),
       _vm._v(" "),
-      _c("div", { staticClass: "col-sm-2" }, [
-        _c("label", { staticClass: "text" }, [_vm._v(" nombre      ")]),
-        _vm._v(" "),
+      _c("div", { staticClass: "col-sm-8" }, [
         _c("input", {
-          staticClass: "form-control badge-secondary",
-          attrs: { type: "text", id: "nombre", name: "nombre" }
+          staticClass: "form-control text-danger badge-secondary",
+          attrs: { disabled: "", type: "text" }
         })
       ])
     ])
@@ -47073,24 +47601,88 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("th", { attrs: { width: "10px" } }, [
+    return _c("div", { staticClass: "form-group row" }, [
       _c(
-        "a",
-        { staticClass: "btn btn-primary btn-small", attrs: { href: "#" } },
-        [_vm._v("Datos")]
-      )
+        "label",
+        {
+          staticClass: "col-sm-4 col-form-label text-center ",
+          attrs: { for: "horario" }
+        },
+        [_vm._v("NOMBRE     ")]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-sm-8" }, [
+        _c("input", {
+          staticClass: "form-control text-danger badge-secondary",
+          attrs: { disabled: "", type: "text" }
+        })
+      ])
     ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("th", { attrs: { width: "10px" } }, [
+    return _c("div", { staticClass: "form-group row" }, [
       _c(
-        "a",
-        { staticClass: "btn btn-primary btn-small", attrs: { href: "#" } },
-        [_vm._v("Datos")]
-      )
+        "label",
+        {
+          staticClass: "col-sm-4 col-form-label text-center ",
+          attrs: { for: "documento" }
+        },
+        [_vm._v("APELLIDO   ")]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-sm-8" }, [
+        _c("input", {
+          staticClass: "form-control badge-secondary",
+          attrs: { type: "text" }
+        })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row" }, [
+      _c(
+        "label",
+        {
+          staticClass: "col-sm-4 col-form-label text-center ",
+          attrs: { for: "documento" }
+        },
+        [_vm._v("FECHA DE INICIO")]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-sm-8" }, [
+        _c("input", {
+          staticClass: "form-control badge-secondary",
+          attrs: { type: "date" }
+        })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row" }, [
+      _c(
+        "label",
+        {
+          staticClass: "col-sm-4 col-form-label text-center ",
+          attrs: { for: "documento" }
+        },
+        [_vm._v("FECHA FIN")]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-sm-8" }, [
+        _c("input", {
+          staticClass: "form-control badge-secondary",
+          attrs: { type: "date" }
+        })
+      ])
     ])
   }
 ]
@@ -47375,7 +47967,7 @@ var render = function() {
                               }
                             ],
                             staticClass: "form-control badge-secondary",
-                            attrs: { name: "", id: "genero" },
+                            attrs: { name: "" },
                             on: {
                               change: function($event) {
                                 var $$selectedVal = Array.prototype.filter
@@ -47518,6 +48110,459 @@ var render = function() {
                           ],
                           2
                         )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _vm._l(_vm.errors, function(error) {
+                      return _c(
+                        "span",
+                        { key: error, staticClass: "text-danger" },
+                        [_vm._v(_vm._s(error))]
+                      )
+                    })
+                  ],
+                  2
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-footer badge-secondary" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-outline-danger",
+                      attrs: { type: "button", "data-dismiss": "modal" }
+                    },
+                    [_vm._v("Close")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary",
+                      attrs: { type: "submit" },
+                      on: {
+                        click: function($event) {
+                          _vm.verificador++
+                        }
+                      }
+                    },
+                    [_vm._v("Agregar Proveedor")]
+                  )
+                ])
+              ])
+            ]
+          )
+        ]
+      )
+    ]
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header badge-dark" }, [
+      _c("h5", { staticClass: "Nuevo Agente", attrs: { id: "nuevo" } }, [
+        _vm._v("Nuevo Agente")
+      ]),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/contratos/NuevoNumeroContrato.vue?vue&type=template&id=800a1248&":
+/*!********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/contratos/NuevoNumeroContrato.vue?vue&type=template&id=800a1248& ***!
+  \********************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "form",
+    {
+      attrs: { method: "post" },
+      on: {
+        submit: function($event) {
+          $event.preventDefault()
+          return _vm.guardarContrato($event)
+        }
+      }
+    },
+    [
+      _c(
+        "div",
+        {
+          staticClass: "modal fade",
+          attrs: {
+            id: "cargarContrato",
+            tabindex: "-1",
+            role: "dialog",
+            "aria-hidden": "true"
+          }
+        },
+        [
+          _c(
+            "div",
+            { staticClass: "modal-dialog", attrs: { role: "document" } },
+            [
+              _c("div", { staticClass: "modal-content" }, [
+                _vm._m(0),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "modal-body badge-dark" },
+                  [
+                    _c("hr"),
+                    _vm._v(" "),
+                    _c("p", [_vm._v(_vm._s(_vm.contrato))]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-sm-4 col-form-label text-center",
+                          attrs: { for: "legajo" }
+                        },
+                        [_vm._v("PROVEEDOR   ")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-sm-8" }, [
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.proveedorAux,
+                                expression: "proveedorAux"
+                              }
+                            ],
+                            staticClass: "form-control badge-secondary",
+                            attrs: { name: "" },
+                            on: {
+                              change: [
+                                function($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function(o) {
+                                      return o.selected
+                                    })
+                                    .map(function(o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.proveedorAux = $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                },
+                                _vm.setProveedorId
+                              ]
+                            }
+                          },
+                          [
+                            _c("option", { attrs: { value: "0" } }, [
+                              _vm._v("SELECCIONE")
+                            ]),
+                            _vm._v(" "),
+                            _vm._l(_vm.proveedor, function(proveedors) {
+                              return _c(
+                                "option",
+                                { domProps: { value: proveedors } },
+                                [_vm._v(_vm._s(proveedors.proveedor))]
+                              )
+                            })
+                          ],
+                          2
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-sm-4 col-form-label text-center ",
+                          attrs: { for: "horario" }
+                        },
+                        [_vm._v("APELLIDO   ")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-sm-8" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.proveedorAux.apellido,
+                              expression: "proveedorAux.apellido"
+                            }
+                          ],
+                          staticClass:
+                            "form-control text-danger badge-secondary",
+                          attrs: { type: "disabled" },
+                          domProps: { value: _vm.proveedorAux.apellido },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.proveedorAux,
+                                "apellido",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-sm-4 col-form-label text-center ",
+                          attrs: { for: "horario" }
+                        },
+                        [_vm._v("NOMBRE   ")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-sm-8" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.proveedorAux.nombre,
+                              expression: "proveedorAux.nombre"
+                            }
+                          ],
+                          staticClass:
+                            "form-control text-danger badge-secondary",
+                          attrs: { type: "disabled" },
+                          domProps: { value: _vm.proveedorAux.nombre },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.proveedorAux,
+                                "nombre",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-sm-4 col-form-label text-center",
+                          attrs: { for: "legajo" }
+                        },
+                        [_vm._v("ESPECIALIDAD   ")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-sm-8" }, [
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.contrato.especialidad_id,
+                                expression: "contrato.especialidad_id"
+                              }
+                            ],
+                            staticClass: "form-control badge-secondary",
+                            attrs: { name: "" },
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.$set(
+                                  _vm.contrato,
+                                  "especialidad_id",
+                                  $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                )
+                              }
+                            }
+                          },
+                          [
+                            _c("option", { attrs: { value: "" } }, [
+                              _vm._v("SELECCIONE")
+                            ]),
+                            _vm._v(" "),
+                            _vm._l(_vm.especialidades, function(especialidad) {
+                              return _c(
+                                "option",
+                                {
+                                  key: especialidad.id,
+                                  domProps: { value: especialidad.id }
+                                },
+                                [_vm._v(_vm._s(especialidad.especialidad))]
+                              )
+                            })
+                          ],
+                          2
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-sm-4 col-form-label text-center ",
+                          attrs: { for: "horario" }
+                        },
+                        [_vm._v("CONTRATO   ")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-sm-8" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.contrato.contrato,
+                              expression: "contrato.contrato"
+                            }
+                          ],
+                          staticClass:
+                            "form-control text-danger badge-secondary",
+                          attrs: { type: "disabled" },
+                          domProps: { value: _vm.contrato.contrato },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.contrato,
+                                "contrato",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-sm-4 col-form-label text-center ",
+                          attrs: { for: "documento" }
+                        },
+                        [_vm._v("FECHA INICIO")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-sm-8" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.contrato.fecha_inicio,
+                              expression: "contrato.fecha_inicio"
+                            }
+                          ],
+                          staticClass: "form-control badge-secondary",
+                          attrs: { type: "date" },
+                          domProps: { value: _vm.contrato.fecha_inicio },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.contrato,
+                                "fecha_inicio",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-sm-4 col-form-label text-center ",
+                          attrs: { for: "documento" }
+                        },
+                        [_vm._v("FECHA FIN")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-sm-8" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.contrato.fecha_fin,
+                              expression: "contrato.fecha_fin"
+                            }
+                          ],
+                          staticClass: "form-control badge-secondary",
+                          attrs: { type: "date" },
+                          domProps: { value: _vm.contrato.fecha_fin },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.contrato,
+                                "fecha_fin",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        })
                       ])
                     ]),
                     _vm._v(" "),
@@ -96710,6 +97755,8 @@ var home = Vue.component('home', __webpack_require__(/*! ./components/Home.vue *
 var libro = Vue.component('libro', __webpack_require__(/*! ./components/libros/VistaLibros.vue */ "./resources/js/components/libros/VistaLibros.vue")["default"]);
 var listProv = Vue.component('listado-proveedores', __webpack_require__(/*! ./components/contratos/ListadoContratos.vue */ "./resources/js/components/contratos/ListadoContratos.vue")["default"]);
 var cargarCont = Vue.component('nuevo-proveedor', __webpack_require__(/*! ./components/contratos/NuevoContrato.vue */ "./resources/js/components/contratos/NuevoContrato.vue")["default"]);
+Vue.component('modificar-proveedor', __webpack_require__(/*! ./components/contratos/ModificarContratos.vue */ "./resources/js/components/contratos/ModificarContratos.vue")["default"]);
+Vue.component('nuevo-contrato', __webpack_require__(/*! ./components/contratos/NuevoNumeroContrato.vue */ "./resources/js/components/contratos/NuevoNumeroContrato.vue")["default"]);
 var routes = [{
   path: '/',
   name: 'Home',
@@ -97298,6 +98345,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/contratos/ModificarContratos.vue":
+/*!******************************************************************!*\
+  !*** ./resources/js/components/contratos/ModificarContratos.vue ***!
+  \******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ModificarContratos_vue_vue_type_template_id_9c2a3ea0___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ModificarContratos.vue?vue&type=template&id=9c2a3ea0& */ "./resources/js/components/contratos/ModificarContratos.vue?vue&type=template&id=9c2a3ea0&");
+/* harmony import */ var _ModificarContratos_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ModificarContratos.vue?vue&type=script&lang=js& */ "./resources/js/components/contratos/ModificarContratos.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ModificarContratos_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ModificarContratos_vue_vue_type_template_id_9c2a3ea0___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ModificarContratos_vue_vue_type_template_id_9c2a3ea0___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/contratos/ModificarContratos.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/contratos/ModificarContratos.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************!*\
+  !*** ./resources/js/components/contratos/ModificarContratos.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ModificarContratos_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./ModificarContratos.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/contratos/ModificarContratos.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ModificarContratos_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/contratos/ModificarContratos.vue?vue&type=template&id=9c2a3ea0&":
+/*!*************************************************************************************************!*\
+  !*** ./resources/js/components/contratos/ModificarContratos.vue?vue&type=template&id=9c2a3ea0& ***!
+  \*************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ModificarContratos_vue_vue_type_template_id_9c2a3ea0___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./ModificarContratos.vue?vue&type=template&id=9c2a3ea0& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/contratos/ModificarContratos.vue?vue&type=template&id=9c2a3ea0&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ModificarContratos_vue_vue_type_template_id_9c2a3ea0___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ModificarContratos_vue_vue_type_template_id_9c2a3ea0___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/contratos/NuevoContrato.vue":
 /*!*************************************************************!*\
   !*** ./resources/js/components/contratos/NuevoContrato.vue ***!
@@ -97362,6 +98478,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NuevoContrato_vue_vue_type_template_id_198d25a0___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NuevoContrato_vue_vue_type_template_id_198d25a0___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/contratos/NuevoNumeroContrato.vue":
+/*!*******************************************************************!*\
+  !*** ./resources/js/components/contratos/NuevoNumeroContrato.vue ***!
+  \*******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _NuevoNumeroContrato_vue_vue_type_template_id_800a1248___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./NuevoNumeroContrato.vue?vue&type=template&id=800a1248& */ "./resources/js/components/contratos/NuevoNumeroContrato.vue?vue&type=template&id=800a1248&");
+/* harmony import */ var _NuevoNumeroContrato_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NuevoNumeroContrato.vue?vue&type=script&lang=js& */ "./resources/js/components/contratos/NuevoNumeroContrato.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _NuevoNumeroContrato_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _NuevoNumeroContrato_vue_vue_type_template_id_800a1248___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _NuevoNumeroContrato_vue_vue_type_template_id_800a1248___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/contratos/NuevoNumeroContrato.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/contratos/NuevoNumeroContrato.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************!*\
+  !*** ./resources/js/components/contratos/NuevoNumeroContrato.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_NuevoNumeroContrato_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./NuevoNumeroContrato.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/contratos/NuevoNumeroContrato.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_NuevoNumeroContrato_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/contratos/NuevoNumeroContrato.vue?vue&type=template&id=800a1248&":
+/*!**************************************************************************************************!*\
+  !*** ./resources/js/components/contratos/NuevoNumeroContrato.vue?vue&type=template&id=800a1248& ***!
+  \**************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NuevoNumeroContrato_vue_vue_type_template_id_800a1248___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./NuevoNumeroContrato.vue?vue&type=template&id=800a1248& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/contratos/NuevoNumeroContrato.vue?vue&type=template&id=800a1248&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NuevoNumeroContrato_vue_vue_type_template_id_800a1248___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NuevoNumeroContrato_vue_vue_type_template_id_800a1248___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -97669,7 +98854,9 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
     contratos: [],
     servicios: [],
     sectores: [],
-    contratosBajas: []
+    contratosBajas: [],
+    especialidades: [],
+    proveedor: []
   },
   mutations: {
     llenarHospitales: function llenarHospitales(state, hosp) {
@@ -97689,6 +98876,12 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
     },
     llenarContratosBajas: function llenarContratosBajas(state, contratosBajas) {
       state.contratosBajas = contratosBajas;
+    },
+    llenarEspecialidades: function llenarEspecialidades(state, especialidades) {
+      state.especialidades = especialidades;
+    },
+    llenarProveedores: function llenarProveedores(state, proveedor) {
+      state.proveedor = proveedor;
     }
   },
   actions: {
@@ -97796,15 +98989,15 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
         }
       });
     },
-    getServicios: function getServicios(_ref5) {
-      var commit, data, servicios;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getServicios$(_context5) {
+    getEspecialidades: function getEspecialidades(_ref5) {
+      var commit, data, especialidades;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getEspecialidades$(_context5) {
         while (1) {
           switch (_context5.prev = _context5.next) {
             case 0:
               commit = _ref5.commit;
               _context5.next = 3;
-              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(fetch('/contrataciones-1/public/servicios'));
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(fetch('/contrataciones-1/public/especialidades'));
 
             case 3:
               data = _context5.sent;
@@ -97812,8 +99005,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
               return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(data.json());
 
             case 6:
-              servicios = _context5.sent;
-              commit('llenarServicios', servicios);
+              especialidades = _context5.sent;
+              commit('llenarEspecialidades', especialidades);
 
             case 8:
             case "end":
@@ -97822,15 +99015,15 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
         }
       });
     },
-    getSectores: function getSectores(_ref6) {
-      var commit, data, sectores;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getSectores$(_context6) {
+    getServicios: function getServicios(_ref6) {
+      var commit, data, servicios;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getServicios$(_context6) {
         while (1) {
           switch (_context6.prev = _context6.next) {
             case 0:
               commit = _ref6.commit;
               _context6.next = 3;
-              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(fetch('/contrataciones-1/public/sectores'));
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(fetch('/contrataciones-1/public/servicios'));
 
             case 3:
               data = _context6.sent;
@@ -97838,12 +99031,64 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
               return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(data.json());
 
             case 6:
-              sectores = _context6.sent;
-              commit('llenarSectores', sectores);
+              servicios = _context6.sent;
+              commit('llenarServicios', servicios);
 
             case 8:
             case "end":
               return _context6.stop();
+          }
+        }
+      });
+    },
+    getSectores: function getSectores(_ref7) {
+      var commit, data, sectores;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getSectores$(_context7) {
+        while (1) {
+          switch (_context7.prev = _context7.next) {
+            case 0:
+              commit = _ref7.commit;
+              _context7.next = 3;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(fetch('/contrataciones-1/public/sectores'));
+
+            case 3:
+              data = _context7.sent;
+              _context7.next = 6;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(data.json());
+
+            case 6:
+              sectores = _context7.sent;
+              commit('llenarSectores', sectores);
+
+            case 8:
+            case "end":
+              return _context7.stop();
+          }
+        }
+      });
+    },
+    getProveedores: function getProveedores(_ref8) {
+      var commit, data, proveedor;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getProveedores$(_context8) {
+        while (1) {
+          switch (_context8.prev = _context8.next) {
+            case 0:
+              commit = _ref8.commit;
+              _context8.next = 3;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(fetch('/contrataciones-1/public/proveedor'));
+
+            case 3:
+              data = _context8.sent;
+              _context8.next = 6;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(data.json());
+
+            case 6:
+              proveedor = _context8.sent;
+              commit('llenarProveedores', proveedor);
+
+            case 8:
+            case "end":
+              return _context8.stop();
           }
         }
       });

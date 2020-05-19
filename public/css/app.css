@@ -11581,3 +11581,26 @@ a.text-dark:focus {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
+.button1 {
+  font-size: 95%;
+  background-color: #FF600D;
+  color: white;
+}
+
+.button1:hover {
+  color: #FF600D;
+  background-color: transparent;
+  border: 1px solid #FF600D;
+}
+
+.button2 {
+  background-color: #0095B3;
+  color: white;
+}
+
+.button2:hover {
+  color: #0099CC;
+  background-color: transparent;
+  border: 1px solid #0099CC;
+}
+

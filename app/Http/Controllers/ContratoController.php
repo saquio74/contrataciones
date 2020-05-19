@@ -41,7 +41,7 @@ class ContratoController extends Controller
                         ->join('proveedors','proveedor_id','=','proveedors.id')
                         ->join('especialidad','especialidad_id','=','especialidad.id')
                         ->select('proveedors.id','proveedors.proveedor','proveedors.dni','proveedors.cuil',
-                        'proveedors.nombre','proveedors.apellido','contratos.contrato',
+                        'proveedors.nombre','proveedors.apellido','contratos.id AS contrato_id','contratos.contrato',
                         'especialidad.especialidad','contratos.fecha_fin')
                         ->where('fecha_fin','>=',$mytime)
                         ->get();
@@ -65,7 +65,20 @@ class ContratoController extends Controller
     }
     public function store(Request $proveedor)
     {
+        $this->validate($proveedor,[
+            'proveedor_id'      =>  'required',
+            'especialidad_id'   =>  'required',
+            'contrato'          =>  'required',
+            'fecha_inicio'      =>  'required',
+            'fecha_fin'         =>  'required',
+        ]);
+
+        contrato::create($proveedor->all());
         
+    }
+    public function delete($id)
+    {
+        $delete = contrato::where('id',$id)->delete();
     }
 
     

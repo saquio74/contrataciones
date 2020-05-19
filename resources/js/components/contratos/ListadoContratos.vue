@@ -5,55 +5,13 @@
             <button v-on:click="ver=0" type="submit" class="btn btn-outline-dark">ACTIVOS</button>
             <button v-on:click="ver=1"   type="submit" class="btn btn-outline-dark">NO ACTIVOS</button>
         </div>
+        
         <div class="form-group row badge-dark col-sm-12">
-            <hr>
-            <hr>
-            
-            <div class="col-sm-2">
-                <label class="text"> proveedor      </label>
-                <input type="int" class="form-control badge-secondary" id="legajo" name='legajo'>
-            </div>
-            <div class="col-sm-2">
-                <label class="text"> DNI         </label>
-                <input type="int" class="form-control badge-secondary" id="legajo" name='legajo'>
-            </div>
-            <div class="col-sm-2">
-                <label class="text"> nombre      </label>
-                <input type="text" class="form-control badge-secondary" id="nombre" name='nombre'>
-            </div>
-            <!--
-            <div class="col-sm-2">
-                <label class="text"> hospital    </label>
-                <select class="form-control badge-secondary" id="hospital" name='hospital'>
-                    <option value=''>seleccione</option>
-                    <option v-for="hosp in hospitales" :key="hosp.ID" :value="hosp" >{{hosp.HOSPITAL}}</option>
-                </select>
-            </div>
-            <div class="col-sm-2">
-                <label class="text"> servicio    </label>
-                <select class="form-control badge-secondary" v-model="servicio" id="servicio" name='servicio'>
-                    <option value=''>seleccione</option>
-                    <option v-for="serv in servicios" :value="serv.SERVICIO" :key="serv.ID">{{serv.SERVICIO}}</option>
-                </select>
-            </div>
-            <div class="col-sm-2">
-                <label class="text"> sectores    </label>
-                <select class="form-control badge-secondary" v-model="sector" id="servicio" name='servicio'>
-                    <option value=''>seleccione</option>
-                    <option v-for="sect in sectores" :value="sect.SECTOR" :key="sect.SECTOR">{{sect.SECTOR}}</option>
-
-                </select>
-            </div>
-            <hr>
-            <hr>
-            <div class="col-sm-6">
-                <label class="text">TOTAL DE AGENTES:</label>
-                <P>  {{searchAgentes.length}}</P>
-            </div>-->
-        </div>
-        <div class="form-group row badge-dark col-sm-12">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cargar">
+            <button type="button" class="button2 btn" data-toggle="modal" data-target="#cargar">
                 Nuevo contratado
+            </button>
+            <button type="button" class="button1 btn" data-toggle="modal" data-target="#cargarContrato">
+                Nuevo contrato
             </button>
             <p>
                 total de proveedores activos {{contratosActivos.length}}
@@ -79,6 +37,8 @@
                     <th scope="col" v-else v-on:click="ordenadosAsc('CONTRATO');auxiliar--" >CONTRATO</th>
                     <th scope="col" v-if="auxiliar===0" v-on:click="ordenadosDesc('ESPECIALIDAD');auxiliar++"  >ESPECIALIDAD</th>
                     <th scope="col" v-else v-on:click="ordenadosAsc('ESPECIALIDAD');auxiliar--" >ESPECIALIDAD</th>
+                    <th scope="col">CONTRATADO</th>
+                    <th scope="col">CONTRATO</th>
                 </tr>
             </thead>
             <thead v-else>
@@ -90,9 +50,10 @@
                     <th scope="col" v-else v-on:click="ordenadosAsc('NOMBRE');auxiliar--" >NOMBRE</th>
                     <th scope="col" v-if="auxiliar===0" v-on:click="ordenadosDesc('APELLIDO');auxiliar++"  >APELLIDO</th>
                     <th scope="col" v-else v-on:click="ordenadosAsc('APELLIDO');auxiliar--" >APELLIDO</th>
+                    
             </thead>
             <tbody v-if="ver===0">
-                <tr  v-for="contratado in contratosActivos" :key="contratado.id" >
+                <tr  v-for="contratado in contratosActivos" :key="contratado.contrato" >
                     <th>
                         {{contratado.proveedor}}
                     </th>
@@ -107,15 +68,23 @@
                     </th>
                     <th>
                         {{contratado.contrato}}
+                        
                     </th>
                     <th>
                         {{contratado.especialidad.toUpperCase()}}
                     </th >
                     
                     <th width="10px">
-                        
-                        <a href="#" class="btn btn-primary btn-small">Datos</a>
+                        <button type="button" class=" btn btn-small button1" data-toggle="modal" data-target="#modificar">Cambiar</button>
+                        <button type="button" class=" btn btn-small button2">Datos</button>
                     </th>
+                    <th width="10px">
+                        <button type="button" class=" btn btn-small button1" data-toggle="modal" data-target="#modificar">Cambiar</button>
+                        <button type="button" v-on:click.prevent="deleteContrato(contratado.contrato_id)" class=" btn btn-small btn-danger">Borrar</button>
+                        
+                    </th>
+                    
+
                 </tr>
             </tbody>
             <tbody v-else>
@@ -133,27 +102,38 @@
                         {{contratado.apellido.toUpperCase()}}
                     </th>
                     <th width="10px">
-                        
-                        <a href="#" class="btn btn-primary btn-small">Datos</a>
+                        <button type="button" class=" btn btn-small button1" data-toggle="modal" data-target="#modificar">Cambiar</button>
+                    </th>
+                    <th width="10px">
+
+                        <button type="button" class=" btn btn-small button2">Datos</button>
                     </th>
                 </tr>
             </tbody>
         </table>
         <nuevo-proveedor></nuevo-proveedor>
+        <modificar-proveedor></modificar-proveedor>
+        <nuevo-contrato />
+        
     </div>
 </template>
 <script>
+import axios    from 'axios';
+import toastr   from 'toastr';
 export default {
     data(){
         return{
             auxiliar:   0,
             ver:        0,
+            errors:      [],
         }
     },
     created:function()  {
         this.hosp();
         this.cont();
         this.contBajas();
+        this.especialidades();
+        this.proveedores();
         //this.onFileChange();
     },
     methods:{
@@ -165,6 +145,12 @@ export default {
         },
         contBajas(){
             return this.$store.dispatch('getContratosBajas')
+        },
+        especialidades(){
+            return this.$store.dispatch('getEspecialidades')
+        },
+        proveedores(){
+            return this.$store.dispatch('getProveedores')
         },
         ordenadosAsc: function(prop) {
             if(this.ver===0){
@@ -218,6 +204,19 @@ export default {
             }else{
                 this.contratosBajas.reverse();
             }
+        },
+        deleteContrato(id){
+            let url = '/contrataciones-1/public/contrato/delete/'+ id;
+            console.log(url)
+            axios.delete(url).then(response=>{
+                this.cont();
+                this.contBajas();
+                toastr.success('eliminado satisfactoriamente');
+            }).catch(errors=>{
+                    this.errors = errors.response.data
+                    toastr.error('error');
+            })
+            
         }
     },
     computed:{
@@ -230,6 +229,17 @@ export default {
         contratosBajas(){
             return this.$store.state.contratosBajas
         },
+        especialidad(){
+            return this.$store.state.especialidades
+        },
+        proveedor(){
+            return this.$store.state.proveedor
+        }
     }
 }
 </script>
+<style>
+    
+
+    
+</style>

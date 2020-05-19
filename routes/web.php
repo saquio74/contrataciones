@@ -68,18 +68,26 @@ Route::post('/especialidad/excelImport',     'especialidadController@importExcel
 
 Route::get('/proveedor/vistaExcel',          'proveedorController@VistaExcel');
 
+Route::get('/proveedor',                     'proveedorController@index');
+
 Route::post('/proveedor/excelImport',        'proveedorController@importExcel');
 
-Route::get('/contrato/vistaExcel',          'contratoController@VistaExcel');
+Route::get('/contrato/vistaExcel',           'contratoController@VistaExcel');
 
-Route::post('/contrato/excelImport',        'contratoController@importExcel');
+Route::post('/contrato/excelImport',         'contratoController@importExcel');
 
-Route::get('/provhosp/vistaExcel',          'provhospController@VistaExcel');
+Route::get('/provhosp/vistaExcel',           'provhospController@VistaExcel');
 
-Route::post('/provhosp/excelImport',        'provhospController@importExcel');
+Route::post('/provhosp/excelImport',         'provhospController@importExcel');
 
-Route::get('/contrato/activos',             'contratoController@activos');
+Route::get('/contrato/activos',              'ContratoController@activos');
 
-Route::get('/contrato/bajas',               'contratoController@bajas');
+Route::get('/contrato/bajas',                'contratoController@bajas');
 
 Route::post('/proveedor/nuevo',              'proveedorController@store');
+
+Route::get('/especialidades',                'EspecialidadController@index');
+
+Route::post('/contratos/store',              'contratoController@store');
+
+Route::delete('/contrato/delete/{id}',       'contratoController@delete');
