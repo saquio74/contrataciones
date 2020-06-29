@@ -88,6 +88,26 @@
                     </div>
                     <div class="form-group row">
                         
+                        <label for="legajo" class="col-sm-4 col-form-label text-center ">PROVINCIA     </label>
+                        <div class="col-sm-8">
+                            <select  class="form-control badge-secondary" v-model="agente.provinciaId" @change="getMunicipio(agente.provinciaId)">
+                                <option value="0">Seleccione</option>
+                                <option v-for="prov in provincias" :value="prov.id" :key="prov.id">{{prov.nombre}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row" v-if="municipios!=''">
+                        
+                        <label for="legajo" class="col-sm-4 col-form-label text-center ">MUNICIPIOS     </label>
+                        <div class="col-sm-8">
+                            <select  class="form-control badge-secondary" v-model="agente.municipioId" >
+                                <option value="0">Seleccione</option>
+                                <option v-for="muni in municipios" :value="muni.id" :key="muni.id">{{muni.nombre}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        
                         <label for="horario"   class="col-sm-4 col-form-label text-center ">HORARIO </label>
                         <div class="col-sm-8">
                             <input type="text" class="form-control badge-secondary" v-model="agente.horario" id="horario" name='horario' value=''>
@@ -118,6 +138,8 @@
                 servicios:[],
                 sectores:[],
                 incisos:[],
+                provincias:[],
+                municipios:[],
                 agente:{
                     legajo: '',
                     dni:'',
@@ -127,7 +149,9 @@
                     inciso:[],
                     sec:'',
                     idservicio:'',
+                    provinciaId:0,
                     horario:'',
+                    municipioId: 0,
                     activo:0,
                 },
                 errors:[],
@@ -140,6 +164,7 @@
             this.getServicios();
             this.getSectores();
             this.getIncisos();
+            this.getProvincias();
         },
         methods:{
             getHospitales:function(){
@@ -164,6 +189,23 @@
                 var urlIncisos = '/contrataciones-1/public/incisos';
                 axios.get(urlIncisos).then(Response=>{
                     this.incisos = Response.data
+                });
+
+            },
+            getProvincias:function(){
+                var urlProvincias = 'https://apis.datos.gob.ar/georef/api/provincias';
+                axios.get(urlProvincias).then(Response=>{
+                    this.provincias = Response.data.provincias
+                    //console.log(this.provincias)
+                });
+
+            },
+            getMunicipio:function(){
+                var urlMunicipios = 'https://apis.datos.gob.ar/georef/api/municipios?provincia='+this.agente.provinciaId+'&max=1000';
+                axios.get(urlMunicipios).then(Response=>{
+                    this.municipios = Response.data.municipios
+                    console.log(this.municipios)
+                    
                 });
 
             },

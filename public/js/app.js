@@ -3134,6 +3134,26 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -3144,6 +3164,8 @@ __webpack_require__.r(__webpack_exports__);
       servicios: [],
       sectores: [],
       incisos: [],
+      provincias: [],
+      municipios: [],
       agente: {
         legajo: '',
         dni: '',
@@ -3153,7 +3175,9 @@ __webpack_require__.r(__webpack_exports__);
         inciso: [],
         sec: '',
         idservicio: '',
+        provinciaId: 0,
         horario: '',
+        municipioId: 0,
         activo: 0
       },
       errors: [],
@@ -3165,6 +3189,7 @@ __webpack_require__.r(__webpack_exports__);
     this.getServicios();
     this.getSectores();
     this.getIncisos();
+    this.getProvincias();
   },
   methods: {
     getHospitales: function getHospitales() {
@@ -3199,25 +3224,42 @@ __webpack_require__.r(__webpack_exports__);
         _this4.incisos = Response.data;
       });
     },
-    crearAgente: function crearAgente() {
+    getProvincias: function getProvincias() {
       var _this5 = this;
+
+      var urlProvincias = 'https://apis.datos.gob.ar/georef/api/provincias';
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(urlProvincias).then(function (Response) {
+        _this5.provincias = Response.data.provincias; //console.log(this.provincias)
+      });
+    },
+    getMunicipio: function getMunicipio() {
+      var _this6 = this;
+
+      var urlMunicipios = 'https://apis.datos.gob.ar/georef/api/municipios?provincia=' + this.agente.provinciaId + '&max=1000';
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(urlMunicipios).then(function (Response) {
+        _this6.municipios = Response.data.municipios;
+        console.log(_this6.municipios);
+      });
+    },
+    crearAgente: function crearAgente() {
+      var _this7 = this;
 
       var url = 'store';
       axios__WEBPACK_IMPORTED_MODULE_2___default.a.post(url, this.agente).then(function (response) {
         //console.log(this.agente.inciso)
         $('#NuevoAgente').modal('hide');
-        _this5.agente.legajo = '';
-        _this5.agente.dni = '';
-        _this5.agente.nombre = '';
-        _this5.agente.telefono = '';
-        _this5.agente.idhosp = '';
-        _this5.agente.inciso = [];
-        _this5.agente.sec = '';
-        _this5.agente.idservicio = '';
-        _this5.agente.horario = '';
+        _this7.agente.legajo = '';
+        _this7.agente.dni = '';
+        _this7.agente.nombre = '';
+        _this7.agente.telefono = '';
+        _this7.agente.idhosp = '';
+        _this7.agente.inciso = [];
+        _this7.agente.sec = '';
+        _this7.agente.idservicio = '';
+        _this7.agente.horario = '';
         toastr__WEBPACK_IMPORTED_MODULE_0___default.a.success('agente guardado satisfactoriamente');
       })["catch"](function (errors) {
-        _this5.errors = errors.response.data;
+        _this7.errors = errors.response.data;
       });
     }
   }
@@ -46724,6 +46766,143 @@ var render = function() {
                         )
                       ])
                     ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-sm-4 col-form-label text-center ",
+                          attrs: { for: "legajo" }
+                        },
+                        [_vm._v("PROVINCIA     ")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-sm-8" }, [
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.agente.provinciaId,
+                                expression: "agente.provinciaId"
+                              }
+                            ],
+                            staticClass: "form-control badge-secondary",
+                            on: {
+                              change: [
+                                function($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function(o) {
+                                      return o.selected
+                                    })
+                                    .map(function(o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.$set(
+                                    _vm.agente,
+                                    "provinciaId",
+                                    $event.target.multiple
+                                      ? $$selectedVal
+                                      : $$selectedVal[0]
+                                  )
+                                },
+                                function($event) {
+                                  return _vm.getMunicipio(
+                                    _vm.agente.provinciaId
+                                  )
+                                }
+                              ]
+                            }
+                          },
+                          [
+                            _c("option", { attrs: { value: "0" } }, [
+                              _vm._v("Seleccione")
+                            ]),
+                            _vm._v(" "),
+                            _vm._l(_vm.provincias, function(prov) {
+                              return _c(
+                                "option",
+                                { key: prov.id, domProps: { value: prov.id } },
+                                [_vm._v(_vm._s(prov.nombre))]
+                              )
+                            })
+                          ],
+                          2
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _vm.municipios != ""
+                      ? _c("div", { staticClass: "form-group row" }, [
+                          _c(
+                            "label",
+                            {
+                              staticClass:
+                                "col-sm-4 col-form-label text-center ",
+                              attrs: { for: "legajo" }
+                            },
+                            [_vm._v("MUNICIPIOS     ")]
+                          ),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-sm-8" }, [
+                            _c(
+                              "select",
+                              {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.agente.municipioId,
+                                    expression: "agente.municipioId"
+                                  }
+                                ],
+                                staticClass: "form-control badge-secondary",
+                                on: {
+                                  change: function($event) {
+                                    var $$selectedVal = Array.prototype.filter
+                                      .call($event.target.options, function(o) {
+                                        return o.selected
+                                      })
+                                      .map(function(o) {
+                                        var val =
+                                          "_value" in o ? o._value : o.value
+                                        return val
+                                      })
+                                    _vm.$set(
+                                      _vm.agente,
+                                      "municipioId",
+                                      $event.target.multiple
+                                        ? $$selectedVal
+                                        : $$selectedVal[0]
+                                    )
+                                  }
+                                }
+                              },
+                              [
+                                _c("option", { attrs: { value: "0" } }, [
+                                  _vm._v("Seleccione")
+                                ]),
+                                _vm._v(" "),
+                                _vm._l(_vm.municipios, function(muni) {
+                                  return _c(
+                                    "option",
+                                    {
+                                      key: muni.id,
+                                      domProps: { value: muni.id }
+                                    },
+                                    [_vm._v(_vm._s(muni.nombre))]
+                                  )
+                                })
+                              ],
+                              2
+                            )
+                          ])
+                        ])
+                      : _vm._e(),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row" }, [
                       _c(
@@ -99116,8 +99295,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! c:\xampp\htdocs\contrataciones-1\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! c:\xampp\htdocs\contrataciones-1\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\xampp\htdocs\contrataciones-1\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\contrataciones-1\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ }),
