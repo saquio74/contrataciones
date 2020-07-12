@@ -33,6 +33,7 @@ const listProv     =Vue.component('listado-proveedores',       require('./compon
 const cargarCont   =Vue.component('nuevo-proveedor',           require('./components/contratos/NuevoContrato.vue'            ).default);
                     Vue.component('modificar-proveedor',       require('./components/contratos/ModificarContratos.vue'       ).default);
                     Vue.component('nuevo-contrato',            require('./components/contratos/NuevoNumeroContrato.vue'      ).default);
+                    Vue.component('login',                     require('./components/login/Login.vue'                        ).default);
 const routes = [
     { path: '/'             ,name: 'Home'            , component: home         },
     { path: '/agente'       ,name: 'Foo'             , component: agente       },

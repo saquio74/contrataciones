@@ -27,7 +27,7 @@
     </th>
 </template>
 <script>
-    import Axios  from 'axios';
+    import axios  from 'axios';
     import toastr from 'toastr';
     export default {
         props:{
@@ -88,7 +88,7 @@
             },
             guardarDatos:function(){//ingresa los datos
                 var urlAgeninc = '/contrataciones-1/public/agenfac/store'
-                Axios.post(urlAgeninc,this.agenteIngresar).then(Response => {
+                axios.post(urlAgeninc,this.agenteIngresar).then(Response => {
                     toastr.success('contenido cargado satisfactoriamente');
                     this.agenteIngresar.HORAS       =   0
                     this.agenteIngresar.SUBTOT      =   0
@@ -101,7 +101,7 @@
                 this.agenteAux.leg      = this.agenteIngresar.LEG
                 this.agenteAux.periodo  = this.agenteIngresar.PERIODO
                 this.agenteAux.anio     = this.agenteIngresar.ANIO 
-                Axios.post(urlLiquidacion,this.agenteAux).then(Response=>{
+                axios.post(urlLiquidacion,this.agenteAux).then(Response=>{
                     this.agenfac = Response.data
                 })
             },

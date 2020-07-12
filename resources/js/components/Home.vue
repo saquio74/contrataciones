@@ -1,7 +1,7 @@
 <template>
         <div>
             <div class="col-sm-4">
-                
+                <login></login>
                 <!--<ul v-for="hospital in hospitales" class="list-group" :key="hospital.ID">
                     <li class="list-group-item list-group-item">
                         {{hospital.HOSPITAL}}

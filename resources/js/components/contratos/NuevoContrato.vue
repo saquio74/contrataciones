@@ -89,7 +89,7 @@
 <script>
 import axios    from 'axios'
 import toastr   from 'toastr'
-//import Axios    from 'axios'
+
 export default {
     data(){
         return{
