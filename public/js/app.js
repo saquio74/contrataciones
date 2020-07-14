@@ -4551,23 +4551,37 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
+axios__WEBPACK_IMPORTED_MODULE_0___default.a.defaults.withCredentials = true;
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       datos: {
         email: 'truenity52@hotmail.com',
         password: '71947194'
-      }
+      },
+      user: {},
+      actualUser: {}
     };
   },
   methods: {
     login: function login() {
-      var url = 'login';
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post(url, this.datos).then(function (Response) {
-        console.log('hola');
-      })["catch"](function (e) {
-        console.log(e);
+      var _this = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('sanctum/csrf-cookie').then(function (response) {
+        var url = 'login';
+        axios__WEBPACK_IMPORTED_MODULE_0___default.a.post(url, _this.datos).then(function (Response) {
+          _this.user = Response.data;
+        })["catch"](function (e) {
+          console.log(e);
+        });
+      });
+    },
+    me: function me() {
+      var url = 'api/user';
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(url).then(function (Res) {
+        console.log(Res.data);
       });
     }
   }
@@ -49754,7 +49768,9 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("form", [
     _c("div", { staticClass: "form-group col-sm-12 col-md-6 col-lg-4" }, [
-      _vm._v("\n        " + _vm._s(_vm.datos) + "\n        "),
+      _vm._v("\n        " + _vm._s(_vm.user) + "\n        "),
+      _c("button", { on: { click: _vm.me } }, [_vm._v("obtener usuario")]),
+      _vm._v(" "),
       _c("label", { attrs: { for: "exampleInputEmail1" } }, [
         _vm._v("Usuario")
       ]),
