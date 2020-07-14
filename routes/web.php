@@ -8,6 +8,8 @@ Route::get('/',                              'PagesController@index');
 
 Route::post('/login',                         'Auth\LoginController@login');
 
+Route::post('/logout',                         'Auth\LoginController@logout');
+
 Route::get('/agente/agente',                 'agentes@index');
 
 Route::get('/agente/activos',                'agentes@activos');

@@ -33,20 +33,22 @@ const listProv     =Vue.component('listado-proveedores',       require('./compon
 const cargarCont   =Vue.component('nuevo-proveedor',           require('./components/contratos/NuevoContrato.vue'            ).default);
                     Vue.component('modificar-proveedor',       require('./components/contratos/ModificarContratos.vue'       ).default);
                     Vue.component('nuevo-contrato',            require('./components/contratos/NuevoNumeroContrato.vue'      ).default);
-                    Vue.component('login',                     require('./components/login/Login.vue'                        ).default);
+const login        =Vue.component('login',                     require('./components/login/Login.vue'                        ).default);
+                    Vue.component('usuario',                   require('./components/login/UsuarioEstado.vue'                ).default);
 const routes = [
-    { path: '/'             ,name: 'Home'            , component: home         },
+    { path: '/'             ,name: 'Home'            , component: login         },
     { path: '/agente'       ,name: 'Foo'             , component: agente       },
     { path: '/vacaciones'   ,name: 'Bar'             , component: vacaciones   },
     { path: '/paraLiquidar' ,name: 'paraLiquidar'    , component: paraLiquidar },
     { path: '/libros'       ,name: 'libros'          , component: libro        },
+    { path: '/login'        ,name: 'login'           , component: login        },
     { path: '/contratos'    ,name: 'contratos'       , component: listProv     }
   ]
 
 const router = new VueRouter({
     routes
 });
-
+store.dispatch('getUser')
 
 const app = new Vue({
     store:store,    

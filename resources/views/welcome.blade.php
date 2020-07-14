@@ -15,60 +15,8 @@
             </div>
             
         </div>
-        <div class="container-fluid">
-            <div class="row" id='app'>
-                <div class="col-sm-2">
-                    <nav class="navbar navbar-expand-md navbar-dark bg-dark col-sm-4">
-                        <div class="collapse navbar-collapse secondary" id="navbarCollapse">
-                            <ul class="nav column">
-                                <li class="nav-item active">
-                                    <button type="submit" class="btn btn-outline-primary">
-                                        
-                                    <router-link class="nav-link" :to="{name: 'Home'}"> INICIO <span class="sr-only">(current)</span></router-link>
-                                    </button>
-                                    
-                                </li>
-                                <li class="nav-item active">
-                                    <a class="nav-link" href="#">Certificar</a>
-                                </li>
-                                <li class="nav-item active">
-                                    <router-link class="nav-link" :to="{name: 'Foo'}"> Altas y Bajas       </router-link>
-                                </li>
-                                <li class="nav-item active">
-                                    <router-link class="nav-link" :to="{name: 'Bar'}"> Vacaciones          </router-link>
-                                </li>
-                                <li class="nav-item active">
-                                    <router-link class="nav-link" :to="{name: 'paraLiquidar'}"> Liquidar   </router-link>
-                                </li>
-                                <li class="nav-item active">
-                                    <router-link class="nav-link" :to="{name: 'libros'}"> Libros   </router-link>
-                                </li>
-                                <li class="nav-item active">
-                                    <router-link class="nav-link" :to="{name: 'contratos'}"> Contratados</router-link>
-                                </li>
-                                
-                            </ul>
-                        </div>
-                    </nav>
-                </div>
-                
-                <div class="col-sm-10">
-                    <div class=" col-sm-12 bg-secondary">
-                        
-                            <br>
-                            
-                            
-                            
-                                    
-                        
-                            <router-view></router-view>
-                            <br>
-                                @yield('contenido')    
-                             
-                        
-                    </div>
-                </div>
-            </div>
+        <div id='app'>
+            <home></home>
             
         </div>
         <!--<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>

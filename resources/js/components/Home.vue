@@ -1,16 +1,62 @@
 <template>
-        <div>
-            <div class="col-sm-4">
-                <login></login>
-                <!--<ul v-for="hospital in hospitales" class="list-group" :key="hospital.ID">
-                    <li class="list-group-item list-group-item">
-                        {{hospital.HOSPITAL}}
-                    </li>
-                </ul>-->
+    <div class="container-fluid row">
+        <div class="col-md-12 col-sm-4">
+            <usuario></usuario>
+        </div>
+        <div class="col-md-2">
+            
+            <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+                <div class="collapse navbar-collapse secondary">
+                    <ul class="nav column">
+                        <li class="nav-item active">
+                            <button type="submit" class="btn btn-outline-primary">
+                            <router-link class="nav-link" :to="{name: 'login'}"> INICIO <span class="sr-only">(current)</span></router-link>
+                            </button>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#">Certificar</a>
+                        </li>
+                        <li class="nav-item active">
+                            <router-link class="nav-link" :to="{name: 'Foo'}"> Altas y Bajas       </router-link>
+                        </li>
+                        <li class="nav-item active">
+                            <router-link class="nav-link" :to="{name: 'Bar'}"> Vacaciones          </router-link>
+                        </li>
+                        <li class="nav-item active">
+                            <router-link class="nav-link" :to="{name: 'paraLiquidar'}"> Liquidar   </router-link>
+                        </li>
+                        <li class="nav-item active">
+                            <router-link class="nav-link" :to="{name: 'libros'}"> Libros   </router-link>
+                        </li>
+                        <li class="nav-item active">
+                            <router-link class="nav-link" :to="{name: 'contratos'}"> Contratados</router-link>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        
+        <div class="col-sm-10">
+            <div class="col-sm-12 bg-secondary">
+                <router-view></router-view>
+                
             </div>
+        </div>
+    </div>
+            
+            
+            <!-- <div class="col-sm-4">
+                <template v-if="$store.state.auth">
+                    <login></login>
+                </template>
+                <template>
+                    
+                    <button @click="logout">salir</button>
+                </template>
+            </div> -->
             
 
-        </div>
+       
     
 </template>
 <script>
