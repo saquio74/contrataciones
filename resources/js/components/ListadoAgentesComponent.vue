@@ -209,7 +209,7 @@
             speakMethod: function () {
                 setTimeout(()=>{
                     this.getAgentes()
-                },5000)
+                },1000)
                 
             },
             getLegajo: function(agent){

@@ -13,8 +13,8 @@
             
             <button type="button" @click="login" class="btn btn-primary">Entrar</button>
         </div>
-        <div v-else class="form-group col-sm-12 col-md-6 col-lg-4">
-            <h4 class="display-2"> Bienvenido usuario {{userConfirm.name}}</h4>
+        <div v-else class="form-group col-sm-12 col-md-6 col-lg-4 text-center">
+            <h4 class="display-4"> Bienvenido usuario {{userConfirm.name}}</h4>
         </div>
     </form>
 </template>
@@ -39,9 +39,9 @@ axios.defaults.withCredentials = true;
             
         },
         computed:{
-        userConfirm(){
-            return this.$store.state.user
-        }
+            userConfirm(){
+                return this.$store.state.user
+            }
     }
     }
 </script>

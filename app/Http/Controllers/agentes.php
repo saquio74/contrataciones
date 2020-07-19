@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Http\Request;
 use App\agente;
 use App\hospital;
@@ -113,10 +114,13 @@ class agentes extends Controller
             $agente = agente::where('dni',$request->dni)->get();
         }
         try {
-            if(count($agente)>=1) {//si existe devuelve el mensaje de error
+            if(count($agente)>0) {//si existe devuelve el mensaje de error
 
-                $mensaje = 'el agente ya existe';
-                return view('Agente.show', compact('agente','mensaje'));
+                $message = 'el agente ya existe';
+                return response::json(array(
+                    'code'      =>  401,
+                    'message'   =>  $message
+                ), 401);
             } else {
                 agente::create($request->all());//ingresa a dicho agente
                 
@@ -129,13 +133,17 @@ class agentes extends Controller
                 }
                 
                 $agente = agente::where('legajo',$request->legajo)->get();
-
-                return view('agente.show', compact('agente'));
+                $msj = 'ingresado satisfactoriamente';
+                return response::json($msj,200);
         
             }
         } catch (\Throwable $th) {
             //throw $th;
-            return 'ocurrio algun problema';
+            $message = 'el agente ya existe';
+                return response::json(array(
+                    'code'      =>  401,
+                    'message'   =>  $message
+                ), 401);
         }
     }
     public function buscar()//retorna la vista buscar
@@ -184,7 +192,8 @@ class agentes extends Controller
                 $incisos->save();
             }
             $agente = agente::where('legajo',$request->legajo)->get();//vuelve a buscar al agente
-            return view('agente.show', compact('agente'));
+            $msj = 'actualizado satisfactoriamente';
+            return response::json($msj,200);
         }else{
             $agente = agente::where('dni',$request->dni)->get();//busco al agente por DNI
             if(count($agente)>=1){
@@ -197,7 +206,8 @@ class agentes extends Controller
                     $incisos->idinc=$request->inciso[$i];
                     $incisos->save();
                 }
-                return view('agente.show', compact('agente'));
+                $msj = 'ingresado satisfactoriamente';
+                return response::json($msj,200);
             }else{
                 return 'no puede cambiar el campo LEGAJO y DNI al mismo tiempo';
             }

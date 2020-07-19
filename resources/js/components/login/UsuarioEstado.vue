@@ -1,5 +1,5 @@
 <template>
-    <div class="button1">
+    <div class="login">
         
         <div v-if="user" class="row justify-content-center">
 

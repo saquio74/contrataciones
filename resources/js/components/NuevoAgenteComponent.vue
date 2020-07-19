@@ -86,26 +86,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="form-group row">
                         
-                        <label for="legajo" class="col-sm-4 col-form-label text-center ">PROVINCIA     </label>
-                        <div class="col-sm-8">
-                            <select  class="form-control badge-secondary" v-model="agente.provinciaId" @change="getMunicipio(agente.provinciaId)">
-                                <option value="0">Seleccione</option>
-                                <option v-for="prov in provincias" :value="prov.id" :key="prov.id">{{prov.nombre}}</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group row" v-if="municipios!=''">
-                        
-                        <label for="legajo" class="col-sm-4 col-form-label text-center ">MUNICIPIOS     </label>
-                        <div class="col-sm-8">
-                            <select  class="form-control badge-secondary" v-model="agente.municipioId" >
-                                <option value="0">Seleccione</option>
-                                <option v-for="muni in municipios" :value="muni.id" :key="muni.id">{{muni.nombre}}</option>
-                            </select>
-                        </div>
-                    </div>
                     <div class="form-group row">
                         
                         <label for="horario"   class="col-sm-4 col-form-label text-center ">HORARIO </label>
@@ -118,7 +99,7 @@
                 </div>
                 <div class="modal-footer badge-secondary">
                     <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" @click="$emit('speak')">Agregar Agente</button>
+                    <button type="submit" class="btn btn-primary" @click="$emit('   ')">Agregar Agente</button>
                 </div>
                 </div>
             </div>
@@ -149,9 +130,9 @@
                     inciso:[],
                     sec:'',
                     idservicio:'',
-                    provinciaId:0,
+                    
                     horario:'',
-                    municipioId: 0,
+                    
                     activo:0,
                 },
                 errors:[],
@@ -164,7 +145,7 @@
             this.getServicios();
             this.getSectores();
             this.getIncisos();
-            this.getProvincias();
+            //this.getProvincias();
         },
         methods:{
             getHospitales:function(){
@@ -192,28 +173,22 @@
                 });
 
             },
-            getProvincias:function(){
-                var urlProvincias = 'https://apis.datos.gob.ar/georef/api/provincias';
-                axios.get(urlProvincias).then(Response=>{
-                    this.provincias = Response.data.provincias
-                    //console.log(this.provincias)
-                });
-
-            },
-            getMunicipio:function(){
-                var urlMunicipios = 'https://apis.datos.gob.ar/georef/api/municipios?provincia='+this.agente.provinciaId+'&max=1000';
-                axios.get(urlMunicipios).then(Response=>{
-                    this.municipios = Response.data.municipios
-                    console.log(this.municipios)
-                    
-                });
-
-            },
-            crearAgente:function(){
-                var url = 'store';
+            crearAgente(){
+                var url = 'agente/store';
                 axios.post(url,this.agente).then(response=>{
                     //console.log(this.agente.inciso)
-                    $('#NuevoAgente').modal('hide');
+                    
+                    console.log(response.data)
+                    this.reset()
+                    toastr.success('agente guardado satisfactoriamente');
+                }).catch(errors=>{
+                    this.errors = errors.response.data
+                    toastr.error('ocurrio un error')
+                });
+            },
+
+            reset(){
+                $('#NuevoAgente').modal('hide');
                     this.agente.legajo      = '';
                     this.agente.dni         = '';
                     this.agente.nombre      = '';
@@ -223,11 +198,7 @@
                     this.agente.sec         = '';
                     this.agente.idservicio  = '';
                     this.agente.horario     = '';
-                    toastr.success('agente guardado satisfactoriamente');
-                }).catch(errors=>{
-                    this.errors = errors.response.data
-                });
-            },
+            }
             
             
         }

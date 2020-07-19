@@ -1,12 +1,14 @@
 <template>
     <div class="container-fluid row">
-        <div class="col-md-12 col-sm-4">
+        <div class="col-md-4 col-sm-4 offset-md-8">
             <usuario></usuario>
         </div>
         <div class="col-md-2">
-            
             <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-                <div class="collapse navbar-collapse secondary">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse secondary" id="navbarToggleExternalContent">
                     <ul class="nav column">
                         <li class="nav-item active">
                             <button type="submit" class="btn btn-outline-primary">

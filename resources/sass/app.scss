@@ -10,6 +10,7 @@
 // toastr
 @import '~toastr/build/toastr.css';
 
+
 .navbar-laravel {
     background-color: #fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
@@ -35,4 +36,14 @@
     background-color: transparent;
     border: 1px solid #0099CC;
 
+}
+.login{
+    font-size:95%;
+    background-color: #FF600D;
+    color:white;
+}
+.login:hover{
+    color:#0099CC;
+    background-color: #4CEBFF;
+    border: 1px solid #0099CC;
 }
