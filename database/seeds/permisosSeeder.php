@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use caffeinated\Shinobi\Models\Permission;
+use Illuminate\Support\Facades\DB;
+
 
 class permisosSeeder extends Seeder
 {
@@ -12,51 +13,146 @@ class permisosSeeder extends Seeder
      */
     public function run()
     {
-        Permission::create([
+        
+        \DB::table('permissions')->insert([
             'name'          =>  'Navegar usuarios',
-            'slug'          =>  'users.index',
+            'slug'          =>  'usuario.navegar',
             'description'   =>  'Listar y navegar los usuarios',
         ]);
-        Permission::create([
+        \DB::table('permissions')->insert([
             'name'          =>  'ver detalles de  usuarios',
-            'slug'          =>  'users.show',
+            'slug'          =>  'usuario.ver',
             'description'   =>  'detalles de los usuarios',
         ]);
-        Permission::create([
+        \DB::table('permissions')->insert([
             'name'          =>  'editar usuarios',
-            'slug'          =>  'users.edit',
+            'slug'          =>  'usuario.editar',
             'description'   =>  'editar usuarios',
         ]);
-        Permission::create([
+        \DB::table('permissions')->insert([
             'name'          =>  'Eliminar usuarios',
-            'slug'          =>  'users.destroy',
+            'slug'          =>  'usuario.borrar',
             'description'   =>  'borrar usuarios',
         ]);
         //roles
-        Permission::create([
+        \DB::table('permissions')->insert([
             'name'          =>  'Navegar roles',
-            'slug'          =>  'users.index',
+            'slug'          =>  'roles.navegar',
             'description'   =>  'Listar y navegar los roles',
         ]);
-        Permission::create([
+        \DB::table('permissions')->insert([
             'name'          =>  'ver detalles de  roles',
-            'slug'          =>  'users.show',
+            'slug'          =>  'roles.ver',
             'description'   =>  'detalles de los roles',
         ]);
-        Permission::create([
+        \DB::table('permissions')->insert([
             'name'          =>  'crear roles',
-            'slug'          =>  'users.create',
+            'slug'          =>  'roles.crear',
             'description'   =>  'crear roles',
         ]);
-        Permission::create([
+        \DB::table('permissions')->insert([
             'name'          =>  'editar roles',
-            'slug'          =>  'users.edit',
+            'slug'          =>  'roles.editar',
             'description'   =>  'editar roles',
         ]);
-        Permission::create([
+        \DB::table('permissions')->insert([
             'name'          =>  'Eliminar roles',
-            'slug'          =>  'roles.destroy',
+            'slug'          =>  'roles.borrar',
             'description'   =>  'borrar roles',
+        ]);
+        //agentes
+        \DB::table('permissions')->insert([
+            'name'          =>  'Navegar agente',
+            'slug'          =>  'agentes.navegar',
+            'description'   =>  'Listar y navegar los agentes',
+        ]);
+        \DB::table('permissions')->insert([
+            'name'          =>  'ver detalles de  agente',
+            'slug'          =>  'agentes.ver',
+            'description'   =>  'detalles de los agentes',
+        ]);
+        \DB::table('permissions')->insert([
+            'name'          =>  'crear agente',
+            'slug'          =>  'agentes.crear',
+            'description'   =>  'crear agentes',
+        ]);
+        \DB::table('permissions')->insert([
+            'name'          =>  'editar agente',
+            'slug'          =>  'agentes.editar',
+            'description'   =>  'editar agentes',
+        ]);
+        \DB::table('permissions')->insert([
+            'name'          =>  'Eliminar agente',
+            'slug'          =>  'agentes.borrar',
+            'description'   =>  'borrar agentes',
+        ]);
+        //vacaciones
+        \DB::table('permissions')->insert([
+            'name'          =>  'Navegar vacaciones',
+            'slug'          =>  'vacaciones.navegar',
+            'description'   =>  'Listar y navegar los vacaciones',
+        ]);
+        \DB::table('permissions')->insert([
+            'name'          =>  'crear vacaciones',
+            'slug'          =>  'vacaciones.crear',
+            'description'   =>  'crear vacaciones',
+        ]);
+        \DB::table('permissions')->insert([
+            'name'          =>  'editar vacaciones',
+            'slug'          =>  'vacaciones.editar',
+            'description'   =>  'editar vacaciones',
+        ]);
+        \DB::table('permissions')->insert([
+            'name'          =>  'Eliminar vacaciones',
+            'slug'          =>  'vacaciones.borrar',
+            'description'   =>  'borrar vacaciones',
+        ]);
+        //libros
+        \DB::table('permissions')->insert([
+            'name'          =>  'Navegar libros',
+            'slug'          =>  'libros.navegar',
+            'description'   =>  'Listar y navegar los libros',
+        ]);
+        \DB::table('permissions')->insert([
+            'name'          =>  'crear libros',
+            'slug'          =>  'libros.crear',
+            'description'   =>  'crear libros',
+        ]);
+        \DB::table('permissions')->insert([
+            'name'          =>  'editar libros',
+            'slug'          =>  'libros.editar',
+            'description'   =>  'editar libros',
+        ]);
+        \DB::table('permissions')->insert([
+            'name'          =>  'Eliminar libros',
+            'slug'          =>  'libros.borrar',
+            'description'   =>  'borrar libros',
+        ]);
+        //contratados
+        \DB::table('permissions')->insert([
+            'name'          =>  'Navegar contratados',
+            'slug'          =>  'contratados.navegar',
+            'description'   =>  'Listar y navegar los contratados',
+        ]);
+        \DB::table('permissions')->insert([
+            'name'          =>  'ver detalles de  contratados',
+            'slug'          =>  'contratados.ver',
+            'description'   =>  'detalles de los contratados',
+        ]);
+        \DB::table('permissions')->insert([
+            'name'          =>  'crear contratados',
+            'slug'          =>  'contratados.crear',
+            'description'   =>  'crear contratados',
+        ]);
+        \DB::table('permissions')->insert([
+            'name'          =>  'editar contratados',
+            'slug'          =>  'contratados.editar',
+            'description'   =>  'editar contratados',
+        ]);
+        \DB::table('permissions')->insert([
+            'name'          =>  'Eliminar contratados',
+            'slug'          =>  'contratados.borrar',
+            'description'   =>  'borrar contratados',
         ]);
     }
 }

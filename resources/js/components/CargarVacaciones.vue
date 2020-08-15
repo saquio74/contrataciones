@@ -54,7 +54,7 @@
                 </div>
                 <div class="modal-footer badge-secondary">
                     <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" @click="$emit('speak')">Agregar Vacaciones</button>
+                    <button type="submit" class="btn btn-primary">Agregar Vacaciones</button>
                 </div>
                 </div>
             </div>
@@ -75,7 +75,7 @@
                     fecha_inicio:   '',
                     fecha_fin:      '',
                 },
-                agentes:[],
+                
                 agenteAux:[],
                 errors:[],
             }
@@ -84,33 +84,41 @@
             this.getAgentes();
         },
         methods:{
-            getAgentes:function(){
-                var url = '/contrataciones-1/public/agente/agente';
-                axios.get(url).then(Response=>{
-                    this.agentes = Response.data
-                })
+            async getAgentes(){
+                await this.$store.dispatch('getAgentes')
             },
             mostrarDatos:function(){
                 this.vacaciones.agente_id = this.agenteAux.LEGAJO
 
             },
-            crearVacaciones:function(){
-                var url = '/contrataciones-1/public/vacaciones/store'
-                
-                axios.post(url, this.vacaciones).then(Response=>{   
+            crearVacaciones:async function(){
+                const url = '/contrataciones-1/public/vacaciones/store'
+                try{
+                    
+                    await axios.post(url,this.vacaciones)
+                    await this.$store.dispatch('getVacaciones')
                     $('#cargar').modal('hide');
                     this.vacaciones.agente_id     = '';
                     this.vacaciones.anio          = 0 ;
                     this.vacaciones.fecha_inicio  = '';
                     this.vacaciones.fecha_fin     = '';
                     toastr.success('vacaciones cargaradas correctamente');
-                }).catch(errors=>{
+
+                }catch(errors){
                     this.errors = errors.response.data
+                    this.vacaciones.agente_id     = '';
+                    this.vacaciones.anio          = 0 ;
+                    this.vacaciones.fecha_inicio  = '';
+                    this.vacaciones.fecha_fin     = '';
                     toastr.error('error');
-                });
+                }
             },
-            
-            
+        },
+        computed:{
+            agentes(){
+                
+                return this.$store.state.agentes
+            }
         }
     }
 </script>

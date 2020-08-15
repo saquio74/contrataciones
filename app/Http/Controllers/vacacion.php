@@ -10,8 +10,8 @@ class vacacion extends Controller
     public function index()
     {
         $vacaciones = vacaciones::all();
-        $vacaciones = json_encode($vacaciones);
-        return $vacaciones;
+        //$vacaciones = json_encode($vacaciones);
+        return response()->json([$vacaciones],200);
     }
     public function vistaVacaciones()//devuelve la vista de vacaciones
     {
@@ -27,8 +27,8 @@ class vacacion extends Controller
                         
                         ->get();
         
-        $vacaciones = json_encode($vacaciones);
-        return $vacaciones;
+        //$vacaciones = json_encode($vacaciones);
+        return response()->json([$vacaciones],200);
     }
     public function store(Request $request)
     {

@@ -22,6 +22,7 @@ export default {
         async logout(){
             await this.$store.dispatch("logout")
         }
+        
     },
     computed:{
         user(){

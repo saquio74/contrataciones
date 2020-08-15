@@ -42,7 +42,7 @@
                             <input type="date" class="form-control badge-secondary" >
                         </div>
                     </div>
-                    <span v-for="error in errors" :key="error" class="text-danger">{{error}}</span>
+                    
                 </div>
                 <div class="modal-footer badge-secondary">
                     <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>

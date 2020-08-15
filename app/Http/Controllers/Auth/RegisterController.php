@@ -23,6 +23,13 @@ class RegisterController extends Controller
 
     use RegistersUsers;
 
+    protected function registered(Request $request, $user)
+    {
+        $user->generateToken();
+
+        return response()->json(['data' => $user->toArray()], 201);
+    }
+
     /**
      * Where to redirect users after registration.
      *
@@ -63,10 +70,27 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            ]);
+         return response()->json('hola'); 
+    }
+    public function signup(Request $request)
+    {
+        $request->validate([
+            'name'     => 'required|string',
+            'email'    => 'required|string|email|unique:users',
+            'password' => 'required|string|confirmed',
         ]);
+        $user = new User([
+            'name'     => $request->name,
+            'email'    => $request->email,
+            'password' => bcrypt($request->password),
+        ]);
+        $user->save();
+        return response()->json([
+            'message' => 'Successfully created user!'], 201);
     }
 }

@@ -15,7 +15,9 @@ export const store = new Vuex.Store({
         contratosBajas: [],
         especialidades: [],
         proveedor:      [],
+        vacaciones:     [],
         user:           null,
+        rol:            null,
         auth:           false,
     },
     mutations: {
@@ -43,9 +45,15 @@ export const store = new Vuex.Store({
         llenarProveedores(state,proveedor){
             state.proveedor         = proveedor
         },
+        llenarVacaciones(state,vacaciones){
+            state.vacaciones         = vacaciones
+        },
         SET_USER(state, user){
             state.user              = user;
             state.auth              = Boolean(user);
+        },
+        SET_ROL(state, rol){
+            state.rol               = rol
         }
         
     },
@@ -54,12 +62,17 @@ export const store = new Vuex.Store({
             const data              = await fetch('/contrataciones-1/public/hospitales')
             const hospitalesAux     = await data.json();
             
-            commit('llenarHospitales',hospitalesAux)
+            return commit('llenarHospitales',hospitalesAux)
+        },
+        getVacaciones: async function({commit}){
+            const data              = await fetch('vacaciones/vacaciones')
+            const vacaciones        = await data.json();
+            return commit('llenarVacaciones', vacaciones[0])
         },
         getAgentes: async function({commit}) {
-            const data              = await fetch('/contrataciones-1/public/agente/agente')
+            const data              = await fetch('agente/agente')
             const agentes           = await data.json()
-            commit('llenarAgentes',agentes)
+            return commit('llenarAgentes',agentes)
         },
         getContratos: async function ({commit}) {
             const data              = await fetch('/contrataciones-1/public/contrato/activos')
@@ -91,6 +104,7 @@ export const store = new Vuex.Store({
             const proveedor          = await data.json()
             commit('llenarProveedores', proveedor)
         },
+        
         async login({dispatch},creedentials){
             const url = 'login'
             await axios.get('sanctum/csrf-cookie');
@@ -102,15 +116,20 @@ export const store = new Vuex.Store({
             await axios.post(url);
             return dispatch("getUser");
         },
-        getUser({commit}){
+        async getUser({commit}){
             const url = 'api/user';
-            axios.get(url).then(Res =>{
+            return axios.get(url).then(Res =>{//promesa con usuarios
+                const urlRol =`roles/${Res.data.rol_id}`;
+                axios.get(urlRol).then(Response=>{//promesa con roles
+                    commit('SET_ROL', Response.data[0])
+                }).catch(e=>{
+                    commit('SET_ROL', null)
+                })
                 commit('SET_USER', Res.data)
             }).catch(e=>{
                 commit('SET_USER', null)
             })
         },
         
-
     }
 });

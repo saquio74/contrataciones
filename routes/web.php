@@ -6,9 +6,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('/',                              'PagesController@index');
 
-Route::post('/login',                         'Auth\LoginController@login');
+Route::post('/login',                        'Auth\LoginController@login');
 
-Route::post('/logout',                         'Auth\LoginController@logout');
+Route::post('/logout',                       'Auth\LoginController@logout');
+
+Route::post('/register',                     'authController@signup');
 
 Route::get('/agente/agente',                 'agentes@index');
 
@@ -48,7 +50,7 @@ Route::get('/incisos',                       'incisos@index');
 
 Route::get('/agenincs',                      'agenincs@index');
 
-Route::post('/agenincs/hosp',                 'agenincs@incisoAgente');
+Route::post('/agenincs/hosp',                'agenincs@incisoAgente');
 
 Route::get('/agenincs/{legajo}',             'agenincs@incisoPorAgente');
 
@@ -99,3 +101,11 @@ Route::get('/especialidades',                'EspecialidadController@index');
 Route::post('/contratos/store',              'contratoController@store');
 
 Route::delete('/contrato/delete/{id}',       'contratoController@delete');
+
+Route::get('/permission',                    'permissionController@index');
+
+Route::get('/user',                          'authController@getUsuarios');
+
+Route::get('/roles',                         'rolesController@index');
+
+Route::get('/roles/{id}',                    'rolesController@show');

@@ -11612,7 +11612,17 @@ a.text-dark:focus {
 
 .login:hover {
   color: #0099CC;
-  background-color: #4CEBFF;
+  background-color: #b32602;
   border: 1px solid #0099CC;
+}
+
+.inputVerificar:focus {
+  border-color: #28a745;
+  box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+}
+
+.inputVerificarError:focus {
+  border-color: #8f1010;
+  box-shadow: 0 0 0 0.2rem rgba(218, 6, 6, 0.25);
 }
 

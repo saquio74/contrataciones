@@ -33,37 +33,25 @@
                         <li class="nav-item active">
                             <router-link class="nav-link" :to="{name: 'contratos'}"> Contratados</router-link>
                         </li>
+                        <!-- <li class="nav-item active">
+                            <router-link class="nav-link" :to="{name: 'nUsuario'}"> Nuevo Usuario</router-link>
+                        </li> -->
                     </ul>
                 </div>
             </nav>
         </div>
-        
         <div class="col-sm-10">
-            <div class="col-sm-12 bg-secondary">
+            <div class="col-sm-12 bg-secondary" v-if="userConfirm">
                 <router-view></router-view>
                 
             </div>
+            <div class="col-sm-12 bg-secondary" v-else>
+                <login></login>
+            </div>
         </div>
     </div>
-            
-            
-            <!-- <div class="col-sm-4">
-                <template v-if="$store.state.auth">
-                    <login></login>
-                </template>
-                <template>
-                    
-                    <button @click="logout">salir</button>
-                </template>
-            </div> -->
-            
-
-       
-    
 </template>
 <script>
-import xlsx from 'xlsx'
-import axios from 'axios';
 export default {
     data(){
         return{
@@ -71,17 +59,9 @@ export default {
         }
     },
     created:function()  {
-        this.hosp();
-        this.agen();
-        //this.onFileChange();
+        
     },
     methods:{
-        hosp(){
-            return this.$store.dispatch('getHospitales')
-        },
-        agen(){
-            return this.$store.dispatch('getAgentes')
-        },
         
         
     },
@@ -91,9 +71,10 @@ export default {
         },
         agentes(){
             return this.$store.state.agentes
+        },
+        userConfirm(){
+            return this.$store.state.user
         }
-        
-        
     }
 }
 </script>

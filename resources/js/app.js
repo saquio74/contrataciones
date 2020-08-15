@@ -5,12 +5,15 @@ try {
 } catch (e) {}
 
 
+import toastr from 'toastr'
 window.Vue = require('vue');
+import axios from 'axios'
 import Vuex from 'vuex'
 import VueRouter from 'vue-router'
 
 import {store} from './store/store'
 
+Vue.use(toastr)
 Vue.use(VueRouter);
 Vue.use(Vuex)
 
@@ -35,14 +38,16 @@ const cargarCont   =Vue.component('nuevo-proveedor',           require('./compon
                     Vue.component('nuevo-contrato',            require('./components/contratos/NuevoNumeroContrato.vue'      ).default);
 const login        =Vue.component('login',                     require('./components/login/Login.vue'                        ).default);
                     Vue.component('usuario',                   require('./components/login/UsuarioEstado.vue'                ).default);
+const nuevoUsuario =Vue.component('nUsuario',                  require('./components/login/Register'                         ).default);
 const routes = [
-    { path: '/'             ,name: 'Home'            , component: login         },
+    { path: '/'             ,name: 'Home'            , component: login        },
     { path: '/agente'       ,name: 'Foo'             , component: agente       },
     { path: '/vacaciones'   ,name: 'Bar'             , component: vacaciones   },
     { path: '/paraLiquidar' ,name: 'paraLiquidar'    , component: paraLiquidar },
     { path: '/libros'       ,name: 'libros'          , component: libro        },
     { path: '/login'        ,name: 'login'           , component: login        },
-    { path: '/contratos'    ,name: 'contratos'       , component: listProv     }
+    { path: '/contratos'    ,name: 'contratos'       , component: listProv     },
+    //{ path: '/register'     ,name: 'nUsuario'        , component: nuevoUsuario },
   ]
 
 const router = new VueRouter({
@@ -51,7 +56,9 @@ const router = new VueRouter({
 store.dispatch('getUser')
 
 const app = new Vue({
-    store:store,    
+    store:store,
+    axios,
+    toastr,   
     el: '#app',
     router,
 }).$mount('#app');

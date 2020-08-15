@@ -260,6 +260,9 @@
                     return this.agentes.filter((agente)=>agente.SECTOR.toString().includes(this.sector.toString()))
                 }
                 return this.agentes
+            },
+            userConfirm(){
+                return this.$store.state.user
             }
         }
     }

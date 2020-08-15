@@ -46,7 +46,7 @@
                 </div>
                 <div class="modal-footer badge-secondary">
                     <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" @click="$emit('speak')">Agregar Vacaciones</button>
+                    <button type="submit" class="btn btn-primary">Agregar Vacaciones</button>
                 </div>
                 </div>
             </div>
@@ -85,15 +85,17 @@
                 this.vacaciones.fecha_fin    = this.listaModificar.fecha_fin
                 
             },
-            actualizarVacaciones:function(){
-                var urlVacaciones= 'vacaciones/update';
-                
-                axios.post(urlVacaciones,this.vacaciones).then(Response=>{
+            actualizarVacaciones:async function(){
+                const urlVacaciones= 'vacaciones/update';
+                try {
+                    await axios.post(urlVacaciones,this.vacaciones)
+                    await this.$store.dispatch('getVacaciones')
                     $('#modificar').modal('hide');
                     toastr.success('agente modificado satisfactoriamente satisfactoriamente');
-                }).catch(errors=>{
+                } catch (error) {
                     this.errors = errors.response.data
-                });
+                }
+
             }
         },
         watch:{

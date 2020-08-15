@@ -60,10 +60,10 @@
                         {{vacacion.DNI}}
                     </th>
                     <th>
-                        {{vacacion.NOMBRE.toUpperCase()}}
+                        {{vacacion.NOMBRE}}
                     </th>
                     <th>
-                        {{vacacion.HOSPITAL.toUpperCase()}}
+                        {{vacacion.HOSPITAL}}
                     </th>
                     <th>
                         {{
@@ -72,7 +72,7 @@
                     </th>
                     <th>
                         {{
-                            formatoFecha(vacacion.fecha_final)
+                            formatoFecha(vacacion.fecha_fin)
                         }}
                     </th>
                     <th>
@@ -106,7 +106,7 @@
     export default{
         data(){
             return{
-                vacaciones: [],
+                
                 legajo:     '',
                 dni:        '',
                 nombre:     '',
@@ -119,12 +119,8 @@
             this.getVacaciones()
         },
         methods:{
-            getVacaciones:function(){
-                var urlVacaciones = '/contrataciones-1/public/vacaciones/vacaciones';
-                axios.get(urlVacaciones).then(Response=>{
-                    this.vacaciones = Response.data
-                    
-                });
+            getVacaciones: async function(){
+                await this.$store.dispatch('getVacaciones')
             },
             formatoFecha:function(d){
                 return moment(d).format("DD-MM-YY")
@@ -134,11 +130,7 @@
                 this.vacacionAux = datos
                 
             },
-            speakMethod:function(){
-                setTimeout(()=>{
-                    this.getVacaciones()
-                },5000)
-            },
+            
             ordenadosAsc: function(prop) {
                 this.vacaciones.sort(function(a,b){
                     if(prop === 'LEGAJO'){
@@ -176,6 +168,9 @@
         },
         
         computed:{
+            vacaciones(){
+                return this.$store.state.vacaciones
+            },
             searchVacaciones: function(){
                 if (this.nombre) {
                     return this.vacaciones.filter((vacacion)=>vacacion.NOMBRE.toUpperCase().includes(this.nombre.toUpperCase()))
@@ -188,6 +183,7 @@
                 }
                 return this.vacaciones
             }
+            
         }
     }
 </script>
