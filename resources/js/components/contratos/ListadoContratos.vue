@@ -7,7 +7,7 @@
         </div>
         
         <div class="form-group row badge-dark col-sm-12">
-            <button type="button" class="button2 btn" data-toggle="modal" data-target="#cargar">
+            <button type="button" class="button2 btn"  data-toggle="modal" data-target="#cargar">
                 Nuevo contratado
             </button>
             <button type="button" class="button1 btn" data-toggle="modal" data-target="#cargarContrato">
@@ -21,98 +21,94 @@
                 / total de proveedores inactivos {{contratosBajas.length}}
             </p>
         </div>
-
-        <table class="table table-striped table-dark table-bordered table-hover">
-            <thead v-if="ver===0">
-                <tr>
+        <div class="container horizontal-scrollable">
+            
+            <table class="table table-striped table-dark table-bordered table-hover">
+                <thead v-if="ver===0">
+                    <tr>
+                        <th scope="col" v-if="auxiliar===0" v-on:click="ordenadosDesc('PROVEEDOR');auxiliar++"  >PROV</th>
+                        <th scope="col" v-else v-on:click="ordenadosAsc('PROVEEDOR');auxiliar--" >PROV</th>
+                        <th scope="col" v-if="auxiliar===0" v-on:click="ordenadosDesc('DOCUMENTO');auxiliar++"  >DNI</th>
+                        <th scope="col" v-else v-on:click="ordenadosAsc('DOCUMENTO');auxiliar--" >DNI</th>
+                        <th scope="col" v-if="auxiliar===0" v-on:click="ordenadosDesc('APELLIDO');auxiliar++"  >APELLIDO</th>
+                        <th scope="col" v-else v-on:click="ordenadosAsc('APELLIDO');auxiliar--" >APELLIDO</th>
+                        <th scope="col" v-if="auxiliar===0" v-on:click="ordenadosDesc('CONTRATO');auxiliar++"  >CONTRATO</th>
+                        <th scope="col" v-else v-on:click="ordenadosAsc('CONTRATO');auxiliar--" >CONTRATO</th>
+                        <th scope="col" v-if="auxiliar===0" v-on:click="ordenadosDesc('ESPECIALIDAD');auxiliar++"  >ESPECIALIDAD</th>
+                        <th scope="col" v-else v-on:click="ordenadosAsc('ESPECIALIDAD');auxiliar--" >ESPECIALIDAD</th>
+                        <th scope="col">CONTRATADO</th>
+                        <th scope="col">CONTRATO</th>
+                    </tr>
+                </thead>
+                <thead v-else>
                     <th scope="col" v-if="auxiliar===0" v-on:click="ordenadosDesc('PROVEEDOR');auxiliar++"  >PROV</th>
-                    <th scope="col" v-else v-on:click="ordenadosAsc('PROVEEDOR');auxiliar--" >PROV</th>
-                    <th scope="col" v-if="auxiliar===0" v-on:click="ordenadosDesc('DOCUMENTO');auxiliar++"  >DNI</th>
-                    <th scope="col" v-else v-on:click="ordenadosAsc('DOCUMENTO');auxiliar--" >DNI</th>
-                    <th scope="col" v-if="auxiliar===0" v-on:click="ordenadosDesc('NOMBRE');auxiliar++"  >NOMBRE</th>
-                    <th scope="col" v-else v-on:click="ordenadosAsc('NOMBRE');auxiliar--" >NOMBRE</th>
-                    <th scope="col" v-if="auxiliar===0" v-on:click="ordenadosDesc('APELLIDO');auxiliar++"  >APELLIDO</th>
-                    <th scope="col" v-else v-on:click="ordenadosAsc('APELLIDO');auxiliar--" >APELLIDO</th>
-                    <th scope="col" v-if="auxiliar===0" v-on:click="ordenadosDesc('CONTRATO');auxiliar++"  >CONTRATO</th>
-                    <th scope="col" v-else v-on:click="ordenadosAsc('CONTRATO');auxiliar--" >CONTRATO</th>
-                    <th scope="col" v-if="auxiliar===0" v-on:click="ordenadosDesc('ESPECIALIDAD');auxiliar++"  >ESPECIALIDAD</th>
-                    <th scope="col" v-else v-on:click="ordenadosAsc('ESPECIALIDAD');auxiliar--" >ESPECIALIDAD</th>
-                    <th scope="col">CONTRATADO</th>
-                    <th scope="col">CONTRATO</th>
-                </tr>
-            </thead>
-            <thead v-else>
-                <th scope="col" v-if="auxiliar===0" v-on:click="ordenadosDesc('PROVEEDOR');auxiliar++"  >PROV</th>
-                    <th scope="col" v-else v-on:click="ordenadosAsc('PROVEEDOR');auxiliar--" >PROV</th>
-                    <th scope="col" v-if="auxiliar===0" v-on:click="ordenadosDesc('DOCUMENTO');auxiliar++"  >DNI</th>
-                    <th scope="col" v-else v-on:click="ordenadosAsc('DOCUMENTO');auxiliar--" >DNI</th>
-                    <th scope="col" v-if="auxiliar===0" v-on:click="ordenadosDesc('NOMBRE');auxiliar++"  >NOMBRE</th>
-                    <th scope="col" v-else v-on:click="ordenadosAsc('NOMBRE');auxiliar--" >NOMBRE</th>
-                    <th scope="col" v-if="auxiliar===0" v-on:click="ordenadosDesc('APELLIDO');auxiliar++"  >APELLIDO</th>
-                    <th scope="col" v-else v-on:click="ordenadosAsc('APELLIDO');auxiliar--" >APELLIDO</th>
-                    
-            </thead>
-            <tbody v-if="ver===0">
-                <tr  v-for="contratado in contratosActivos" :key="contratado.contrato" >
-                    <th>
-                        {{contratado.proveedor}}
-                    </th>
-                    <th>
-                        {{contratado.dni}}
-                    </th>
-                    <th>
-                        {{contratado.nombre.toUpperCase()}}
-                    </th>
-                    <th>
-                        {{contratado.apellido.toUpperCase()}}
-                    </th>
-                    <th>
-                        {{contratado.contrato}}
+                        <th scope="col" v-else v-on:click="ordenadosAsc('PROVEEDOR');auxiliar--" >PROV</th>
+                        <th scope="col" v-if="auxiliar===0" v-on:click="ordenadosDesc('DOCUMENTO');auxiliar++"  >DNI</th>
+                        <th scope="col" v-else v-on:click="ordenadosAsc('DOCUMENTO');auxiliar--" >DNI</th>
+                        <th scope="col" v-if="auxiliar===0" v-on:click="ordenadosDesc('APELLIDO');auxiliar++"  >APELLIDO</th>
+                        <th scope="col" v-else v-on:click="ordenadosAsc('APELLIDO');auxiliar--" >APELLIDO</th>
                         
-                    </th>
-                    <th>
-                        {{contratado.especialidad.toUpperCase()}}
-                    </th >
-                    
-                    <th width="10px">
-                        <button type="button" class=" btn btn-small button1" data-toggle="modal" data-target="#modificar">Cambiar</button>
-                        <button type="button" class=" btn btn-small button2">Datos</button>
-                    </th>
-                    <th width="10px">
-                        <button type="button" class=" btn btn-small button1" data-toggle="modal" data-target="#modificar">Cambiar</button>
-                        <button type="button" v-on:click.prevent="deleteContrato(contratado.contrato_id)" class=" btn btn-small btn-danger">Borrar</button>
+                </thead>
+                <tbody v-if="ver===0">
+                    <tr  v-for="contratado in contratosActivos" :key="contratado.contrato" >
+                        <th>
+                            {{contratado.proveedor}}
+                        </th>
+                        <th>
+                            {{contratado.dni}}
+                        </th>
+                        <th>
+                            {{contratado.apellido.toUpperCase() + ' ' + contratado.nombre.toUpperCase()}}
+                        </th>
+                        <th>
+                            {{contratado.contrato}}
+                            
+                        </th>
+                        <th>
+                            {{contratado.especialidad.toUpperCase()}}
+                        </th >
                         
-                    </th>
-                    
+                        <th width="10px">
+                            <button type="button" class=" btn btn-small button1" data-toggle="modal" data-target="#modificar" @click="setProveedor(contratado)">Cambiar</button>
+                            <button type="button" class=" btn btn-small button2">Datos</button>
+                        </th>
+                        <th width="10px">
+                            <button type="button" class=" btn btn-small button1" data-toggle="modal" data-target="#modificar">Cambiar</button>
+                            <button type="button" v-on:click.prevent="deleteContrato(contratado.contrato_id)" class=" btn btn-small btn-danger">Borrar</button>
+                            
+                        </th>
+                        
 
-                </tr>
-            </tbody>
-            <tbody v-else>
-                <tr v-for="contratado in contratosBajas" :key="contratado.id">
-                    <th>
-                        {{contratado.proveedor}}
-                    </th>
-                    <th>
-                        {{contratado.dni}}
-                    </th>
-                    <th>
-                        {{contratado.nombre.toUpperCase()}}
-                    </th>
-                    <th>
-                        {{contratado.apellido.toUpperCase()}}
-                    </th>
-                    <th width="10px">
-                        <button type="button" class=" btn btn-small button1" data-toggle="modal" data-target="#modificar">Cambiar</button>
-                    </th>
-                    <th width="10px">
+                    </tr>
+                </tbody>
+                <tbody v-else>
+                    <tr v-for="contratado in contratosBajas" :key="contratado.id">
+                        <th>
+                            {{contratado.proveedor}}
+                        </th>
+                        <th>
+                            {{contratado.dni}}
+                        </th>
+                        <th>
+                            {{contratado.apellido.toUpperCase() + ' ' + contratado.nombre.toUpperCase()}}
+                        </th>
+                        <th width="10px">
+                            <button type="button" class=" btn btn-small button1" data-toggle="modal" data-target="#modificar" @click="setProveedor(contratado)">Cambiar</button>
+                        </th>
+                        <th width="10px">
 
-                        <button type="button" class=" btn btn-small button2">Datos</button>
-                    </th>
-                </tr>
-            </tbody>
-        </table>
+                            <button type="button" class=" btn btn-small button2">Datos</button>
+                        </th>
+                        <th width="10px">
+
+                            <button type="button" class=" btn btn-small button3">Borrar</button>
+                        </th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
         <nuevo-proveedor></nuevo-proveedor>
-        <modificar-proveedor></modificar-proveedor>
+        <modificar-proveedor :proveedorModificar="proveedorAux"></modificar-proveedor>
         <nuevo-contrato />
         
     </div>
@@ -126,6 +122,7 @@ export default {
             auxiliar:   0,
             ver:        0,
             errors:      [],
+            proveedorAux:  '',
         }
     },
     created:function()  {
@@ -138,6 +135,9 @@ export default {
     },
     methods:{
         hosp(){
+            $('table').on('scroll', function() {
+            $("#" + this.id + " > *").width($(this).width() + $(this).scrollLeft());
+            });
             return this.$store.dispatch('getHospitales')
         },
         cont(){
@@ -151,6 +151,9 @@ export default {
         },
         proveedores(){
             return this.$store.dispatch('getProveedores')
+        },
+        setProveedor(contratado){
+            this.proveedorAux = contratado
         },
         ordenadosAsc: function(prop) {
             if(this.ver===0){
@@ -205,18 +208,18 @@ export default {
                 this.contratosBajas.reverse();
             }
         },
-        deleteContrato(id){
-            let url = '/contrataciones-1/public/contrato/delete/'+ id;
+        async deleteContrato(id){
+            let url = 'contrato/delete/'+ id;
             console.log(url)
-            axios.delete(url).then(response=>{
-                this.cont();
-                this.contBajas();
+            try {
+                await axios.delete(url)
+                await this.cont()
+                await this.contBajas();
                 toastr.success('eliminado satisfactoriamente');
-            }).catch(errors=>{
-                    this.errors = errors.response.data
+            } catch (errors) {
+                this.errors = errors.response.data
                     toastr.error('error');
-            })
-            
+            }
         }
     },
     computed:{

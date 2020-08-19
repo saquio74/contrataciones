@@ -4,7 +4,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                 <div class="modal-header badge-dark">
-                    <h5 class="Nuevo Agente" id="nuevo">Nuevo Agente</h5>
+                    <h5 class="Nuevo Agente" id="nuevo">Nuevo Contrato</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
@@ -12,59 +12,67 @@
                 <div class="modal-body badge-dark">
                    
                     <hr>
-                    <p>{{contrato}}</p>
+                    <p>{{proveedor}}</p>
                     
                     <div class="form-group row">
                         
                         <label for="legajo"    class="col-sm-4 col-form-label text-center">PROVEEDOR   </label>
                         <div class="col-sm-8">
-                            <select name="" class="form-control badge-secondary" @change="setProveedorId" v-model="proveedorAux">
-                                <option value="0">SELECCIONE</option>
-                                <option v-for="proveedors in proveedor":value="proveedors" >{{proveedors.proveedor}}</option>
-                            </select>
+                            <input type="number" class="form-control text-danger badge-secondary" v-model="proveedor.proveedor">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group row">
+                        <label for="horario"   class="col-sm-4 col-form-label text-center ">NOMBRE   </label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control text-danger badge-secondary" v-model="proveedor.nombre">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="horario"   class="col-sm-4 col-form-label text-center ">APELLIDO   </label>
                         <div class="col-sm-8">
-                            <input type="disabled" class="form-control text-danger badge-secondary" v-model="proveedorAux.apellido">
+                            <input type="text" class="form-control text-danger badge-secondary" v-model="proveedor.apellido">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="horario"   class="col-sm-4 col-form-label text-center ">NOMBRE   </label>
+                        <label for="documento" class="col-sm-4 col-form-label text-center " >DNI      </label>
                         <div class="col-sm-8">
-                            <input type="disabled" class="form-control text-danger badge-secondary" v-model="proveedorAux.nombre">
+                            <input type="number" class="form-control badge-secondary" v-model="proveedor.dni">
                         </div>
                     </div>
                     <div class="form-group row">
-                        
-                        <label for="legajo"    class="col-sm-4 col-form-label text-center">ESPECIALIDAD   </label>
+                        <label for="documento" class="col-sm-4 col-form-label text-center ">CUIL      </label>
                         <div class="col-sm-8">
-                            <select name="" class="form-control badge-secondary" v-model="contrato.especialidad_id">
+                            <input type="number" class="form-control badge-secondary" v-model="proveedor.cuil">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="documento" class="col-sm-4 col-form-label text-center ">GENERO      </label>
+                        <div class="col-sm-8">
+                            <select name=""  class="form-control badge-secondary" v-model="proveedor.genero">
                                 <option value="">SELECCIONE</option>
-                                <option v-for="especialidad in especialidades" :value="especialidad.id" :key="especialidad.id" >{{especialidad.especialidad}}</option>
+                                <option value="F">FEMENINO</option>
+                                <option value="M">MASCULINO</option>
+                                <option value="U">NO REFIERE</option>
                             </select>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="horario"   class="col-sm-4 col-form-label text-center ">CONTRATO   </label>
+                        <label for="documento" class="col-sm-4 col-form-label text-center ">MATRICULA      </label>
                         <div class="col-sm-8">
-                            <input type="disabled" class="form-control text-danger badge-secondary" v-model="contrato.contrato">
+                            <input type="number" class="form-control badge-secondary" v-model="proveedor.matricula">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="documento" class="col-sm-4 col-form-label text-center ">FECHA INICIO</label>
+                        <label for="documento" class="col-sm-4 col-form-label text-center ">HOSPITAL      </label>
                         <div class="col-sm-8">
-                            <input type="date" class="form-control badge-secondary" v-model="contrato.fecha_inicio">
+                            <select name="" class="form-control badge-secondary" v-model="proveedor.hospital">
+                                <option value="">SELECCIONE</option>
+                                <option v-for="hospital in hospitales" :key="hospital.ID" :value="hospital.ID">{{hospital.HOSPITAL}}</option>
+                                
+                            </select>
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <label for="documento" class="col-sm-4 col-form-label text-center ">FECHA FIN</label>
-                        <div class="col-sm-8">
-                            <input type="date" class="form-control badge-secondary" v-model="contrato.fecha_fin">
-                        </div>
-                    </div>
-                    
                     <span v-for="error in errors" :key="error" class="text-danger">{{error}}</span>
                     
                 </div>

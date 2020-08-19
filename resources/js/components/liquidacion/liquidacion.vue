@@ -94,18 +94,22 @@
             this.getFecha();
         },
         methods:{
-            getAgentes: function(){
+            getAgentes: async function(){
                 if (this.hospitalId) {
                     this.datos.hospitalId   = this.hospitalId
                     this.datos.servicioId   = this.servicioId
                     this.datos.sectorId     = this.sectorId
-                    
-                    var urlAgentes ='/contrataciones-1/public/agenincs/hosp';
-                    axios.post(urlAgentes, this.datos).then(Response => {
-                        this.agentes = Response.data
+                    try{
+                        const data = await axios.post('agenincs/hosp', this.datos)
+                        console.log(data.data[0])
+                        this.agentes = data.data[0]
                         toastr.success('contenido cargado satisfactoriamente');
                         
-                    });
+                    }catch(e){
+                        console.log(e)
+                    }
+                }else{
+                    toastr.error('debes completar todos los datos')
                 }
             },
             getFecha:function(){
@@ -118,6 +122,9 @@
                 }
             },
 
+        },
+        computed:{
+            
         },
         watch:{
             sectorId:{

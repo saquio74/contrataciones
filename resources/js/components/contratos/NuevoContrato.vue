@@ -4,7 +4,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                 <div class="modal-header badge-dark">
-                    <h5 class="Nuevo Agente" id="nuevo">Nuevo Agente</h5>
+                    <h5 class="Nuevo Agente" id="nuevo">Nuevo Contratado</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
@@ -66,7 +66,7 @@
                     <div class="form-group row">
                         <label for="documento" class="col-sm-4 col-form-label text-center ">HOSPITAL      </label>
                         <div class="col-sm-8">
-                            <select name="" id="hospital" class="form-control badge-secondary" v-model="proveedor.hospital">
+                            <select name="" class="form-control badge-secondary" v-model="proveedor.hospital">
                                 <option value="">SELECCIONE</option>
                                 <option v-for="hospital in hospitales" :key="hospital.ID" :value="hospital.ID">{{hospital.HOSPITAL}}</option>
                                 

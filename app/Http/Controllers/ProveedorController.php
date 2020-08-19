@@ -7,6 +7,7 @@ Use App\provhosp;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\facades\Excel;
 use App\imports\proveedorImport;
+use DB;
 
 class ProveedorController extends Controller
 {
@@ -55,9 +56,12 @@ class ProveedorController extends Controller
         return $proveedor_id;
         
     }
-    public function show($proveedor)
+    public function show($proveedor_id)
     {
-        $proveedor = proveedor::where('proveedor',$proveedor)->get();
+        $proveedor = db::table('proveedors')
+                    ->join('provhosps','proveedor_id','=','proveedors.id')
+                    ->join('hospitales','hospitales.id','=','provhosps.hospital_id')
+                    ->where('proveedors.id',$proveedor_id)->get();
         return $proveedor;
     }
 
@@ -79,9 +83,34 @@ class ProveedorController extends Controller
      * @param  \App\proveedor  $proveedor
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, proveedor $proveedor)
+    public function update(Request $request)
     {
-        //
+        
+        $this->validate($request,[
+        
+            'nombre'        =>'required',
+            'apellido'      =>'required',
+            'dni'           =>'required',
+            'cuil'          =>'required',
+            'genero'        =>'required',
+        
+        ]);
+        
+        $proveedor = proveedor::find($request->id);
+        $proveedor->nombre      = $request->nombre;
+        $proveedor->apellido    = $request->apellido;
+        $proveedor->cuil        = $request->dni;
+        $proveedor->genero      = $request->genero;
+        $proveedor->matricula   = $request->matricula;
+        $proveedor->save();
+
+        
+        $provhosp = provhosp::find($request->id);
+        $provhosp ->hospital_id = $request->hospital_id;
+        $provhosp->save();
+            
+        return response()->json('actualizado satisfactoriamente', 204);
+        
     }
 
     /**

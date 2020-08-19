@@ -11604,6 +11604,17 @@ a.text-dark:focus {
   border: 1px solid #0099CC;
 }
 
+.button3 {
+  background-color: #b30009;
+  color: white;
+}
+
+.button3:hover {
+  color: #e00a15;
+  background-color: transparent;
+  border: 1px solid #e00a15;
+}
+
 .login {
   font-size: 95%;
   background-color: #FF600D;
@@ -11624,5 +11635,12 @@ a.text-dark:focus {
 .inputVerificarError:focus {
   border-color: #8f1010;
   box-shadow: 0 0 0 0.2rem rgba(218, 6, 6, 0.25);
+}
+
+table {
+  border-collapse: collapse;
+  width: 300px;
+  overflow-x: scroll;
+  display: block;
 }
 

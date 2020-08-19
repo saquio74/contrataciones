@@ -10,7 +10,6 @@ class sectores extends Controller
     {
         
         $sectores = sector::all();
-        $sectores = json_encode($sectores);
         return $sectores;
     }
 }

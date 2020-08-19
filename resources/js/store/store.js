@@ -9,6 +9,7 @@ export const store = new Vuex.Store({
     state:{
         hospitales:     [],
         agentes:        [],
+        agenFac:        [],
         contratos:      [],
         servicios:      [],
         sectores:       [],
@@ -54,15 +55,23 @@ export const store = new Vuex.Store({
         },
         SET_ROL(state, rol){
             state.rol               = rol
-        }
+        },
+        llenarAgenfac(state,agenFac){
+            state.agenFac           = agenFac
+        },
         
     },
     actions: {
         getHospitales: async function({commit}){
-            const data              = await fetch('/contrataciones-1/public/hospitales')
-            const hospitalesAux     = await data.json();
+            const data              = await fetch('hospitales')
+            const hospitales        = await data.json();
+            return commit('llenarHospitales',hospitales)
+        },
+        async getLiquidar({commit},datos){
             
-            return commit('llenarHospitales',hospitalesAux)
+            const data              = await axios.post('agenincs/hosp',datos)
+            const agentes           = await data.data[0]
+            return commit('llenarAgenfac', agentes) 
         },
         getVacaciones: async function({commit}){
             const data              = await fetch('vacaciones/vacaciones')
@@ -75,34 +84,36 @@ export const store = new Vuex.Store({
             return commit('llenarAgentes',agentes)
         },
         getContratos: async function ({commit}) {
-            const data              = await fetch('/contrataciones-1/public/contrato/activos')
+            const data              = await fetch('contrato/activos')
             const contratos         = await data.json()
             commit('llenarContratos',contratos)
         },
         getContratosBajas: async function ({commit}){
-            const dataBajas         = await fetch('/contrataciones-1/public/contrato/bajas')
+            const dataBajas         = await fetch('contrato/bajas')
             const contratosBajas    = await dataBajas.json()
             commit('llenarContratosBajas',contratosBajas)
         },
         getEspecialidades: async function({commit}){
-            const data                   = await fetch('/contrataciones-1/public/especialidades')
+            const data                   = await fetch('especialidades')
             const especialidades         = await data.json()
             commit('llenarEspecialidades',especialidades)
         },
         getServicios: async function({commit}){
-            const data              = await fetch('/contrataciones-1/public/servicios')
+            const data              = await fetch('servicios')
             const servicios         = await data.json()
-            commit('llenarServicios',servicios)
+            
+            return commit('llenarServicios',servicios)
         },
         getSectores:  async function ({commit}){
-            const data              = await fetch('/contrataciones-1/public/sectores')
+            const data              = await fetch('sectores')
             const sectores          = await data.json()
-            commit('llenarSectores', sectores)
+            return commit('llenarSectores', sectores)
         },
         getProveedores:  async function ({commit}){
-            const data              = await fetch('/contrataciones-1/public/proveedor')
+            const data              = await fetch('proveedor')
             const proveedor          = await data.json()
-            commit('llenarProveedores', proveedor)
+            
+            return commit('llenarProveedores', proveedor)
         },
         
         async login({dispatch},creedentials){

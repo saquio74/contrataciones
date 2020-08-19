@@ -41,8 +41,8 @@
 <script>
     import toastr from 'toastr'
     import moment from 'moment'
-    import axios  from 'axios'
-    import jquery from 'jquery'
+ 
+
     
     
     export default{
@@ -52,36 +52,29 @@
                 hospital:   '',
                 servicio:   '',
                 sector:     '',
-                hospitales: [],
-                servicios:  [],
-                sectores:   [],
             }
         },
         created: function(){
-            this.getHospitales();
-            this.getServicios();
-            this.getSectores();
+            this.getTodo();
         },
         methods:{
-            getHospitales:function(){
-                var urlHospitales = '/contrataciones-1/public/hospitales';
-                axios.get(urlHospitales).then(Response=>{
-                    this.hospitales = Response.data
-                });
-            },
-            getServicios:function(){
-                var urlServicios = '/contrataciones-1/public/servicios';
-                axios.get(urlServicios).then(Response=>{
-                    this.servicios = Response.data
-                });
-            },
-            getSectores:function(){
-                var urlSectores = '/contrataciones-1/public/sectores';
-                axios.get(urlSectores).then(Response=>{
-                    this.sectores = Response.data
-                });
+            getTodo:async function(){
+                await this.$store.dispatch('getHospitales')
+                await this.$store.dispatch('getServicios')
+                await this.$store.dispatch('getSectores')
             },
             
         },
+        computed:{
+            hospitales(){
+                return this.$store.state.hospitales
+            },
+            servicios(){
+                return this.$store.state.servicios
+            },
+            sectores(){
+                return this.$store.state.sectores
+            }
+        }
     }
 </script>

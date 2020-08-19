@@ -152,6 +152,9 @@
         },
         methods:{
             getAgentes: function(){
+                $('table').on('scroll', function() {
+                    $("#" + this.id + " > *").width($(this).width() + $(this).scrollLeft());
+                });
                 var urlAgentes ='agente/agente';
                 axios.get(urlAgentes).then(Response => {
                     this.agentes = Response.data

@@ -80,6 +80,8 @@ Route::get('/proveedor/vistaExcel',          'proveedorController@VistaExcel');
 
 Route::get('/proveedor',                     'proveedorController@index');
 
+Route::get('/proveedor/{id}',                'proveedorController@show');
+
 Route::post('/proveedor/excelImport',        'proveedorController@importExcel');
 
 Route::get('/contrato/vistaExcel',           'contratoController@VistaExcel');
@@ -95,6 +97,8 @@ Route::get('/contrato/activos',              'ContratoController@activos');
 Route::get('/contrato/bajas',                'contratoController@bajas');
 
 Route::post('/proveedor/nuevo',              'proveedorController@store');
+
+Route::put('/proveedor/update',              'proveedorController@update');
 
 Route::get('/especialidades',                'EspecialidadController@index');
 

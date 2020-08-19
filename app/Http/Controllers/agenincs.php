@@ -40,8 +40,8 @@ class agenincs extends Controller
                     ->where('agentes.ACTIVO','=',0)
                     ->get();
         
-
-        return $inciso;
+        
+        return response()->json([$inciso],200);
 
     }
 }

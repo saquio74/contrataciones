@@ -120,6 +120,9 @@
         },
         methods:{
             getVacaciones: async function(){
+                $('table').on('scroll', function() {
+                    $("#" + this.id + " > *").width($(this).width() + $(this).scrollLeft());
+                });
                 await this.$store.dispatch('getVacaciones')
             },
             formatoFecha:function(d){
