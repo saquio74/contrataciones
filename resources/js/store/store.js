@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
+import { data } from 'jquery';
 axios.defaults.withCredentials = true;
 
 Vue.use(Vuex);
@@ -8,6 +9,7 @@ Vue.use(Vuex);
 export const store = new Vuex.Store({
     state:{
         hospitales:     [],
+        liquidacion:    [],
         agentes:        [],
         agenFac:        [],
         contratos:      [],
@@ -59,6 +61,9 @@ export const store = new Vuex.Store({
         llenarAgenfac(state,agenFac){
             state.agenFac           = agenFac
         },
+        llenarLiquidacion(state,liquidacion){
+            state.liquidacion       = liquidacion
+        }
         
     },
     actions: {
@@ -66,6 +71,10 @@ export const store = new Vuex.Store({
             const data              = await fetch('hospitales')
             const hospitales        = await data.json();
             return commit('llenarHospitales',hospitales)
+        },
+        async getLiquidacion({commit},datos){
+            const liquidacion       = await axios.post('agenfac/liquidacion',datos)
+            return commit('llenarLiquidacion',liquidacion.data[0])
         },
         async getLiquidar({commit},datos){
             

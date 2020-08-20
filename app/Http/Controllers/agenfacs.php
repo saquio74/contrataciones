@@ -24,9 +24,23 @@ class agenfacs extends Controller
         
         return $agenfac; 
     }
+    public function getLiquidacion(Request $datos){
+        $agenfac = DB::table('agenfac')
+                    ->where('PERIODO','=',  $datos->mes)
+                    ->where('ANIO','=', $datos->anio)
+                    ->get();
+        return response()->json([$agenfac],200);
+    }
 
     public function store(Request $facturacion)
     {
         agenfac::create($facturacion->all());
+    }
+    public function liquidacionPDF(Request $request){
+        $agenfac = DB::table('agenfac')
+                    ->where('PERIODO','=',  $datos->mes)
+                    ->where('ANIO','=', $datos->anio)
+                    ->where('HOSPITAL','=',$datos->hospital)
+                    ->get();
     }
 }

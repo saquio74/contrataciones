@@ -11,13 +11,14 @@ const paraLiquidar =Vue.component('agente-liquidar',           require('./compon
 const horas        =Vue.component('horas-ingresar',            require('./components/liquidacion/horas.vue'                  ).default);
 const liquidacion  =Vue.component('liquidacion',               require('./components/liquidacion/liquidacion.vue'            ).default);
 const home         =Vue.component('home',                      require('./components/Home.vue'                               ).default);
-
+const contaduria   =Vue.component('contaduria',                require('./components/contaduria/Contaduria.vue'              ).default);
 
 const routes = [
     { path: '/'             ,name: 'Home'            , component: home         },
     { path: '/agente'       ,name: 'Foo'             , component: agente       },
     { path: '/vacaciones'   ,name: 'Bar'             , component: vacaciones   },
-    { path: '/paraLiquidar' ,name: 'paraLiquidar'    , component: paraLiquidar }
+    { path: '/paraLiquidar' ,name: 'paraLiquidar'    , component: paraLiquidar },
+    { path: '/contaduria'   ,name: 'contaduria'      , component: contaduria }
   ]
 
 export const router = new VueRouter({

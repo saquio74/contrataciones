@@ -37,8 +37,8 @@
                 </tr>
             </tbody>
         </table>
-
-        <button type="button" class="button btn btn-primary" v-on:click="auxiliar++">liquidar {{auxiliar}}</button>
+        
+        <button type="button" class="button btn btn-primary" v-on:click="auxiliar++">liquidar{{auxiliar}}</button>
     </div>
 </template>
 
@@ -47,6 +47,7 @@
     import moment from 'moment'
     import axios  from 'axios'
     import jquery from 'jquery'
+    import { mapState } from 'vuex'
 
     
     
@@ -63,7 +64,7 @@
         data(){
             return {
                 agentes:     [],
-                agenfac:     [],
+                
                 periodo:{
                     mes:     '',
                     anio:    '',
@@ -92,6 +93,7 @@
         },
         created:function(){
             this.getFecha();
+            this.getLiquidacion();
         },
         methods:{
             getAgentes: async function(){
@@ -101,16 +103,17 @@
                     this.datos.sectorId     = this.sectorId
                     try{
                         const data = await axios.post('agenincs/hosp', this.datos)
-                        console.log(data.data[0])
                         this.agentes = data.data[0]
                         toastr.success('contenido cargado satisfactoriamente');
-                        
                     }catch(e){
                         console.log(e)
                     }
                 }else{
                     toastr.error('debes completar todos los datos')
                 }
+            },
+            async getLiquidacion(){
+                await this.$store.dispatch('getLiquidacion',this.periodo)
             },
             getFecha:function(){
                 if(moment().month()===0){
@@ -121,13 +124,29 @@
                     this.periodo.anio = moment().year()
                 }
             },
+            reiniciar(){
+                this.auxiliar = 0
+            }
+            
 
         },
         computed:{
-            
+            liquidacion(){
+                return this.$store.state.liquidacion
+            },
         },
         watch:{
             sectorId:{
+                handler:function(){
+                    this.auxiliar = 0
+                }
+            },
+            hospitalId:{
+                handler:function(){
+                    this.auxiliar = 0
+                }
+            },
+            servicioId:{
                 handler:function(){
                     this.auxiliar = 0
                 }

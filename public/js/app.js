@@ -4499,10 +4499,14 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! toastr */ "./node_modules/toastr/toastr.js");
-/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(toastr__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! toastr */ "./node_modules/toastr/toastr.js");
+/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(toastr__WEBPACK_IMPORTED_MODULE_2__);
+
+//
 //
 //
 //
@@ -4559,8 +4563,9 @@ __webpack_require__.r(__webpack_exports__);
         periodo: 0,
         anio: 0
       },
-      agenfac: [],
-      cambiar: 0
+      agentesBuscar: [],
+      cambiar: 0,
+      verificar: 0
     };
   },
   created: function created() {
@@ -4588,24 +4593,41 @@ __webpack_require__.r(__webpack_exports__);
 
       //ingresa los datos
       var urlAgeninc = '/contrataciones-1/public/agenfac/store';
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post(urlAgeninc, this.agenteIngresar).then(function (Response) {
-        toastr__WEBPACK_IMPORTED_MODULE_1___default.a.success('contenido cargado satisfactoriamente');
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(urlAgeninc, this.agenteIngresar).then(function (Response) {
+        toastr__WEBPACK_IMPORTED_MODULE_2___default.a.success('contenido cargado satisfactoriamente');
         _this.agenteIngresar.HORAS = 0;
         _this.agenteIngresar.SUBTOT = 0;
         _this.agenteIngresar.BONVALOR = 0;
         _this.agenteIngresar.TOTAL = 0;
+        _this.verificar++;
       });
     },
     buscarLiquidacion: function buscarLiquidacion() {
-      var _this2 = this;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function buscarLiquidacion$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              this.verificar = this.liquidacion.map(function (result) {
+                return result.LEG;
+              }).indexOf(this.datosAgente.IDAGENTE);
 
-      var urlLiquidacion = '/contrataciones-1/public/agenfac/verificar';
-      this.agenteAux.leg = this.agenteIngresar.LEG;
-      this.agenteAux.periodo = this.agenteIngresar.PERIODO;
-      this.agenteAux.anio = this.agenteIngresar.ANIO;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post(urlLiquidacion, this.agenteAux).then(function (Response) {
-        _this2.agenfac = Response.data;
-      });
+            case 1:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, null, this);
+    }
+  },
+  computed: {
+    liquidacion: function liquidacion() {
+      return this.$store.state.liquidacion;
+    },
+    color: function color() {
+      return {
+        "bg-warning text-dark": this.verificar >= 0,
+        "bg-dark": this.verificar < 0
+      };
     }
   },
   watch: {
@@ -4613,12 +4635,12 @@ __webpack_require__.r(__webpack_exports__);
       handler: function handler() {
         this.buscarLiquidacion();
 
-        if (this.auxiliar === 1 && this.agenteIngresar.TOTAL && this.agenfac.length === 0) {
+        if (this.auxiliar === 1 && this.agenteIngresar.HORAS && this.verificar < 0) {
           this.guardarDatos();
         }
 
-        if (this.agenfac.length > 0 && this.auxiliar < 2) {
-          toastr__WEBPACK_IMPORTED_MODULE_1___default.a.warning('El Agente con legajo ' + this.agenteAux.leg + ' ya existe vuelva a presionar para liquidarlo');
+        if (this.verificar >= 0 && this.auxiliar < 2 && this.agenteIngresar.HORAS) {
+          toastr__WEBPACK_IMPORTED_MODULE_2___default.a.warning('El Agente con legajo ' + this.datosAgente.IDAGENTE + ' ya existe vuelva a presionar para liquidarlo');
         }
 
         if (this.auxiliar === 2 && this.agenteIngresar.TOTAL) {
@@ -4650,6 +4672,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 
 //
 //
@@ -4695,6 +4718,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 
@@ -4708,7 +4732,6 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       agentes: [],
-      agenfac: [],
       periodo: {
         mes: '',
         anio: ''
@@ -4724,6 +4747,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {
     this.getFecha();
+    this.getLiquidacion();
   },
   methods: {
     getAgentes: function getAgentes() {
@@ -4733,7 +4757,7 @@ __webpack_require__.r(__webpack_exports__);
           switch (_context.prev = _context.next) {
             case 0:
               if (!this.hospitalId) {
-                _context.next = 18;
+                _context.next = 17;
                 break;
               }
 
@@ -4746,30 +4770,44 @@ __webpack_require__.r(__webpack_exports__);
 
             case 7:
               data = _context.sent;
-              console.log(data.data[0]);
               this.agentes = data.data[0];
               toastr__WEBPACK_IMPORTED_MODULE_1___default.a.success('contenido cargado satisfactoriamente');
-              _context.next = 16;
+              _context.next = 15;
               break;
 
-            case 13:
-              _context.prev = 13;
+            case 12:
+              _context.prev = 12;
               _context.t0 = _context["catch"](4);
               console.log(_context.t0);
 
-            case 16:
-              _context.next = 19;
+            case 15:
+              _context.next = 18;
               break;
 
-            case 18:
+            case 17:
               toastr__WEBPACK_IMPORTED_MODULE_1___default.a.error('debes completar todos los datos');
 
-            case 19:
+            case 18:
             case "end":
               return _context.stop();
           }
         }
-      }, null, this, [[4, 13]]);
+      }, null, this, [[4, 12]]);
+    },
+    getLiquidacion: function getLiquidacion() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getLiquidacion$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.next = 2;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.$store.dispatch('getLiquidacion', this.periodo));
+
+            case 2:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, null, this);
     },
     getFecha: function getFecha() {
       if (moment__WEBPACK_IMPORTED_MODULE_2___default()().month() === 0) {
@@ -4779,11 +4817,28 @@ __webpack_require__.r(__webpack_exports__);
         this.periodo.mes = this.meses[moment__WEBPACK_IMPORTED_MODULE_2___default()().month() - 1];
         this.periodo.anio = moment__WEBPACK_IMPORTED_MODULE_2___default()().year();
       }
+    },
+    reiniciar: function reiniciar() {
+      this.auxiliar = 0;
     }
   },
-  computed: {},
+  computed: {
+    liquidacion: function liquidacion() {
+      return this.$store.state.liquidacion;
+    }
+  },
   watch: {
     sectorId: {
+      handler: function handler() {
+        this.auxiliar = 0;
+      }
+    },
+    hospitalId: {
+      handler: function handler() {
+        this.auxiliar = 0;
+      }
+    },
+    servicioId: {
       handler: function handler() {
         this.auxiliar = 0;
       }
@@ -42916,6 +42971,22 @@ var render = function() {
                     )
                   ],
                   1
+                ),
+                _vm._v(" "),
+                _c(
+                  "li",
+                  { staticClass: "nav-item active" },
+                  [
+                    _c(
+                      "router-link",
+                      {
+                        staticClass: "nav-link",
+                        attrs: { to: { name: "contaduria" } }
+                      },
+                      [_vm._v(" contaduria")]
+                    )
+                  ],
+                  1
                 )
               ])
             ]
@@ -48151,7 +48222,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("th", [
-    _c("div", { staticClass: "row" }, [
+    _c("div", { staticClass: "row", class: _vm.color }, [
       _c("div", { staticClass: "col-sm-3" }, [
         _vm._v("\n            bonificacion\n            "),
         _c(
@@ -48205,7 +48276,8 @@ var render = function() {
               expression: "agenteIngresar.HORAS"
             }
           ],
-          staticClass: "form-control badge-secondary",
+          staticClass: "form-control",
+          class: {},
           attrs: { type: "text" },
           domProps: { value: _vm.agenteIngresar.HORAS },
           on: {
@@ -48242,7 +48314,7 @@ var render = function() {
         _vm._v(
           "\n            Total: " +
             _vm._s(_vm.agenteIngresar.TOTAL.toFixed(2)) +
-            "\n        "
+            "\n           \n        "
         )
       ])
     ])
@@ -48451,7 +48523,7 @@ var render = function() {
           }
         }
       },
-      [_vm._v("liquidar " + _vm._s(_vm.auxiliar))]
+      [_vm._v("liquidar" + _vm._s(_vm.auxiliar))]
     )
   ])
 }
@@ -66515,6 +66587,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_4__);
+
 
 
 
@@ -66524,6 +66599,7 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
 var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
   state: {
     hospitales: [],
+    liquidacion: [],
     agentes: [],
     agenFac: [],
     contratos: [],
@@ -66574,6 +66650,9 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
     },
     llenarAgenfac: function llenarAgenfac(state, agenFac) {
       state.agenFac = agenFac;
+    },
+    llenarLiquidacion: function llenarLiquidacion(state, liquidacion) {
+      state.liquidacion = liquidacion;
     }
   },
   actions: {
@@ -66603,50 +66682,45 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
         }
       });
     },
-    getLiquidar: function getLiquidar(_ref2, datos) {
-      var commit, data, agentes;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getLiquidar$(_context2) {
+    getLiquidacion: function getLiquidacion(_ref2, datos) {
+      var commit, liquidacion;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getLiquidacion$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
               commit = _ref2.commit;
               _context2.next = 3;
-              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios__WEBPACK_IMPORTED_MODULE_3___default.a.post('agenincs/hosp', datos));
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios__WEBPACK_IMPORTED_MODULE_3___default.a.post('agenfac/liquidacion', datos));
 
             case 3:
-              data = _context2.sent;
-              _context2.next = 6;
-              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(data.data[0]);
+              liquidacion = _context2.sent;
+              return _context2.abrupt("return", commit('llenarLiquidacion', liquidacion.data[0]));
 
-            case 6:
-              agentes = _context2.sent;
-              return _context2.abrupt("return", commit('llenarAgenfac', agentes));
-
-            case 8:
+            case 5:
             case "end":
               return _context2.stop();
           }
         }
       });
     },
-    getVacaciones: function getVacaciones(_ref3) {
-      var commit, data, vacaciones;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getVacaciones$(_context3) {
+    getLiquidar: function getLiquidar(_ref3, datos) {
+      var commit, data, agentes;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getLiquidar$(_context3) {
         while (1) {
           switch (_context3.prev = _context3.next) {
             case 0:
               commit = _ref3.commit;
               _context3.next = 3;
-              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(fetch('vacaciones/vacaciones'));
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios__WEBPACK_IMPORTED_MODULE_3___default.a.post('agenincs/hosp', datos));
 
             case 3:
               data = _context3.sent;
               _context3.next = 6;
-              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(data.json());
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(data.data[0]);
 
             case 6:
-              vacaciones = _context3.sent;
-              return _context3.abrupt("return", commit('llenarVacaciones', vacaciones[0]));
+              agentes = _context3.sent;
+              return _context3.abrupt("return", commit('llenarAgenfac', agentes));
 
             case 8:
             case "end":
@@ -66655,15 +66729,15 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
         }
       });
     },
-    getAgentes: function getAgentes(_ref4) {
-      var commit, data, agentes;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getAgentes$(_context4) {
+    getVacaciones: function getVacaciones(_ref4) {
+      var commit, data, vacaciones;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getVacaciones$(_context4) {
         while (1) {
           switch (_context4.prev = _context4.next) {
             case 0:
               commit = _ref4.commit;
               _context4.next = 3;
-              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(fetch('agente/agente'));
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(fetch('vacaciones/vacaciones'));
 
             case 3:
               data = _context4.sent;
@@ -66671,8 +66745,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
               return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(data.json());
 
             case 6:
-              agentes = _context4.sent;
-              return _context4.abrupt("return", commit('llenarAgentes', agentes));
+              vacaciones = _context4.sent;
+              return _context4.abrupt("return", commit('llenarVacaciones', vacaciones[0]));
 
             case 8:
             case "end":
@@ -66681,15 +66755,15 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
         }
       });
     },
-    getContratos: function getContratos(_ref5) {
-      var commit, data, contratos;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getContratos$(_context5) {
+    getAgentes: function getAgentes(_ref5) {
+      var commit, data, agentes;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getAgentes$(_context5) {
         while (1) {
           switch (_context5.prev = _context5.next) {
             case 0:
               commit = _ref5.commit;
               _context5.next = 3;
-              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(fetch('contrato/activos'));
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(fetch('agente/agente'));
 
             case 3:
               data = _context5.sent;
@@ -66697,8 +66771,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
               return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(data.json());
 
             case 6:
-              contratos = _context5.sent;
-              commit('llenarContratos', contratos);
+              agentes = _context5.sent;
+              return _context5.abrupt("return", commit('llenarAgentes', agentes));
 
             case 8:
             case "end":
@@ -66707,24 +66781,24 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
         }
       });
     },
-    getContratosBajas: function getContratosBajas(_ref6) {
-      var commit, dataBajas, contratosBajas;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getContratosBajas$(_context6) {
+    getContratos: function getContratos(_ref6) {
+      var commit, data, contratos;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getContratos$(_context6) {
         while (1) {
           switch (_context6.prev = _context6.next) {
             case 0:
               commit = _ref6.commit;
               _context6.next = 3;
-              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(fetch('contrato/bajas'));
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(fetch('contrato/activos'));
 
             case 3:
-              dataBajas = _context6.sent;
+              data = _context6.sent;
               _context6.next = 6;
-              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(dataBajas.json());
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(data.json());
 
             case 6:
-              contratosBajas = _context6.sent;
-              commit('llenarContratosBajas', contratosBajas);
+              contratos = _context6.sent;
+              commit('llenarContratos', contratos);
 
             case 8:
             case "end":
@@ -66733,24 +66807,24 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
         }
       });
     },
-    getEspecialidades: function getEspecialidades(_ref7) {
-      var commit, data, especialidades;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getEspecialidades$(_context7) {
+    getContratosBajas: function getContratosBajas(_ref7) {
+      var commit, dataBajas, contratosBajas;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getContratosBajas$(_context7) {
         while (1) {
           switch (_context7.prev = _context7.next) {
             case 0:
               commit = _ref7.commit;
               _context7.next = 3;
-              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(fetch('especialidades'));
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(fetch('contrato/bajas'));
 
             case 3:
-              data = _context7.sent;
+              dataBajas = _context7.sent;
               _context7.next = 6;
-              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(data.json());
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(dataBajas.json());
 
             case 6:
-              especialidades = _context7.sent;
-              commit('llenarEspecialidades', especialidades);
+              contratosBajas = _context7.sent;
+              commit('llenarContratosBajas', contratosBajas);
 
             case 8:
             case "end":
@@ -66759,15 +66833,15 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
         }
       });
     },
-    getServicios: function getServicios(_ref8) {
-      var commit, data, servicios;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getServicios$(_context8) {
+    getEspecialidades: function getEspecialidades(_ref8) {
+      var commit, data, especialidades;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getEspecialidades$(_context8) {
         while (1) {
           switch (_context8.prev = _context8.next) {
             case 0:
               commit = _ref8.commit;
               _context8.next = 3;
-              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(fetch('servicios'));
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(fetch('especialidades'));
 
             case 3:
               data = _context8.sent;
@@ -66775,8 +66849,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
               return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(data.json());
 
             case 6:
-              servicios = _context8.sent;
-              return _context8.abrupt("return", commit('llenarServicios', servicios));
+              especialidades = _context8.sent;
+              commit('llenarEspecialidades', especialidades);
 
             case 8:
             case "end":
@@ -66785,15 +66859,15 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
         }
       });
     },
-    getSectores: function getSectores(_ref9) {
-      var commit, data, sectores;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getSectores$(_context9) {
+    getServicios: function getServicios(_ref9) {
+      var commit, data, servicios;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getServicios$(_context9) {
         while (1) {
           switch (_context9.prev = _context9.next) {
             case 0:
               commit = _ref9.commit;
               _context9.next = 3;
-              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(fetch('sectores'));
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(fetch('servicios'));
 
             case 3:
               data = _context9.sent;
@@ -66801,8 +66875,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
               return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(data.json());
 
             case 6:
-              sectores = _context9.sent;
-              return _context9.abrupt("return", commit('llenarSectores', sectores));
+              servicios = _context9.sent;
+              return _context9.abrupt("return", commit('llenarServicios', servicios));
 
             case 8:
             case "end":
@@ -66811,15 +66885,15 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
         }
       });
     },
-    getProveedores: function getProveedores(_ref10) {
-      var commit, data, proveedor;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getProveedores$(_context10) {
+    getSectores: function getSectores(_ref10) {
+      var commit, data, sectores;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getSectores$(_context10) {
         while (1) {
           switch (_context10.prev = _context10.next) {
             case 0:
               commit = _ref10.commit;
               _context10.next = 3;
-              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(fetch('proveedor'));
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(fetch('sectores'));
 
             case 3:
               data = _context10.sent;
@@ -66827,8 +66901,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
               return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(data.json());
 
             case 6:
-              proveedor = _context10.sent;
-              return _context10.abrupt("return", commit('llenarProveedores', proveedor));
+              sectores = _context10.sent;
+              return _context10.abrupt("return", commit('llenarSectores', sectores));
 
             case 8:
             case "end":
@@ -66837,61 +66911,87 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
         }
       });
     },
-    login: function login(_ref11, creedentials) {
-      var dispatch, url;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function login$(_context11) {
+    getProveedores: function getProveedores(_ref11) {
+      var commit, data, proveedor;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getProveedores$(_context11) {
         while (1) {
           switch (_context11.prev = _context11.next) {
             case 0:
-              dispatch = _ref11.dispatch;
-              url = 'login';
-              _context11.next = 4;
-              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios__WEBPACK_IMPORTED_MODULE_3___default.a.get('sanctum/csrf-cookie'));
+              commit = _ref11.commit;
+              _context11.next = 3;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(fetch('proveedor'));
 
-            case 4:
+            case 3:
+              data = _context11.sent;
               _context11.next = 6;
-              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios__WEBPACK_IMPORTED_MODULE_3___default.a.post(url, creedentials));
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(data.json());
 
             case 6:
-              return _context11.abrupt("return", dispatch("getUser"));
+              proveedor = _context11.sent;
+              return _context11.abrupt("return", commit('llenarProveedores', proveedor));
 
-            case 7:
+            case 8:
             case "end":
               return _context11.stop();
           }
         }
       });
     },
-    logout: function logout(_ref12) {
+    login: function login(_ref12, creedentials) {
       var dispatch, url;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function logout$(_context12) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function login$(_context12) {
         while (1) {
           switch (_context12.prev = _context12.next) {
             case 0:
               dispatch = _ref12.dispatch;
-              url = 'logout';
+              url = 'login';
               _context12.next = 4;
-              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios__WEBPACK_IMPORTED_MODULE_3___default.a.post(url));
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios__WEBPACK_IMPORTED_MODULE_3___default.a.get('sanctum/csrf-cookie'));
 
             case 4:
+              _context12.next = 6;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios__WEBPACK_IMPORTED_MODULE_3___default.a.post(url, creedentials));
+
+            case 6:
               return _context12.abrupt("return", dispatch("getUser"));
 
-            case 5:
+            case 7:
             case "end":
               return _context12.stop();
           }
         }
       });
     },
-    getUser: function getUser(_ref13) {
-      var commit, url;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getUser$(_context13) {
+    logout: function logout(_ref13) {
+      var dispatch, url;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function logout$(_context13) {
         while (1) {
           switch (_context13.prev = _context13.next) {
             case 0:
-              commit = _ref13.commit;
+              dispatch = _ref13.dispatch;
+              url = 'logout';
+              _context13.next = 4;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios__WEBPACK_IMPORTED_MODULE_3___default.a.post(url));
+
+            case 4:
+              return _context13.abrupt("return", dispatch("getUser"));
+
+            case 5:
+            case "end":
+              return _context13.stop();
+          }
+        }
+      });
+    },
+    getUser: function getUser(_ref14) {
+      var commit, url;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getUser$(_context14) {
+        while (1) {
+          switch (_context14.prev = _context14.next) {
+            case 0:
+              commit = _ref14.commit;
               url = 'api/user';
-              return _context13.abrupt("return", axios__WEBPACK_IMPORTED_MODULE_3___default.a.get(url).then(function (Res) {
+              return _context14.abrupt("return", axios__WEBPACK_IMPORTED_MODULE_3___default.a.get(url).then(function (Res) {
                 //promesa con usuarios
                 var urlRol = "roles/".concat(Res.data.rol_id);
                 axios__WEBPACK_IMPORTED_MODULE_3___default.a.get(urlRol).then(function (Response) {
@@ -66907,7 +67007,7 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
 
             case 3:
             case "end":
-              return _context13.stop();
+              return _context14.stop();
           }
         }
       });

@@ -33,9 +33,9 @@
                         <li class="nav-item active">
                             <router-link class="nav-link" :to="{name: 'contratos'}"> Contratados</router-link>
                         </li>
-                        <!-- <li class="nav-item active">
-                            <router-link class="nav-link" :to="{name: 'nUsuario'}"> Nuevo Usuario</router-link>
-                        </li> -->
+                        <li class="nav-item active">
+                            <router-link class="nav-link" :to="{name: 'contaduria'}"> contaduria</router-link>
+                        </li>
                     </ul>
                 </div>
             </nav>

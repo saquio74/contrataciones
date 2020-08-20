@@ -1,6 +1,6 @@
 <template>
     <th>
-        <div class="row">
+        <div class="row" :class="color">
             <div class="col-sm-3">
                 bonificacion
                 <select class="form-control badge-secondary" v-model="agenteIngresar.BONIFICACION">
@@ -11,7 +11,7 @@
             </div>
             <div class="col-sm-3">
                 horas
-            <input type="text" class="form-control badge-secondary" v-model="agenteIngresar.HORAS" v-on:keyup="liquidar()" >
+            <input type="text" :class="{}" class="form-control" v-model="agenteIngresar.HORAS" v-on:keyup="liquidar()" >
             </div>
             
             <div class="col-sm-2">
@@ -22,6 +22,7 @@
             </div>
             <div class="col-sm-2">
                 Total: {{agenteIngresar.TOTAL.toFixed(2)}}
+               
             </div>
         </div>
     </th>
@@ -61,8 +62,9 @@
                     periodo:    0,
                     anio:       0,
                 },
-                agenfac:[],
-                cambiar: 0,
+                agentesBuscar:  [],
+                cambiar:        0,
+                verificar:      0,
                 
             }
         },
@@ -94,29 +96,37 @@
                     this.agenteIngresar.SUBTOT      =   0
                     this.agenteIngresar.BONVALOR    =   0
                     this.agenteIngresar.TOTAL       =   0
+                    this.verificar++
                 })     
             },
-            buscarLiquidacion:function(){
-                var urlLiquidacion      = '/contrataciones-1/public/agenfac/verificar';
-                this.agenteAux.leg      = this.agenteIngresar.LEG
-                this.agenteAux.periodo  = this.agenteIngresar.PERIODO
-                this.agenteAux.anio     = this.agenteIngresar.ANIO 
-                axios.post(urlLiquidacion,this.agenteAux).then(Response=>{
-                    this.agenfac = Response.data
-                })
+            buscarLiquidacion:async function(){
+                this.verificar = this.liquidacion.map(result=>result.LEG).indexOf(this.datosAgente.IDAGENTE )
             },
             
         },
+        computed:{
+            liquidacion(){
+                
+                return this.$store.state.liquidacion
+            },
+            color(){
+                return{
+                    "bg-warning text-dark" : this.verificar >= 0,
+                    "bg-dark"       : this.verificar<0 
+                }
+            }
+        },
+
         watch:{
             auxiliar:{
                 handler:function(){
                     this.buscarLiquidacion()
-                    if(this.auxiliar === 1 && this.agenteIngresar.TOTAL && this.agenfac.length === 0 ){
+                    if(this.auxiliar === 1 && this.agenteIngresar.HORAS && this.verificar < 0 ){
                         this.guardarDatos()
                     }
-                    if(this.agenfac.length>0 && this.auxiliar < 2){
+                    if(this.verificar>=0 && this.auxiliar < 2 && this.agenteIngresar.HORAS){
                         toastr.warning('El Agente con legajo ' + 
-                        this.agenteAux.leg + 
+                        this.datosAgente.IDAGENTE  + 
                         ' ya existe vuelva a presionar para liquidarlo')
                     }
                     if(this.auxiliar === 2 && this.agenteIngresar.TOTAL){

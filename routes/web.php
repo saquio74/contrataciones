@@ -70,6 +70,10 @@ Route::post('/agenfac/store',                'agenfacs@store');
 
 Route::post('/agenfac/verificar',            'agenfacs@getFacturacion');
 
+Route::get('/agenfac/liquidacionpdf',        'agenfacs@liquidacionPDF');
+
+Route::post('/agenfac/liquidacion',          'agenfacs@getLiquidacion');
+
 Route::get('/libro',                         'libroController@index');
 
 Route::get('/especialidad/vistaExcel',       'especialidadController@vistaExcel');
