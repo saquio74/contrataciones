@@ -70,7 +70,15 @@ Route::post('/agenfac/store',                'agenfacs@store');
 
 Route::post('/agenfac/verificar',            'agenfacs@getFacturacion');
 
-Route::get('/agenfac/liquidacionpdf',        'agenfacs@liquidacionPDF');
+Route::post('/agenfac/liquidacionpdf',       'agenfacs@liquidacionPDF');
+
+Route::post('/agenfac/excel',                'agenfacs@excelLiquidacion');
+
+Route::post('/agenfac/modificar',            'agenfacs@getModificar');
+
+Route::delete('/agenfac/delete/{id}',        'agenfacs@delete');
+
+Route::get('/agenfac/periodo',               'agenfacs@getPeriodo');
 
 Route::post('/agenfac/liquidacion',          'agenfacs@getLiquidacion');
 

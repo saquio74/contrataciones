@@ -39,6 +39,9 @@ const cargarCont   =Vue.component('nuevo-proveedor',           require('./compon
 const login        =Vue.component('login',                     require('./components/login/Login.vue'                        ).default);
                     Vue.component('usuario',                   require('./components/login/UsuarioEstado.vue'                ).default);
 const nuevoUsuario =Vue.component('nUsuario',                  require('./components/login/Register'                         ).default);
+const contaduria   =Vue.component('contaduria',                require('./components/contaduria/Contaduria.vue'              ).default);
+                    Vue.component('getPDF',                    require('./components/contaduria/vistas/GenerarPDF.vue'       ).default)
+
 const routes = [
     { path: '/'             ,name: 'Home'            , component: login        },
     { path: '/agente'       ,name: 'Foo'             , component: agente       },
@@ -47,7 +50,7 @@ const routes = [
     { path: '/libros'       ,name: 'libros'          , component: libro        },
     { path: '/login'        ,name: 'login'           , component: login        },
     { path: '/contratos'    ,name: 'contratos'       , component: listProv     },
-    //{ path: '/register'     ,name: 'nUsuario'        , component: nuevoUsuario },
+    { path: '/contaduria'   ,name: 'contaduria'      , component: contaduria   },
   ]
 
 const router = new VueRouter({

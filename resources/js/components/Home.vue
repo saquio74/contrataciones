@@ -43,7 +43,6 @@
         <div class="col-sm-10">
             <div class="col-sm-12 bg-secondary" v-if="userConfirm">
                 <router-view></router-view>
-                
             </div>
             <div class="col-sm-12 bg-secondary" v-else>
                 <login></login>

@@ -25,7 +25,7 @@ class agenincs extends Controller
         
         return $inciso;
     }
-    public function incisoAgente(Request $datos)
+    public function incisoAgente($data)
     {
         
         

@@ -18,7 +18,7 @@ const routes = [
     { path: '/agente'       ,name: 'Foo'             , component: agente       },
     { path: '/vacaciones'   ,name: 'Bar'             , component: vacaciones   },
     { path: '/paraLiquidar' ,name: 'paraLiquidar'    , component: paraLiquidar },
-    { path: '/contaduria'   ,name: 'contaduria'      , component: contaduria }
+    { path: '/Contaduria'   ,name: 'Contaduria'      , component: contaduria   },
   ]
 
 export const router = new VueRouter({
