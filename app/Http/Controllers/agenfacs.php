@@ -46,7 +46,7 @@ class agenfacs extends Controller
                     ->distinct()
                     ->select('periodo','anio')
                     ->get();
-        return response()->json([$periodo],200);
+        return response()->json($periodo,200);
     }
     
     public function liquidacionPDF(Request $datos){
@@ -234,7 +234,7 @@ class agenfacs extends Controller
     }
     public function getModificar(Request $datos){
         $agenfac = DB::table('agenfac')
-                    ->select('agenfac.id','leg','agentes.nombre','inciso.inciso','subtot','bonvalor','total','sector.sector')
+                    ->select('agenfac.id','leg','agentes.nombre','agenfac.bonificacion','agenfac.horas','inciso.inciso','inciso.valor','subtot','bonvalor','total','sector.sector')
                     ->join('agentes','agenfac.leg','=','agentes.legajo')
                     ->join('inciso','agenfac.inc','=','inciso.id')
                     ->join('servicio','agentes.idservicio','=','servicio.id')
@@ -250,6 +250,23 @@ class agenfacs extends Controller
     public function delete($id)
     {
         $delete = agenfac::where('id',$id)->delete();
+    }
+    public function update(Request $datos){
+        $this->validate($datos,[
+            'horas'=> 'required'
+        ]);
+        $agenfac = agenfac::find($datos->id);
+
+        $agenfac->horas             =  $datos->horas;
+        $agenfac->bonificacion      =  $datos->bonificacion;
+        $agenfac->subtot            =  $datos->subtot;
+        $agenfac->bonvalor          =  $datos->bonvalor;
+        $agenfac->total             =  $datos->total;
+
+        $agenfac->save();
+
+        return response()->json(['Modificado correctamente'],204);
+        
     }
 
 }

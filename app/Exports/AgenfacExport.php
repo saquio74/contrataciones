@@ -13,9 +13,9 @@ class AgenfacExport implements FromCollection,WithHeadings
     * @return \Illuminate\Support\Collection
     */
     function __construct($datos){
-        $this->periodo   = $datos->periodo;
-        $this->anio      = $datos->anio;
-        $this->hospital_id   = $datos->hospital_id;
+        $this->periodo      = $datos->periodo;
+        $this->anio         = $datos->anio;
+        $this->hospital_id  = $datos->hospital_id;
         
     }
     public function headings(): array

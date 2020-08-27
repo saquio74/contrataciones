@@ -1,6 +1,5 @@
 <template>
     <div class="bg-secondary col-sm-12 form-group" >
-        {{vista}}
         <div class="col-sm-12">
             <button type="button" class="btn btn-outline-success" v-on:click="vista=2">Modificar Liquidacion</button>
             <button type="button" class="btn btn-outline-success" v-on:click="vista=1">Generar PDF</button>
@@ -73,13 +72,14 @@
                     <th scope="col">LEGAJO</th>
                     <th scope="col">INCISO</th>
                     <th scope="col">NOMBRE</th>
+                    <th scope="col">HORAS</th>
                     <th scope="col">SUBTOTAL</th>
                     <th scope="col">BONIF.</th>
                     <th scope="col">TOTAL</th>
                 </tr>
             </thead>
             <tbody>
-                <tr  v-for="agente in liquidacion" :key="agente.LEGAJO" >
+                <tr  v-for="agente in liquidacionM" :key="agente.LEGAJO" >
                     <th>
                         {{agente.leg}}
                     </th>
@@ -90,13 +90,16 @@
                         {{agente.nombre.toUpperCase()}}
                     </th>
                     <th>
-                        {{agente.subtot}}
+                        {{agente.horas}}
                     </th>
                     <th>
-                        {{agente.bonvalor}}
+                        {{agente.subtot.toFixed(2)}}
                     </th>
                     <th>
-                        {{agente.total}}
+                        {{agente.bonvalor.toFixed(2)}}
+                    </th>
+                    <th>
+                        {{agente.total.toFixed(2)}}
                     </th >
                     <th width="10px">
                         <button type="button" class="btn btn-warning" v-on:click="modificar(agente)" data-toggle="modal" data-target="#ModificarLiquidacion">
@@ -109,6 +112,7 @@
                 </tr>
             </tbody>
         </table>
+        <modificar-liquidacion :agenteData="aux"></modificar-liquidacion>
         </div>
     </div>
     
@@ -131,7 +135,7 @@ export default {
 
             },
             vista:0,
-            liquidacion:{
+            aux:{
 
             }
         }
@@ -204,9 +208,8 @@ export default {
                 return
             }
             try {
-                let data            = await axios.post('agenfac/modificar',datos)
-                let liquidacion     = data.data
-                this.liquidacion    = liquidacion[0]
+                
+                this.liquidacion    = await this.$store.dispatch('getModificarLiquidacion',datos)
                 console.log(this.liquidacion.length)
                 if(this.liquidacion.length>0){
                     toastr.success('contenido cargado correctamente')
@@ -234,8 +237,8 @@ export default {
                 console.log(error)
             }
         },
-        modificar(){
-            
+        modificar(data){
+            this.aux = data
         }
     },
     computed:{
@@ -245,6 +248,9 @@ export default {
         periodos(){
             return this.$store.state.periodos
         },
+        liquidacionM(){
+            return this.$store.state.liquidacionM
+        }
     },
 }
 </script>

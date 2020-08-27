@@ -17,9 +17,10 @@ export const store = new Vuex.Store({
         sectores:       [],
         contratosBajas: [],
         especialidades: [],
-        proveedor:      [],
+        liquidacionM:   [],
         vacaciones:     [],
         periodos:       [],
+        modificar:      [],
         user:           null,
         rol:            null,
         auth:           false,
@@ -66,7 +67,10 @@ export const store = new Vuex.Store({
             state.liquidacion       = liquidacion
         },
         llenarPeriodos(state,periodos){
-            state.periodos       = periodos
+            state.periodos          = periodos
+        },
+        llenarModificar(state,liquidacion){
+            state.liquidacionM         = liquidacion
         }
         
     },
@@ -79,11 +83,16 @@ export const store = new Vuex.Store({
         async getPeriodos({commit}){
             const data              = await fetch('agenfac/periodo')
             const periodos          = await data.json()
-            return commit('llenarPeriodos', periodos[0])
+            return commit('llenarPeriodos', periodos)
         },
         async getLiquidacion({commit},datos){
             const liquidacion       = await axios.post('agenfac/liquidacion',datos)
+            console.log(liquidacion)
             return commit('llenarLiquidacion',liquidacion.data[0])
+        },
+        async getModificarLiquidacion({commit},datos){
+            const liquidacion       = await axios.post('agenfac/modificar',datos)
+            return commit('llenarModificar',liquidacion.data[0])
         },
         async getLiquidar({commit},datos){
             

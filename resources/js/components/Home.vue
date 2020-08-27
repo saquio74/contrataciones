@@ -36,6 +36,9 @@
                         <li class="nav-item active">
                             <router-link class="nav-link" :to="{name: 'contaduria'}"> contaduria</router-link>
                         </li>
+                        <li class="nav-item active">
+                            <router-link class="nav-link" :to="{name: 'complementaria'}"> complementaria</router-link>
+                        </li>
                     </ul>
                 </div>
             </nav>

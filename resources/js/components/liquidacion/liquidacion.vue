@@ -102,10 +102,12 @@
                     this.datos.servicioId   = this.servicioId
                     this.datos.sectorId     = this.sectorId
                     try{
+                        
                         const data = await axios.post('agenincs/hosp', this.datos)
                         this.agentes = data.data[0]
                         toastr.success('contenido cargado satisfactoriamente');
                     }catch(e){
+                        toastr.error(e.response)
                         console.log(e)
                     }
                 }else{

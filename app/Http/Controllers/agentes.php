@@ -83,7 +83,7 @@ class agentes extends Controller
     public function show($legajo)//muestra todos los datos del agente
     {
         $agente = agente::where('legajo',$legajo)->get();
-        return view('agente.show', compact('agente'));
+        return response()->json($agente,200);
     }
     public function nuevo()//vista para ingresar un agente
     {

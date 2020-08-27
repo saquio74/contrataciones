@@ -82,6 +82,8 @@ Route::get('/agenfac/periodo',               'agenfacs@getPeriodo');
 
 Route::post('/agenfac/liquidacion',          'agenfacs@getLiquidacion');
 
+Route::put('/agenfac/update',                'agenfacs@update');
+
 Route::get('/libro',                         'libroController@index');
 
 Route::get('/especialidad/vistaExcel',       'especialidadController@vistaExcel');
@@ -125,3 +127,13 @@ Route::get('/user',                          'authController@getUsuarios');
 Route::get('/roles',                         'rolesController@index');
 
 Route::get('/roles/{id}',                    'rolesController@show');
+
+Route::get('/complementaria',                'ComplementariaController@index');
+
+Route::post('/complementaria/store',         'ComplementariaController@store');
+
+Route::post('/complementaria/get',           'ComplementariaController@getComplementaria');
+
+Route::post('/complementaria/getPDF',        'ComplementariaController@complementariaPDF');
+
+Route::delete('/complementaria/delete',      'ComplementariaController@destroy');

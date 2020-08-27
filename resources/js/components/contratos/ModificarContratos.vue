@@ -12,7 +12,7 @@
                 <div class="modal-body badge-dark">
                    
                     <hr>
-                    <p>{{proveedor}}</p>
+                    
                     
                     <div class="form-group row">
                         

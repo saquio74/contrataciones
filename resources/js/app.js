@@ -40,8 +40,12 @@ const login        =Vue.component('login',                     require('./compon
                     Vue.component('usuario',                   require('./components/login/UsuarioEstado.vue'                ).default);
 const nuevoUsuario =Vue.component('nUsuario',                  require('./components/login/Register'                         ).default);
 const contaduria   =Vue.component('contaduria',                require('./components/contaduria/Contaduria.vue'              ).default);
-                    Vue.component('getPDF',                    require('./components/contaduria/vistas/GenerarPDF.vue'       ).default)
-
+                    Vue.component('getPDF',                    require('./components/contaduria/vistas/GenerarPDF.vue'       ).default);
+                    Vue.component('modificar-liquidacion',     require('./components/contaduria/vistas/ModificarLiquidacion.vue').default);
+const comple       =Vue.component('complementaria',            require('./components/complementaria/complementaria.vue'      ).default);
+                    Vue.component('borrar-comples',            require('./components/complementaria/vistas/BorrarComple.vue' ).default);
+                    Vue.component('generar-comple',            require('./components/complementaria/vistas/GenerarComple.vue').default);
+                    Vue.component('pdf-comples',               require('./components/complementaria/vistas/PDFcomple.vue'    ).default);
 const routes = [
     { path: '/'             ,name: 'Home'            , component: login        },
     { path: '/agente'       ,name: 'Foo'             , component: agente       },
@@ -51,6 +55,7 @@ const routes = [
     { path: '/login'        ,name: 'login'           , component: login        },
     { path: '/contratos'    ,name: 'contratos'       , component: listProv     },
     { path: '/contaduria'   ,name: 'contaduria'      , component: contaduria   },
+    { path: '/comple'       ,name: 'complementaria'  , component: comple       },
   ]
 
 const router = new VueRouter({

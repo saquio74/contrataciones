@@ -12,7 +12,6 @@
                 <div class="modal-body badge-dark">
                     
                     <hr>
-                    <p>{{agente}}</p>
                     
                     <div class="form-group row">
                         <label for="legajo"    class="col-sm-4 col-form-label text-center">LEGAJO   </label>
