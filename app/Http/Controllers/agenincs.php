@@ -25,6 +25,17 @@ class agenincs extends Controller
         
         return $inciso;
     }
+    public function incisoLiquidacion($legajo){
+        $inciso = DB::table('ageninc')
+                    ->join('agentes','idagente','=','agentes.legajo')
+                    ->join('inciso','idinc','=','inciso.id')
+                    
+                    ->where('idagente','=',$legajo)
+                    ->get();
+        
+        
+        return $inciso;
+    }
     public function incisoAgente(Request $datos)
     {
         

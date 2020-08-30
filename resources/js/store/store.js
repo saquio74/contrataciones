@@ -21,6 +21,9 @@ export const store = new Vuex.Store({
         vacaciones:     [],
         periodos:       [],
         modificar:      [],
+        fechas:         [],
+        incisos:        [],
+        permisos:       [],
         user:           null,
         rol:            null,
         auth:           false,
@@ -70,7 +73,16 @@ export const store = new Vuex.Store({
             state.periodos          = periodos
         },
         llenarModificar(state,liquidacion){
-            state.liquidacionM         = liquidacion
+            state.liquidacionM      = liquidacion
+        },
+        llenarFechas(state,fechas){
+            state.fechas            = fechas
+        },
+        llenarIncisos(state,inciso){
+            state.incisos           = inciso
+        },
+        llenarPermisos(state,permisos){
+            state.permisos          = permisos
         }
         
     },
@@ -78,7 +90,22 @@ export const store = new Vuex.Store({
         getHospitales: async function({commit}){
             const data              = await fetch('hospitales')
             const hospitales        = await data.json();
+            
             return commit('llenarHospitales',hospitales)
+        },
+        async getIncisos({commit}){
+            try {
+                const data              = await fetch('inciso')
+                const inciso            = await data.json()
+                return commit('llenarIncisos',inciso)
+            } catch (error) {
+                
+            }
+        },
+        async getFechas({commit}){
+            const data              = await fetch('complementaria/fecha')
+            const getFechas         = await data.json();
+            return commit('llenarFechas',getFechas)
         },
         async getPeriodos({commit}){
             const data              = await fetch('agenfac/periodo')

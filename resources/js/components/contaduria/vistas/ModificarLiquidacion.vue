@@ -106,7 +106,7 @@ export default {
         },
         liquidar(horas){
             this.agente.subtot      = Math.round((this.agente.horas * this.agente.valor).toFixed(2) *100)/100
-            this.agente.bonvalor    = Math.round(this.agente.subtot.toFixed(2) * 0.2 *100)/100
+            this.agente.bonvalor    = Math.round(this.agente.subtot.toFixed(2) * (this.agente.bonificacion /100) *100)/100
             this.agente.total       = Math.round(this.agente.subtot + this.agente.bonvalor *100)/100
         },
         async updateLiquidacion(){

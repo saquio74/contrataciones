@@ -46,6 +46,7 @@ const comple       =Vue.component('complementaria',            require('./compon
                     Vue.component('borrar-comples',            require('./components/complementaria/vistas/BorrarComple.vue' ).default);
                     Vue.component('generar-comple',            require('./components/complementaria/vistas/GenerarComple.vue').default);
                     Vue.component('pdf-comples',               require('./components/complementaria/vistas/PDFcomple.vue'    ).default);
+const inciso       =Vue.component('inciso',                    require('./components/incisos/VistaIncisos.vue').default)
 const routes = [
     { path: '/'             ,name: 'Home'            , component: login        },
     { path: '/agente'       ,name: 'Foo'             , component: agente       },
@@ -56,6 +57,7 @@ const routes = [
     { path: '/contratos'    ,name: 'contratos'       , component: listProv     },
     { path: '/contaduria'   ,name: 'contaduria'      , component: contaduria   },
     { path: '/comple'       ,name: 'complementaria'  , component: comple       },
+    { path: '/inciso'       ,name: 'inciso'          , component: inciso       },
   ]
 
 const router = new VueRouter({

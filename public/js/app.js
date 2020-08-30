@@ -2147,6 +2147,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {};
@@ -3388,12 +3392,210 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! toastr */ "./node_modules/toastr/toastr.js");
+/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(toastr__WEBPACK_IMPORTED_MODULE_2__);
+
 //
 //
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      hospital: {},
+      periodo: {},
+      comples: {},
+      fecha: '',
+      vista: 0,
+      aux: {}
+    };
+  },
+  created: function created() {
+    this.getHosp();
+    this.getPeriodo();
+    this.getFechas();
+  },
+  methods: {
+    getHosp: function getHosp() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getHosp$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.next = 2;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.$store.dispatch('getHospitales'));
+
+            case 2:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, null, this);
+    },
+    getPeriodo: function getPeriodo() {
+      this.$store.dispatch('getPeriodos');
+    },
+    getFechas: function getFechas() {
+      this.$store.dispatch('getFechas');
+    },
+    getComplementaria: function getComplementaria() {
+      var complementaria, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getComplementaria$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              complementaria = {
+                periodo: this.periodo.periodo,
+                anio: this.periodo.anio,
+                hospital: this.hospital.HOSPITAL,
+                hospital_id: this.hospital.ID,
+                fecha: this.fecha
+              };
+
+              if (!this.periodo || !this.hospital || !this.fecha) {
+                toastr__WEBPACK_IMPORTED_MODULE_2___default.a.error('no puedes generar un PDF sin esos datos');
+              }
+
+              _context2.prev = 2;
+              _context2.next = 5;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('complementaria/get', complementaria));
+
+            case 5:
+              response = _context2.sent;
+              this.comples = response.data;
+              _context2.next = 12;
+              break;
+
+            case 9:
+              _context2.prev = 9;
+              _context2.t0 = _context2["catch"](2);
+              toastr__WEBPACK_IMPORTED_MODULE_2___default.a.error(_context2.t0);
+
+            case 12:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, null, this, [[2, 9]]);
+    },
+    borrarComplementaria: function borrarComplementaria(agente) {
+      var response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function borrarComplementaria$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              _context3.prev = 0;
+              _context3.next = 3;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios__WEBPACK_IMPORTED_MODULE_1___default.a["delete"]("complementaria/delete/".concat(agente.id)));
+
+            case 3:
+              response = _context3.sent;
+              this.getComplementaria();
+              this.getFechas();
+              toastr__WEBPACK_IMPORTED_MODULE_2___default.a.success('borrado correctamente');
+              _context3.next = 12;
+              break;
+
+            case 9:
+              _context3.prev = 9;
+              _context3.t0 = _context3["catch"](0);
+              toastr__WEBPACK_IMPORTED_MODULE_2___default.a.error(_context3.t0);
+
+            case 12:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, null, this, [[0, 9]]);
+    }
+  },
+  computed: {
+    hospitales: function hospitales() {
+      return this.$store.state.hospitales;
+    },
+    periodos: function periodos() {
+      return this.$store.state.periodos;
+    },
+    fechas: function fechas() {
+      return this.$store.state.fechas;
+    }
+  }
+});
 
 /***/ }),
 
@@ -3410,6 +3612,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! toastr */ "./node_modules/toastr/toastr.js");
+/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(toastr__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_3__);
 
 //
 //
@@ -3462,15 +3668,34 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      hospital: {},
-      complementaria: {},
       periodo: {},
+      agente: {},
       legajo: '',
-      agente: {}
+      horas: '',
+      subtot: '',
+      bonvalor: '',
+      total: '',
+      bonificacion: '',
+      fecha: moment__WEBPACK_IMPORTED_MODULE_3___default()().format('YYYY-MM-DD')
     };
   },
   created: function created() {
@@ -3487,21 +3712,84 @@ __webpack_require__.r(__webpack_exports__);
           switch (_context.prev = _context.next) {
             case 0:
               _context.next = 2;
-              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("agente/".concat(this.agente.LEGAJO)));
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("agenincs/liquidacion/".concat(this.agente.LEGAJO)));
 
             case 2:
               data = _context.sent;
               this.agente = data.data[0];
-              console.log(this.agente);
 
-            case 5:
+            case 4:
             case "end":
               return _context.stop();
           }
         }
       }, null, this);
     },
-    saveComplementaria: function saveComplementaria() {}
+    calculateComplementaria: function calculateComplementaria() {
+      this.subtot = Math.round(this.horas * this.agente.VALOR * 100) / 100;
+      this.bonvalor = Math.round(this.subtot * this.bonificacion) / 100;
+      this.total = this.subtot + this.bonvalor;
+    },
+    saveComplementaria: function saveComplementaria() {
+      var complementaria, save;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function saveComplementaria$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              complementaria = {
+                leg: this.agente.LEGAJO,
+                periodo: this.periodo.periodo,
+                anio: this.periodo.anio,
+                horas: this.horas,
+                inciso: this.agente.IDINC,
+                valor: this.agente.VALOR,
+                bonificacion: this.bonificacion,
+                subtot: this.subtot,
+                bonvalor: this.bonvalor,
+                total: this.total,
+                hospital: this.agente.IDHOSP,
+                fecha: moment__WEBPACK_IMPORTED_MODULE_3___default()(this.fecha).format('YYYY-MM-DD')
+              };
+
+              if (!(!complementaria.leg || !this.periodo || !this.horas)) {
+                _context2.next = 4;
+                break;
+              }
+
+              toastr__WEBPACK_IMPORTED_MODULE_2___default.a.error('el campo legajo debe estar completo e invocado');
+              return _context2.abrupt("return");
+
+            case 4:
+              _context2.prev = 4;
+              _context2.next = 7;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('complementaria/store', complementaria));
+
+            case 7:
+              save = _context2.sent;
+              this.legajo = '';
+              this.horas = '';
+              this.subtot = '';
+              this.bonvalor = '';
+              this.total = '';
+              this.bonificacion = '';
+              this.agente = {};
+              this.periodo = {};
+              toastr__WEBPACK_IMPORTED_MODULE_2___default.a.success('Complementaria guardada correctamente');
+              _context2.next = 22;
+              break;
+
+            case 19:
+              _context2.prev = 19;
+              _context2.t0 = _context2["catch"](4);
+              toastr__WEBPACK_IMPORTED_MODULE_2___default.a.error('Ocurrio un error');
+
+            case 22:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, null, this, [[4, 19]]);
+    }
   },
   computed: {
     periodos: function periodos() {
@@ -3521,12 +3809,143 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! toastr */ "./node_modules/toastr/toastr.js");
+/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(toastr__WEBPACK_IMPORTED_MODULE_2__);
+
 //
 //
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      hospital: {},
+      periodo: {},
+      fecha: '',
+      vista: 0,
+      aux: {}
+    };
+  },
+  created: function created() {
+    this.getHosp();
+    this.getPeriodo();
+    this.getFechas();
+  },
+  methods: {
+    getHosp: function getHosp() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getHosp$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.next = 2;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.$store.dispatch('getHospitales'));
+
+            case 2:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, null, this);
+    },
+    getPeriodo: function getPeriodo() {
+      this.$store.dispatch('getPeriodos');
+    },
+    getFechas: function getFechas() {
+      this.$store.dispatch('getFechas');
+    },
+    getPdf: function getPdf() {
+      var complementaria, response, pdf, fileURL;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getPdf$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              complementaria = {
+                periodo: this.periodo.periodo,
+                anio: this.periodo.anio,
+                hospital: this.hospital.HOSPITAL,
+                hospital_id: this.hospital.ID,
+                fecha: this.fecha
+              };
+
+              if (!this.periodo || !this.hospital || !this.fecha) {
+                toastr__WEBPACK_IMPORTED_MODULE_2___default.a.error('no puedes generar un PDF sin esos datos');
+              }
+
+              _context2.prev = 2;
+              _context2.next = 5;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('complementaria/getPDF', complementaria, {
+                responseType: 'blob'
+              }));
+
+            case 5:
+              response = _context2.sent;
+              _context2.next = 8;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(new Blob([response.data], {
+                type: 'application/pdf'
+              }));
+
+            case 8:
+              pdf = _context2.sent;
+              fileURL = URL.createObjectURL(pdf);
+              window.open(fileURL);
+              _context2.next = 16;
+              break;
+
+            case 13:
+              _context2.prev = 13;
+              _context2.t0 = _context2["catch"](2);
+              toastr__WEBPACK_IMPORTED_MODULE_2___default.a.error(_context2.t0.response);
+
+            case 16:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, null, this, [[2, 13]]);
+    }
+  },
+  computed: {
+    hospitales: function hospitales() {
+      return this.$store.state.hospitales;
+    },
+    periodos: function periodos() {
+      return this.$store.state.periodos;
+    },
+    fechas: function fechas() {
+      return this.$store.state.fechas;
+    }
+  }
+});
 
 /***/ }),
 
@@ -4049,7 +4468,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     liquidar: function liquidar(horas) {
       this.agente.subtot = Math.round((this.agente.horas * this.agente.valor).toFixed(2) * 100) / 100;
-      this.agente.bonvalor = Math.round(this.agente.subtot.toFixed(2) * 0.2 * 100) / 100;
+      this.agente.bonvalor = Math.round(this.agente.subtot.toFixed(2) * (this.agente.bonificacion / 100) * 100) / 100;
       this.agente.total = Math.round(this.agente.subtot + this.agente.bonvalor * 100) / 100;
     },
     updateLiquidacion: function updateLiquidacion() {
@@ -4995,6 +5414,233 @@ __webpack_require__.r(__webpack_exports__);
         return a.proveedor - b.proveedor;
       });
       return this.proveedores;
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/incisos/VistaIncisos.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/incisos/VistaIncisos.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! toastr */ "./node_modules/toastr/toastr.js");
+/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(toastr__WEBPACK_IMPORTED_MODULE_2__);
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      valor: '',
+      nInciso: {
+        inciso: '',
+        valor: ''
+      },
+      vista: 0
+    };
+  },
+  created: function created() {
+    this.getIncisos();
+  },
+  methods: {
+    getIncisos: function getIncisos() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getIncisos$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.next = 2;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.$store.dispatch('getIncisos'));
+
+            case 2:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, null, this);
+    },
+    modificarInciso: function modificarInciso(incisoModificar) {
+      var inciso;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function modificarInciso$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              inciso = {
+                id: incisoModificar.ID,
+                inciso: incisoModificar.INCISO,
+                valor: incisoModificar.VALOR
+              };
+              _context2.prev = 1;
+              _context2.next = 4;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios__WEBPACK_IMPORTED_MODULE_1___default.a.put('inciso/update', inciso));
+
+            case 4:
+              this.getIncisos();
+              toastr__WEBPACK_IMPORTED_MODULE_2___default.a.success('guardado correctamente');
+              _context2.next = 11;
+              break;
+
+            case 8:
+              _context2.prev = 8;
+              _context2.t0 = _context2["catch"](1);
+              toastr__WEBPACK_IMPORTED_MODULE_2___default.a.error(_context2.t0);
+
+            case 11:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, null, this, [[1, 8]]);
+    },
+    agregarInciso: function agregarInciso() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function agregarInciso$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              _context3.prev = 0;
+              _context3.next = 3;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('inciso/store', this.nInciso));
+
+            case 3:
+              this.getIncisos();
+              this.nInciso.inciso = '';
+              this.nInciso.valor = '';
+              toastr__WEBPACK_IMPORTED_MODULE_2___default.a.success('Agregado Correctamente');
+              _context3.next = 12;
+              break;
+
+            case 9:
+              _context3.prev = 9;
+              _context3.t0 = _context3["catch"](0);
+              toastr__WEBPACK_IMPORTED_MODULE_2___default.a.error(_context3.t0);
+
+            case 12:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, null, this, [[0, 9]]);
+    },
+    borrarInciso: function borrarInciso(inciso) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function borrarInciso$(_context4) {
+        while (1) {
+          switch (_context4.prev = _context4.next) {
+            case 0:
+              _context4.prev = 0;
+              _context4.next = 3;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios__WEBPACK_IMPORTED_MODULE_1___default.a["delete"]("inciso/delete/".concat(inciso.ID)));
+
+            case 3:
+              _context4.next = 5;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.getIncisos());
+
+            case 5:
+              toastr__WEBPACK_IMPORTED_MODULE_2___default.a.success('Borrado Correctamente');
+              _context4.next = 11;
+              break;
+
+            case 8:
+              _context4.prev = 8;
+              _context4.t0 = _context4["catch"](0);
+              toastr__WEBPACK_IMPORTED_MODULE_2___default.a.error(_context4.t0);
+
+            case 11:
+            case "end":
+              return _context4.stop();
+          }
+        }
+      }, null, this, [[0, 8]]);
+    }
+  },
+  computed: {
+    incisos: function incisos() {
+      return this.$store.state.incisos;
+    },
+    rol: function rol() {
+      return this.$store.state.rol;
     }
   }
 });
@@ -43760,6 +44406,22 @@ var render = function() {
                     )
                   ],
                   1
+                ),
+                _vm._v(" "),
+                _c(
+                  "li",
+                  { staticClass: "nav-item active" },
+                  [
+                    _c(
+                      "router-link",
+                      {
+                        staticClass: "nav-link",
+                        attrs: { to: { name: "inciso" } }
+                      },
+                      [_vm._v(" incisos")]
+                    )
+                  ],
+                  1
                 )
               ])
             ]
@@ -46498,9 +47160,285 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_vm._v("\n    borrar comples\n")])
+  return _c("div", [
+    _c(
+      "form",
+      {
+        on: {
+          submit: function($event) {
+            $event.preventDefault()
+            return _vm.getComplementaria($event)
+          }
+        }
+      },
+      [
+        _c("div", { staticClass: "col-sm-3 " }, [
+          _c("label", { staticClass: "text" }, [_vm._v(" hospital    ")]),
+          _vm._v(" "),
+          _c(
+            "select",
+            {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.hospital,
+                  expression: "hospital"
+                }
+              ],
+              staticClass: "form-control badge-secondary",
+              attrs: { id: "hospital", name: "hospital" },
+              on: {
+                change: function($event) {
+                  var $$selectedVal = Array.prototype.filter
+                    .call($event.target.options, function(o) {
+                      return o.selected
+                    })
+                    .map(function(o) {
+                      var val = "_value" in o ? o._value : o.value
+                      return val
+                    })
+                  _vm.hospital = $event.target.multiple
+                    ? $$selectedVal
+                    : $$selectedVal[0]
+                }
+              }
+            },
+            [
+              _c("option", { attrs: { value: "" } }, [_vm._v("seleccione")]),
+              _vm._v(" "),
+              _vm._l(_vm.hospitales, function(hosp) {
+                return _c(
+                  "option",
+                  { key: hosp.ID, domProps: { value: hosp } },
+                  [_vm._v(_vm._s(hosp.HOSPITAL))]
+                )
+              })
+            ],
+            2
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-sm-3 " }, [
+          _c("label", { staticClass: "text" }, [_vm._v(" periodo    ")]),
+          _vm._v(" "),
+          _c(
+            "select",
+            {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.periodo,
+                  expression: "periodo"
+                }
+              ],
+              staticClass: "form-control badge-secondary",
+              attrs: { id: "periodo", name: "periodo" },
+              on: {
+                change: function($event) {
+                  var $$selectedVal = Array.prototype.filter
+                    .call($event.target.options, function(o) {
+                      return o.selected
+                    })
+                    .map(function(o) {
+                      var val = "_value" in o ? o._value : o.value
+                      return val
+                    })
+                  _vm.periodo = $event.target.multiple
+                    ? $$selectedVal
+                    : $$selectedVal[0]
+                }
+              }
+            },
+            [
+              _c("option", { attrs: { value: "" } }, [_vm._v("seleccione")]),
+              _vm._v(" "),
+              _vm._l(_vm.periodos, function(periodo) {
+                return _c("option", { domProps: { value: periodo } }, [
+                  _vm._v(_vm._s(periodo.periodo + " " + periodo.anio))
+                ])
+              })
+            ],
+            2
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-sm-3 " }, [
+          _c("label", { staticClass: "text" }, [_vm._v(" fecha    ")]),
+          _vm._v(" "),
+          _c(
+            "select",
+            {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.fecha,
+                  expression: "fecha"
+                }
+              ],
+              staticClass: "form-control badge-secondary",
+              on: {
+                change: function($event) {
+                  var $$selectedVal = Array.prototype.filter
+                    .call($event.target.options, function(o) {
+                      return o.selected
+                    })
+                    .map(function(o) {
+                      var val = "_value" in o ? o._value : o.value
+                      return val
+                    })
+                  _vm.fecha = $event.target.multiple
+                    ? $$selectedVal
+                    : $$selectedVal[0]
+                }
+              }
+            },
+            [
+              _c("option", { attrs: { value: "" } }, [_vm._v("seleccione")]),
+              _vm._v(" "),
+              _vm._l(_vm.fechas, function(fecha) {
+                return _c(
+                  "option",
+                  { key: fecha.fecha, domProps: { value: fecha.fecha } },
+                  [_vm._v(_vm._s(fecha.fecha))]
+                )
+              })
+            ],
+            2
+          )
+        ]),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c(
+          "button",
+          { staticClass: "btn btn-dark", attrs: { type: "submit" } },
+          [_vm._v("Buscar complementarias")]
+        )
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "table",
+      {
+        staticClass: "table table-striped table-dark table-bordered table-hover"
+      },
+      [
+        _vm._m(0),
+        _vm._v(" "),
+        _c(
+          "tbody",
+          _vm._l(_vm.comples, function(agente) {
+            return _c("tr", { key: agente.legajo }, [
+              _c("th", [
+                _vm._v(
+                  "\n                    " +
+                    _vm._s(agente.legajo) +
+                    "\n                "
+                )
+              ]),
+              _vm._v(" "),
+              _c("th", [
+                _vm._v(
+                  "\n                    " +
+                    _vm._s(agente.inciso) +
+                    "\n                "
+                )
+              ]),
+              _vm._v(" "),
+              _c("th", [
+                _vm._v(
+                  "\n                    " +
+                    _vm._s(agente.nombre.toUpperCase()) +
+                    "\n                "
+                )
+              ]),
+              _vm._v(" "),
+              _c("th", [
+                _vm._v(
+                  "\n                    " +
+                    _vm._s(agente.horas) +
+                    "\n                "
+                )
+              ]),
+              _vm._v(" "),
+              _c("th", [
+                _vm._v(
+                  "\n                    " +
+                    _vm._s(agente.subtot) +
+                    "\n                "
+                )
+              ]),
+              _vm._v(" "),
+              _c("th", [
+                _vm._v(
+                  "\n                    " +
+                    _vm._s(agente.bonvalor) +
+                    "\n                "
+                )
+              ]),
+              _vm._v(" "),
+              _c("th", [
+                _vm._v(
+                  "\n                    " +
+                    _vm._s(agente.total) +
+                    "\n                "
+                )
+              ]),
+              _vm._v(" "),
+              _c("th", { attrs: { width: "10px" } }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-danger",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.borrarComplementaria(agente)
+                      }
+                    }
+                  },
+                  [
+                    _vm._v(
+                      "\n                        eliminar\n                    "
+                    )
+                  ]
+                )
+              ])
+            ])
+          }),
+          0
+        )
+      ]
+    )
+  ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("LEGAJO")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("INCISO")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("NOMBRE")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("HORAS")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("SUBTOTAL")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("BONIF.")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("TOTAL")])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -46579,6 +47517,32 @@ var render = function() {
           )
         ]),
         _vm._v(" "),
+        _c("div", { staticClass: "col-sm-4" }, [
+          _c("label", { staticClass: "text" }, [_vm._v(" FECHA         ")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.fecha,
+                expression: "fecha"
+              }
+            ],
+            staticClass: "form-control badge-secondary",
+            attrs: { type: "date" },
+            domProps: { value: _vm.fecha },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.fecha = $event.target.value
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
         _c("div", { staticClass: "row col-sm-6" }, [
           _c("div", { staticClass: "col-sm-8" }, [
             _c("label", { staticClass: "text" }, [_vm._v(" LEGAJO         ")]),
@@ -46654,6 +47618,60 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "col-sm-4" }, [
+          _c("div", { staticClass: "form-group row" }, [
+            _c(
+              "label",
+              {
+                staticClass: "col-sm-4 col-form-label text-center ",
+                attrs: { for: "documento" }
+              },
+              [_vm._v("BONIFICACION      ")]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-sm-12" }, [
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.bonificacion,
+                      expression: "bonificacion"
+                    }
+                  ],
+                  staticClass: "form-control badge-secondary",
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.bonificacion = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    }
+                  }
+                },
+                [
+                  _c("option", { attrs: { value: "0" } }, [_vm._v("0")]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "20", selected: "" } }, [
+                    _vm._v("20")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "30" } }, [_vm._v("30")])
+                ]
+              )
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-sm-4" }, [
           _c("label", { staticClass: "text" }, [_vm._v(" HORAS         ")]),
           _vm._v(" "),
           _c("input", {
@@ -46661,47 +47679,20 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.complementaria.horas,
-                expression: "complementaria.horas"
+                value: _vm.horas,
+                expression: "horas"
               }
             ],
             staticClass: "form-control badge-secondary",
             attrs: { type: "number" },
-            domProps: { value: _vm.complementaria.horas },
+            domProps: { value: _vm.horas },
             on: {
+              keyup: _vm.calculateComplementaria,
               input: function($event) {
                 if ($event.target.composing) {
                   return
                 }
-                _vm.$set(_vm.complementaria, "horas", $event.target.value)
-              }
-            }
-          })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-sm-4" }, [
-          _c("label", { staticClass: "text" }, [
-            _vm._v(" BONIFICACION         ")
-          ]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.complementaria.horas,
-                expression: "complementaria.horas"
-              }
-            ],
-            staticClass: "form-control badge-secondary",
-            attrs: { type: "number" },
-            domProps: { value: _vm.complementaria.horas },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.complementaria, "horas", $event.target.value)
+                _vm.horas = $event.target.value
               }
             }
           })
@@ -46715,19 +47706,19 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.agente.NOMBRE,
-                expression: "agente.NOMBRE"
+                value: _vm.subtot,
+                expression: "subtot"
               }
             ],
             staticClass: "form-control badge-secondary text-danger",
             attrs: { type: "text", disabled: "" },
-            domProps: { value: _vm.agente.NOMBRE },
+            domProps: { value: _vm.subtot },
             on: {
               input: function($event) {
                 if ($event.target.composing) {
                   return
                 }
-                _vm.$set(_vm.agente, "NOMBRE", $event.target.value)
+                _vm.subtot = $event.target.value
               }
             }
           })
@@ -46743,19 +47734,19 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.agente.NOMBRE,
-                expression: "agente.NOMBRE"
+                value: _vm.bonvalor,
+                expression: "bonvalor"
               }
             ],
             staticClass: "form-control badge-secondary text-danger",
             attrs: { type: "text", disabled: "" },
-            domProps: { value: _vm.agente.NOMBRE },
+            domProps: { value: _vm.bonvalor },
             on: {
               input: function($event) {
                 if ($event.target.composing) {
                   return
                 }
-                _vm.$set(_vm.agente, "NOMBRE", $event.target.value)
+                _vm.bonvalor = $event.target.value
               }
             }
           })
@@ -46769,19 +47760,19 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.agente.NOMBRE,
-                expression: "agente.NOMBRE"
+                value: _vm.total,
+                expression: "total"
               }
             ],
             staticClass: "form-control badge-secondary text-danger",
             attrs: { type: "text", disabled: "" },
-            domProps: { value: _vm.agente.NOMBRE },
+            domProps: { value: _vm.total },
             on: {
               input: function($event) {
                 if ($event.target.composing) {
                   return
                 }
-                _vm.$set(_vm.agente, "NOMBRE", $event.target.value)
+                _vm.total = $event.target.value
               }
             }
           })
@@ -46820,7 +47811,160 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_vm._v("\n    descargar pdf complementaria\n")])
+  return _c(
+    "form",
+    {
+      on: {
+        submit: function($event) {
+          $event.preventDefault()
+          return _vm.getPdf($event)
+        }
+      }
+    },
+    [
+      _c("div", { staticClass: "col-sm-3 " }, [
+        _c("label", { staticClass: "text" }, [_vm._v(" hospital    ")]),
+        _vm._v(" "),
+        _c(
+          "select",
+          {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.hospital,
+                expression: "hospital"
+              }
+            ],
+            staticClass: "form-control badge-secondary",
+            attrs: { id: "hospital", name: "hospital" },
+            on: {
+              change: function($event) {
+                var $$selectedVal = Array.prototype.filter
+                  .call($event.target.options, function(o) {
+                    return o.selected
+                  })
+                  .map(function(o) {
+                    var val = "_value" in o ? o._value : o.value
+                    return val
+                  })
+                _vm.hospital = $event.target.multiple
+                  ? $$selectedVal
+                  : $$selectedVal[0]
+              }
+            }
+          },
+          [
+            _c("option", { attrs: { value: "" } }, [_vm._v("seleccione")]),
+            _vm._v(" "),
+            _vm._l(_vm.hospitales, function(hosp) {
+              return _c("option", { key: hosp.ID, domProps: { value: hosp } }, [
+                _vm._v(_vm._s(hosp.HOSPITAL))
+              ])
+            })
+          ],
+          2
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-sm-3 " }, [
+        _c("label", { staticClass: "text" }, [_vm._v(" periodo    ")]),
+        _vm._v(" "),
+        _c(
+          "select",
+          {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.periodo,
+                expression: "periodo"
+              }
+            ],
+            staticClass: "form-control badge-secondary",
+            attrs: { id: "periodo", name: "periodo" },
+            on: {
+              change: function($event) {
+                var $$selectedVal = Array.prototype.filter
+                  .call($event.target.options, function(o) {
+                    return o.selected
+                  })
+                  .map(function(o) {
+                    var val = "_value" in o ? o._value : o.value
+                    return val
+                  })
+                _vm.periodo = $event.target.multiple
+                  ? $$selectedVal
+                  : $$selectedVal[0]
+              }
+            }
+          },
+          [
+            _c("option", { attrs: { value: "" } }, [_vm._v("seleccione")]),
+            _vm._v(" "),
+            _vm._l(_vm.periodos, function(periodo) {
+              return _c("option", { domProps: { value: periodo } }, [
+                _vm._v(_vm._s(periodo.periodo + " " + periodo.anio))
+              ])
+            })
+          ],
+          2
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-sm-3 " }, [
+        _c("label", { staticClass: "text" }, [_vm._v(" fecha    ")]),
+        _vm._v(" "),
+        _c(
+          "select",
+          {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.fecha,
+                expression: "fecha"
+              }
+            ],
+            staticClass: "form-control badge-secondary",
+            on: {
+              change: function($event) {
+                var $$selectedVal = Array.prototype.filter
+                  .call($event.target.options, function(o) {
+                    return o.selected
+                  })
+                  .map(function(o) {
+                    var val = "_value" in o ? o._value : o.value
+                    return val
+                  })
+                _vm.fecha = $event.target.multiple
+                  ? $$selectedVal
+                  : $$selectedVal[0]
+              }
+            }
+          },
+          [
+            _c("option", { attrs: { value: "" } }, [_vm._v("seleccione")]),
+            _vm._v(" "),
+            _vm._l(_vm.fechas, function(fecha) {
+              return _c(
+                "option",
+                { key: fecha.fecha, domProps: { value: fecha.fecha } },
+                [_vm._v(_vm._s(fecha.fecha))]
+              )
+            })
+          ],
+          2
+        )
+      ]),
+      _vm._v(" "),
+      _c("br"),
+      _vm._v(" "),
+      _c("button", { staticClass: "btn btn-dark", attrs: { type: "submit" } }, [
+        _vm._v("Generar PDF")
+      ])
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -49947,6 +51091,274 @@ var staticRenderFns = [
         },
         [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
       )
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/incisos/VistaIncisos.vue?vue&type=template&id=8a6c1c66&":
+/*!***********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/incisos/VistaIncisos.vue?vue&type=template&id=8a6c1c66& ***!
+  \***********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm.rol.id == 1
+    ? _c("div", { staticClass: "col-sm-12" }, [
+        _c("div", { staticClass: "col-sm-12" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-outline-success",
+              attrs: { type: "button" },
+              on: {
+                click: function($event) {
+                  _vm.vista = 0
+                }
+              }
+            },
+            [_vm._v("Agregar Inciso")]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-outline-success",
+              attrs: { type: "button" },
+              on: {
+                click: function($event) {
+                  _vm.vista = 1
+                }
+              }
+            },
+            [_vm._v("Modificar Incisos")]
+          ),
+          _vm._v(" "),
+          _c("br")
+        ]),
+        _vm._v(" "),
+        _vm.vista == 0
+          ? _c("div", { staticClass: "col-sm-12" }, [
+              _c("div", { staticClass: "row col-sm-12" }, [
+                _c("div", { staticClass: "col-sm-4" }, [
+                  _c(
+                    "label",
+                    { staticClass: "text-white", attrs: { for: "" } },
+                    [_vm._v("INCISO")]
+                  ),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.nInciso.inciso,
+                        expression: "nInciso.inciso"
+                      }
+                    ],
+                    staticClass: "form-control badge-secondary",
+                    attrs: { type: "text" },
+                    domProps: { value: _vm.nInciso.inciso },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.nInciso, "inciso", $event.target.value)
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-sm-4" }, [
+                  _c(
+                    "label",
+                    { staticClass: "text-white", attrs: { for: "" } },
+                    [_vm._v("VALOR")]
+                  ),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.nInciso.valor,
+                        expression: "nInciso.valor"
+                      }
+                    ],
+                    staticClass: "form-control badge-secondary",
+                    attrs: { type: "text" },
+                    domProps: { value: _vm.nInciso.valor },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.nInciso, "valor", $event.target.value)
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-sm-4" }, [
+                  _c("br"),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          return _vm.agregarInciso()
+                        }
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                    Agregar Inciso\n                "
+                      )
+                    ]
+                  )
+                ])
+              ])
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.vista == 1
+          ? _c("div", [
+              _c(
+                "table",
+                {
+                  staticClass:
+                    "table table-striped table-dark table-bordered table-hover"
+                },
+                [
+                  _vm._m(0),
+                  _vm._v(" "),
+                  _c(
+                    "tbody",
+                    _vm._l(_vm.incisos, function(inciso) {
+                      return _c("tr", { key: inciso.ID }, [
+                        _c("th", [
+                          _vm._v(
+                            "\n                        " +
+                              _vm._s(inciso.INCISO) +
+                              "\n                    "
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("th", [
+                          _c("div", { staticClass: "row col-sm-12" }, [
+                            _c("div", { staticClass: "col-sm-8" }, [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: inciso.VALOR,
+                                    expression: "inciso.VALOR"
+                                  }
+                                ],
+                                staticClass: "form-control badge-secondary",
+                                attrs: { type: "text" },
+                                domProps: { value: inciso.VALOR },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      inciso,
+                                      "VALOR",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              })
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-sm-4" }, [
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-primary",
+                                  attrs: { type: "button" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.modificarInciso(inciso)
+                                    }
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                                    Guardar\n                                "
+                                  )
+                                ]
+                              )
+                            ])
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("th", { attrs: { width: "10px" } }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-outline-danger",
+                              attrs: { type: "button" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.borrarInciso(inciso)
+                                }
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\n                            eliminar\n                        "
+                              )
+                            ]
+                          )
+                        ])
+                      ])
+                    }),
+                    0
+                  )
+                ]
+              )
+            ])
+          : _vm._e()
+      ])
+    : _c("div", [
+        _c("h2", { staticClass: "display-1" }, [
+          _vm._v("\n        no pose permiso para entrar aqui\n    ")
+        ])
+      ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("INCISO")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("VALOR")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("BORRAR")])
+      ])
     ])
   }
 ]
@@ -67570,6 +68982,7 @@ var comple = Vue.component('complementaria', __webpack_require__(/*! ./component
 Vue.component('borrar-comples', __webpack_require__(/*! ./components/complementaria/vistas/BorrarComple.vue */ "./resources/js/components/complementaria/vistas/BorrarComple.vue")["default"]);
 Vue.component('generar-comple', __webpack_require__(/*! ./components/complementaria/vistas/GenerarComple.vue */ "./resources/js/components/complementaria/vistas/GenerarComple.vue")["default"]);
 Vue.component('pdf-comples', __webpack_require__(/*! ./components/complementaria/vistas/PDFcomple.vue */ "./resources/js/components/complementaria/vistas/PDFcomple.vue")["default"]);
+var inciso = Vue.component('inciso', __webpack_require__(/*! ./components/incisos/VistaIncisos.vue */ "./resources/js/components/incisos/VistaIncisos.vue")["default"]);
 var routes = [{
   path: '/',
   name: 'Home',
@@ -67606,6 +69019,10 @@ var routes = [{
   path: '/comple',
   name: 'complementaria',
   component: comple
+}, {
+  path: '/inciso',
+  name: 'inciso',
+  component: inciso
 }];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_3__["default"]({
   routes: routes
@@ -68863,6 +70280,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/incisos/VistaIncisos.vue":
+/*!**********************************************************!*\
+  !*** ./resources/js/components/incisos/VistaIncisos.vue ***!
+  \**********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _VistaIncisos_vue_vue_type_template_id_8a6c1c66___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./VistaIncisos.vue?vue&type=template&id=8a6c1c66& */ "./resources/js/components/incisos/VistaIncisos.vue?vue&type=template&id=8a6c1c66&");
+/* harmony import */ var _VistaIncisos_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./VistaIncisos.vue?vue&type=script&lang=js& */ "./resources/js/components/incisos/VistaIncisos.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _VistaIncisos_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _VistaIncisos_vue_vue_type_template_id_8a6c1c66___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _VistaIncisos_vue_vue_type_template_id_8a6c1c66___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/incisos/VistaIncisos.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/incisos/VistaIncisos.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/incisos/VistaIncisos.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_VistaIncisos_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./VistaIncisos.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/incisos/VistaIncisos.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_VistaIncisos_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/incisos/VistaIncisos.vue?vue&type=template&id=8a6c1c66&":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/components/incisos/VistaIncisos.vue?vue&type=template&id=8a6c1c66& ***!
+  \*****************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_VistaIncisos_vue_vue_type_template_id_8a6c1c66___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./VistaIncisos.vue?vue&type=template&id=8a6c1c66& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/incisos/VistaIncisos.vue?vue&type=template&id=8a6c1c66&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_VistaIncisos_vue_vue_type_template_id_8a6c1c66___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_VistaIncisos_vue_vue_type_template_id_8a6c1c66___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/libros/VistaLibros.vue":
 /*!********************************************************!*\
   !*** ./resources/js/components/libros/VistaLibros.vue ***!
@@ -69387,6 +70873,9 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
     vacaciones: [],
     periodos: [],
     modificar: [],
+    fechas: [],
+    incisos: [],
+    permisos: [],
     user: null,
     rol: null,
     auth: false
@@ -69437,6 +70926,15 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
     },
     llenarModificar: function llenarModificar(state, liquidacion) {
       state.liquidacionM = liquidacion;
+    },
+    llenarFechas: function llenarFechas(state, fechas) {
+      state.fechas = fechas;
+    },
+    llenarIncisos: function llenarIncisos(state, inciso) {
+      state.incisos = inciso;
+    },
+    llenarPermisos: function llenarPermisos(state, permisos) {
+      state.permisos = permisos;
     }
   },
   actions: {
@@ -69466,145 +70964,151 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
         }
       });
     },
-    getPeriodos: function getPeriodos(_ref2) {
-      var commit, data, periodos;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getPeriodos$(_context2) {
+    getIncisos: function getIncisos(_ref2) {
+      var commit, _data, inciso;
+
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getIncisos$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
               commit = _ref2.commit;
-              _context2.next = 3;
-              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(fetch('agenfac/periodo'));
+              _context2.prev = 1;
+              _context2.next = 4;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(fetch('inciso'));
 
-            case 3:
-              data = _context2.sent;
-              _context2.next = 6;
-              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(data.json());
+            case 4:
+              _data = _context2.sent;
+              _context2.next = 7;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(_data.json());
 
-            case 6:
-              periodos = _context2.sent;
-              return _context2.abrupt("return", commit('llenarPeriodos', periodos));
+            case 7:
+              inciso = _context2.sent;
+              return _context2.abrupt("return", commit('llenarIncisos', inciso));
 
-            case 8:
+            case 11:
+              _context2.prev = 11;
+              _context2.t0 = _context2["catch"](1);
+
+            case 13:
             case "end":
               return _context2.stop();
           }
         }
-      });
+      }, null, null, [[1, 11]]);
     },
-    getLiquidacion: function getLiquidacion(_ref3, datos) {
-      var commit, liquidacion;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getLiquidacion$(_context3) {
+    getFechas: function getFechas(_ref3) {
+      var commit, data, getFechas;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getFechas$(_context3) {
         while (1) {
           switch (_context3.prev = _context3.next) {
             case 0:
               commit = _ref3.commit;
               _context3.next = 3;
-              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios__WEBPACK_IMPORTED_MODULE_3___default.a.post('agenfac/liquidacion', datos));
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(fetch('complementaria/fecha'));
 
             case 3:
-              liquidacion = _context3.sent;
-              console.log(liquidacion);
-              return _context3.abrupt("return", commit('llenarLiquidacion', liquidacion.data[0]));
+              data = _context3.sent;
+              _context3.next = 6;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(data.json());
 
             case 6:
+              getFechas = _context3.sent;
+              return _context3.abrupt("return", commit('llenarFechas', getFechas));
+
+            case 8:
             case "end":
               return _context3.stop();
           }
         }
       });
     },
-    getModificarLiquidacion: function getModificarLiquidacion(_ref4, datos) {
-      var commit, liquidacion;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getModificarLiquidacion$(_context4) {
+    getPeriodos: function getPeriodos(_ref4) {
+      var commit, data, periodos;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getPeriodos$(_context4) {
         while (1) {
           switch (_context4.prev = _context4.next) {
             case 0:
               commit = _ref4.commit;
               _context4.next = 3;
-              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios__WEBPACK_IMPORTED_MODULE_3___default.a.post('agenfac/modificar', datos));
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(fetch('agenfac/periodo'));
 
             case 3:
-              liquidacion = _context4.sent;
-              return _context4.abrupt("return", commit('llenarModificar', liquidacion.data[0]));
+              data = _context4.sent;
+              _context4.next = 6;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(data.json());
 
-            case 5:
+            case 6:
+              periodos = _context4.sent;
+              return _context4.abrupt("return", commit('llenarPeriodos', periodos));
+
+            case 8:
             case "end":
               return _context4.stop();
           }
         }
       });
     },
-    getLiquidar: function getLiquidar(_ref5, datos) {
-      var commit, data, agentes;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getLiquidar$(_context5) {
+    getLiquidacion: function getLiquidacion(_ref5, datos) {
+      var commit, liquidacion;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getLiquidacion$(_context5) {
         while (1) {
           switch (_context5.prev = _context5.next) {
             case 0:
               commit = _ref5.commit;
               _context5.next = 3;
-              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios__WEBPACK_IMPORTED_MODULE_3___default.a.post('agenincs/hosp', datos));
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios__WEBPACK_IMPORTED_MODULE_3___default.a.post('agenfac/liquidacion', datos));
 
             case 3:
-              data = _context5.sent;
-              _context5.next = 6;
-              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(data.data[0]);
+              liquidacion = _context5.sent;
+              console.log(liquidacion);
+              return _context5.abrupt("return", commit('llenarLiquidacion', liquidacion.data[0]));
 
             case 6:
-              agentes = _context5.sent;
-              return _context5.abrupt("return", commit('llenarAgenfac', agentes));
-
-            case 8:
             case "end":
               return _context5.stop();
           }
         }
       });
     },
-    getVacaciones: function getVacaciones(_ref6) {
-      var commit, data, vacaciones;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getVacaciones$(_context6) {
+    getModificarLiquidacion: function getModificarLiquidacion(_ref6, datos) {
+      var commit, liquidacion;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getModificarLiquidacion$(_context6) {
         while (1) {
           switch (_context6.prev = _context6.next) {
             case 0:
               commit = _ref6.commit;
               _context6.next = 3;
-              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(fetch('vacaciones/vacaciones'));
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios__WEBPACK_IMPORTED_MODULE_3___default.a.post('agenfac/modificar', datos));
 
             case 3:
-              data = _context6.sent;
-              _context6.next = 6;
-              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(data.json());
+              liquidacion = _context6.sent;
+              return _context6.abrupt("return", commit('llenarModificar', liquidacion.data[0]));
 
-            case 6:
-              vacaciones = _context6.sent;
-              return _context6.abrupt("return", commit('llenarVacaciones', vacaciones[0]));
-
-            case 8:
+            case 5:
             case "end":
               return _context6.stop();
           }
         }
       });
     },
-    getAgentes: function getAgentes(_ref7) {
+    getLiquidar: function getLiquidar(_ref7, datos) {
       var commit, data, agentes;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getAgentes$(_context7) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getLiquidar$(_context7) {
         while (1) {
           switch (_context7.prev = _context7.next) {
             case 0:
               commit = _ref7.commit;
               _context7.next = 3;
-              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(fetch('agente/agente'));
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios__WEBPACK_IMPORTED_MODULE_3___default.a.post('agenincs/hosp', datos));
 
             case 3:
               data = _context7.sent;
               _context7.next = 6;
-              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(data.json());
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(data.data[0]);
 
             case 6:
               agentes = _context7.sent;
-              return _context7.abrupt("return", commit('llenarAgentes', agentes));
+              return _context7.abrupt("return", commit('llenarAgenfac', agentes));
 
             case 8:
             case "end":
@@ -69613,15 +71117,15 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
         }
       });
     },
-    getContratos: function getContratos(_ref8) {
-      var commit, data, contratos;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getContratos$(_context8) {
+    getVacaciones: function getVacaciones(_ref8) {
+      var commit, data, vacaciones;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getVacaciones$(_context8) {
         while (1) {
           switch (_context8.prev = _context8.next) {
             case 0:
               commit = _ref8.commit;
               _context8.next = 3;
-              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(fetch('contrato/activos'));
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(fetch('vacaciones/vacaciones'));
 
             case 3:
               data = _context8.sent;
@@ -69629,8 +71133,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
               return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(data.json());
 
             case 6:
-              contratos = _context8.sent;
-              commit('llenarContratos', contratos);
+              vacaciones = _context8.sent;
+              return _context8.abrupt("return", commit('llenarVacaciones', vacaciones[0]));
 
             case 8:
             case "end":
@@ -69639,24 +71143,24 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
         }
       });
     },
-    getContratosBajas: function getContratosBajas(_ref9) {
-      var commit, dataBajas, contratosBajas;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getContratosBajas$(_context9) {
+    getAgentes: function getAgentes(_ref9) {
+      var commit, data, agentes;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getAgentes$(_context9) {
         while (1) {
           switch (_context9.prev = _context9.next) {
             case 0:
               commit = _ref9.commit;
               _context9.next = 3;
-              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(fetch('contrato/bajas'));
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(fetch('agente/agente'));
 
             case 3:
-              dataBajas = _context9.sent;
+              data = _context9.sent;
               _context9.next = 6;
-              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(dataBajas.json());
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(data.json());
 
             case 6:
-              contratosBajas = _context9.sent;
-              commit('llenarContratosBajas', contratosBajas);
+              agentes = _context9.sent;
+              return _context9.abrupt("return", commit('llenarAgentes', agentes));
 
             case 8:
             case "end":
@@ -69665,15 +71169,15 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
         }
       });
     },
-    getEspecialidades: function getEspecialidades(_ref10) {
-      var commit, data, especialidades;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getEspecialidades$(_context10) {
+    getContratos: function getContratos(_ref10) {
+      var commit, data, contratos;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getContratos$(_context10) {
         while (1) {
           switch (_context10.prev = _context10.next) {
             case 0:
               commit = _ref10.commit;
               _context10.next = 3;
-              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(fetch('especialidades'));
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(fetch('contrato/activos'));
 
             case 3:
               data = _context10.sent;
@@ -69681,8 +71185,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
               return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(data.json());
 
             case 6:
-              especialidades = _context10.sent;
-              commit('llenarEspecialidades', especialidades);
+              contratos = _context10.sent;
+              commit('llenarContratos', contratos);
 
             case 8:
             case "end":
@@ -69691,24 +71195,24 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
         }
       });
     },
-    getServicios: function getServicios(_ref11) {
-      var commit, data, servicios;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getServicios$(_context11) {
+    getContratosBajas: function getContratosBajas(_ref11) {
+      var commit, dataBajas, contratosBajas;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getContratosBajas$(_context11) {
         while (1) {
           switch (_context11.prev = _context11.next) {
             case 0:
               commit = _ref11.commit;
               _context11.next = 3;
-              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(fetch('servicios'));
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(fetch('contrato/bajas'));
 
             case 3:
-              data = _context11.sent;
+              dataBajas = _context11.sent;
               _context11.next = 6;
-              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(data.json());
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(dataBajas.json());
 
             case 6:
-              servicios = _context11.sent;
-              return _context11.abrupt("return", commit('llenarServicios', servicios));
+              contratosBajas = _context11.sent;
+              commit('llenarContratosBajas', contratosBajas);
 
             case 8:
             case "end":
@@ -69717,15 +71221,15 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
         }
       });
     },
-    getSectores: function getSectores(_ref12) {
-      var commit, data, sectores;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getSectores$(_context12) {
+    getEspecialidades: function getEspecialidades(_ref12) {
+      var commit, data, especialidades;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getEspecialidades$(_context12) {
         while (1) {
           switch (_context12.prev = _context12.next) {
             case 0:
               commit = _ref12.commit;
               _context12.next = 3;
-              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(fetch('sectores'));
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(fetch('especialidades'));
 
             case 3:
               data = _context12.sent;
@@ -69733,8 +71237,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
               return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(data.json());
 
             case 6:
-              sectores = _context12.sent;
-              return _context12.abrupt("return", commit('llenarSectores', sectores));
+              especialidades = _context12.sent;
+              commit('llenarEspecialidades', especialidades);
 
             case 8:
             case "end":
@@ -69743,15 +71247,15 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
         }
       });
     },
-    getProveedores: function getProveedores(_ref13) {
-      var commit, data, proveedor;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getProveedores$(_context13) {
+    getServicios: function getServicios(_ref13) {
+      var commit, data, servicios;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getServicios$(_context13) {
         while (1) {
           switch (_context13.prev = _context13.next) {
             case 0:
               commit = _ref13.commit;
               _context13.next = 3;
-              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(fetch('proveedor'));
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(fetch('servicios'));
 
             case 3:
               data = _context13.sent;
@@ -69759,8 +71263,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
               return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(data.json());
 
             case 6:
-              proveedor = _context13.sent;
-              return _context13.abrupt("return", commit('llenarProveedores', proveedor));
+              servicios = _context13.sent;
+              return _context13.abrupt("return", commit('llenarServicios', servicios));
 
             case 8:
             case "end":
@@ -69769,61 +71273,113 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
         }
       });
     },
-    login: function login(_ref14, creedentials) {
-      var dispatch, url;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function login$(_context14) {
+    getSectores: function getSectores(_ref14) {
+      var commit, data, sectores;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getSectores$(_context14) {
         while (1) {
           switch (_context14.prev = _context14.next) {
             case 0:
-              dispatch = _ref14.dispatch;
-              url = 'login';
-              _context14.next = 4;
-              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios__WEBPACK_IMPORTED_MODULE_3___default.a.get('sanctum/csrf-cookie'));
+              commit = _ref14.commit;
+              _context14.next = 3;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(fetch('sectores'));
 
-            case 4:
+            case 3:
+              data = _context14.sent;
               _context14.next = 6;
-              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios__WEBPACK_IMPORTED_MODULE_3___default.a.post(url, creedentials));
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(data.json());
 
             case 6:
-              return _context14.abrupt("return", dispatch("getUser"));
+              sectores = _context14.sent;
+              return _context14.abrupt("return", commit('llenarSectores', sectores));
 
-            case 7:
+            case 8:
             case "end":
               return _context14.stop();
           }
         }
       });
     },
-    logout: function logout(_ref15) {
-      var dispatch, url;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function logout$(_context15) {
+    getProveedores: function getProveedores(_ref15) {
+      var commit, data, proveedor;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getProveedores$(_context15) {
         while (1) {
           switch (_context15.prev = _context15.next) {
             case 0:
-              dispatch = _ref15.dispatch;
-              url = 'logout';
-              _context15.next = 4;
-              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios__WEBPACK_IMPORTED_MODULE_3___default.a.post(url));
+              commit = _ref15.commit;
+              _context15.next = 3;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(fetch('proveedor'));
 
-            case 4:
-              return _context15.abrupt("return", dispatch("getUser"));
+            case 3:
+              data = _context15.sent;
+              _context15.next = 6;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(data.json());
 
-            case 5:
+            case 6:
+              proveedor = _context15.sent;
+              return _context15.abrupt("return", commit('llenarProveedores', proveedor));
+
+            case 8:
             case "end":
               return _context15.stop();
           }
         }
       });
     },
-    getUser: function getUser(_ref16) {
-      var commit, url;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getUser$(_context16) {
+    login: function login(_ref16, creedentials) {
+      var dispatch, url;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function login$(_context16) {
         while (1) {
           switch (_context16.prev = _context16.next) {
             case 0:
-              commit = _ref16.commit;
+              dispatch = _ref16.dispatch;
+              url = 'login';
+              _context16.next = 4;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios__WEBPACK_IMPORTED_MODULE_3___default.a.get('sanctum/csrf-cookie'));
+
+            case 4:
+              _context16.next = 6;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios__WEBPACK_IMPORTED_MODULE_3___default.a.post(url, creedentials));
+
+            case 6:
+              return _context16.abrupt("return", dispatch("getUser"));
+
+            case 7:
+            case "end":
+              return _context16.stop();
+          }
+        }
+      });
+    },
+    logout: function logout(_ref17) {
+      var dispatch, url;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function logout$(_context17) {
+        while (1) {
+          switch (_context17.prev = _context17.next) {
+            case 0:
+              dispatch = _ref17.dispatch;
+              url = 'logout';
+              _context17.next = 4;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios__WEBPACK_IMPORTED_MODULE_3___default.a.post(url));
+
+            case 4:
+              return _context17.abrupt("return", dispatch("getUser"));
+
+            case 5:
+            case "end":
+              return _context17.stop();
+          }
+        }
+      });
+    },
+    getUser: function getUser(_ref18) {
+      var commit, url;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getUser$(_context18) {
+        while (1) {
+          switch (_context18.prev = _context18.next) {
+            case 0:
+              commit = _ref18.commit;
               url = 'api/user';
-              return _context16.abrupt("return", axios__WEBPACK_IMPORTED_MODULE_3___default.a.get(url).then(function (Res) {
+              return _context18.abrupt("return", axios__WEBPACK_IMPORTED_MODULE_3___default.a.get(url).then(function (Res) {
                 //promesa con usuarios
                 var urlRol = "roles/".concat(Res.data.rol_id);
                 axios__WEBPACK_IMPORTED_MODULE_3___default.a.get(urlRol).then(function (Response) {
@@ -69839,7 +71395,7 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
 
             case 3:
             case "end":
-              return _context16.stop();
+              return _context18.stop();
           }
         }
       });

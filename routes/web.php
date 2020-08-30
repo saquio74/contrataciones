@@ -54,6 +54,8 @@ Route::post('/agenincs/hosp',                'agenincs@incisoAgente');
 
 Route::get('/agenincs/{legajo}',             'agenincs@incisoPorAgente');
 
+Route::get('/agenincs/liquidacion/{legajo}', 'agenincs@incisoLiquidacion');
+
 Route::get('/vacaciones',                    'vacacion@vistaVacaciones');
 
 Route::get('/vacaciones/vacaciones',         'vacacion@listadoVacaciones');
@@ -134,6 +136,16 @@ Route::post('/complementaria/store',         'ComplementariaController@store');
 
 Route::post('/complementaria/get',           'ComplementariaController@getComplementaria');
 
-Route::post('/complementaria/getPDF',        'ComplementariaController@complementariaPDF');
+Route::post('/complementaria/getPDF',         'ComplementariaController@complementariaPDF');
 
-Route::delete('/complementaria/delete',      'ComplementariaController@destroy');
+Route::get('/complementaria/fecha',          'ComplementariaController@getFecha');
+
+Route::delete('/complementaria/delete/{id}', 'ComplementariaController@destroy');
+
+Route::get('/inciso',                        'incisos@index');
+
+Route::put('/inciso/update',                 'incisos@update');
+
+Route::post('/inciso/store',                 'incisos@create');
+
+Route::delete('/inciso/delete/{id}',         'incisos@delete');
