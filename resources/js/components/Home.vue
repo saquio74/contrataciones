@@ -43,6 +43,9 @@
                         <li class="nav-item active">
                             <router-link class="nav-link" :to="{name: 'inciso'}"> incisos</router-link>
                         </li>
+                        <li class="nav-item active">
+                            <router-link class="nav-link" :to="{name: 'roles'}"> Roles</router-link>
+                        </li>
                     </ul>
                 </div>
             </nav>

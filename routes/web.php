@@ -128,6 +128,8 @@ Route::get('/user',                          'authController@getUsuarios');
 
 Route::get('/roles',                         'rolesController@index');
 
+Route::post('/roles/create',                 'rolesController@store');
+
 Route::get('/roles/{id}',                    'rolesController@show');
 
 Route::get('/complementaria',                'ComplementariaController@index');
@@ -149,3 +151,9 @@ Route::put('/inciso/update',                 'incisos@update');
 Route::post('/inciso/store',                 'incisos@create');
 
 Route::delete('/inciso/delete/{id}',         'incisos@delete');
+
+Route::get('/permisos',                      'permissionController@index');
+
+Route::post('/rolesPermisos',                'permissionController@store');
+
+Route::get('/rolesPermisos/{$id}',           'rolesController@getRolesUser');

@@ -46,7 +46,11 @@ const comple       =Vue.component('complementaria',            require('./compon
                     Vue.component('borrar-comples',            require('./components/complementaria/vistas/BorrarComple.vue' ).default);
                     Vue.component('generar-comple',            require('./components/complementaria/vistas/GenerarComple.vue').default);
                     Vue.component('pdf-comples',               require('./components/complementaria/vistas/PDFcomple.vue'    ).default);
-const inciso       =Vue.component('inciso',                    require('./components/incisos/VistaIncisos.vue').default)
+const inciso       =Vue.component('inciso',                    require('./components/incisos/VistaIncisos.vue'               ).default)
+const roles        =Vue.component('roles',                     require('./components/roles-permisos/RolesPermisos.vue'       ).default);
+                    Vue.component('nuevo-rol',                 require('./components/roles-permisos/vistas/NuevoRol.vue'     ).default);
+                    Vue.component('modificar-rol',             require('./components/roles-permisos/vistas/ModificarRol.vue' ).default);
+                    Vue.component('usuario-rol',               require('./components/roles-permisos/vistas/UsuarioRol.vue'   ).default);
 const routes = [
     { path: '/'             ,name: 'Home'            , component: login        },
     { path: '/agente'       ,name: 'Foo'             , component: agente       },
@@ -58,7 +62,9 @@ const routes = [
     { path: '/contaduria'   ,name: 'contaduria'      , component: contaduria   },
     { path: '/comple'       ,name: 'complementaria'  , component: comple       },
     { path: '/inciso'       ,name: 'inciso'          , component: inciso       },
-  ]
+    { path: '/roles'        ,name: 'roles'           , component: roles        },
+  
+]
 
 const router = new VueRouter({
     routes

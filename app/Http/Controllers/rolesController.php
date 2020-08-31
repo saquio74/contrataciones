@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\rol;
 use Illuminate\Http\Request;
+use DB;
 
 class rolesController extends Controller
 {
@@ -14,18 +15,9 @@ class rolesController extends Controller
     public function index()
     {
         $roles = rol::all();
-        return response()->json([$roles],200); 
+        return response()->json($roles,200); 
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -33,9 +25,15 @@ class rolesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $datos)
     {
-        //
+        $this->validate($datos,[
+            'name'          => 'required',
+            'description'   => 'required'
+        ]);
+        rol::create($datos->all());
+
+        return response()->json(['creado correcamente'],204);
     }
 
     /**
@@ -47,7 +45,7 @@ class rolesController extends Controller
     public function show($id)
     {
         $rol = rol::find($id);
-        return response()->json([$rol], 200);
+        return response()->json($rol, 200);
     }
 
     /**
@@ -56,6 +54,13 @@ class rolesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function getRolesUser($id){
+        $roles = DB::table('roles')
+                    ->join('permissionsrole','permissionsrole.roles_id','roles.id')
+                    ->join('permissions','permissions.id','permissionsrole.permissions_id')
+                    ->where('roles.id','=',$id)
+                    ->get();
+    }
     public function edit($id)
     {
         //

@@ -186,7 +186,7 @@ export const store = new Vuex.Store({
             return axios.get(url).then(Res =>{//promesa con usuarios
                 const urlRol =`roles/${Res.data.rol_id}`;
                 axios.get(urlRol).then(Response=>{//promesa con roles
-                    commit('SET_ROL', Response.data[0])
+                    commit('SET_ROL', Response.data)
                 }).catch(e=>{
                     commit('SET_ROL', null)
                 })

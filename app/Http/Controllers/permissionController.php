@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\permission;
 use Illuminate\Http\Request;
+use DB;
 
 class permissionController extends Controller
 {
@@ -35,7 +36,16 @@ class permissionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'permissions_id' => 'required',
+            'roles_id'       => 'required'
+        ]);
+        DB::table('permissionsrole')->insert([
+            'permissions_id'=> $request->permissions_id,
+            'roles_id'=> $request->roles_id,
+        ]);
+
+        return response()->json(['ingresado correctamente'],204);
     }
 
     /**
