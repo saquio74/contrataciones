@@ -28,6 +28,7 @@
 
                 <h5 class="display-5">su rol es {{userRol.name}} </h5>
                 <h5 class="display-5">tu puedes: {{userRol.description}}</h5>
+                <h4 class="display-5" v-for="permiso in permisos" :key="permiso.id">{{permiso.name}}</h4>
             </div>
             <div v-else>
 
@@ -74,6 +75,9 @@ axios.defaults.withCredentials = true;
             },
             userRol(){
                 return this.$store.state.rol
+            },
+            permisos(){
+                return this.$store.state.permisos
             }
         }
     }

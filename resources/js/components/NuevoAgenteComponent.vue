@@ -99,7 +99,7 @@
                 </div>
                 <div class="modal-footer badge-secondary">
                     <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" @click="$emit('   ')">Agregar Agente</button>
+                    <button type="submit" class="btn btn-primary" @click="$emit('')">Agregar Agente</button>
                 </div>
                 </div>
             </div>

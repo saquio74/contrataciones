@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="form-group row badge-dark col-sm-12">
+        <div class="form-group row badge-dark col-sm-12" >
             <h2 class="text-center">Buscar Agentes</h2>
             <hr>
             
@@ -45,21 +45,42 @@
 
     
     
-    export default{
+    export default {
         
         data(){
             return {
                 hospital:   '',
                 servicio:   '',
                 sector:     '',
+                permiso:    '',
             }
         },
         created: function(){
             this.getTodo();
+            this.buscarPermiso();
         },
         methods:{
+            async buscarPermiso(){
+                
+                this.permiso = await this.permisos.find(valor =>{
+                    let cadena = valor.name.split(" ")
+                    console.log(valor.name)
+                    if(cadena[0]=='Liquidar'){
+
+                        
+
+                    }
+
+                    
+                })
+                
+                
+            },
             getTodo:async function(){
-                await this.$store.dispatch('getHospitales')
+                if(this.rol.special == 'all-access'){
+
+                    await this.$store.dispatch('getHospitales')
+                }
                 await this.$store.dispatch('getServicios')
                 await this.$store.dispatch('getSectores')
             },
@@ -74,6 +95,12 @@
             },
             sectores(){
                 return this.$store.state.sectores
+            },
+            permisos(){
+                return this.$store.state.permisos
+            },
+            rol(){
+                return this.$store.state.rol
             }
         }
     }

@@ -1,5 +1,5 @@
 <template>
-    <div class="panel panel-default   col-sm-12">
+    <div class="panel panel-default   col-sm-12" v-if="rol.special =='all-access' || permiso">
         <h1 class="text-center">Listado General de vacaciones</h1>
         <div class="form-group row badge-dark col-sm-12">
             <hr>
@@ -23,7 +23,7 @@
             <p>{{searchVacaciones.length}}</p>
             
         </div>
-        <div class="form-group row badge-dark col-sm-12">
+        <div class="form-group row badge-dark col-sm-12" v-if="permisoCrear">
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cargar">
                     Cargar Vacaciones
                 </button>
@@ -81,20 +81,35 @@
                         }}
                     </th>
                     
-                    <th width="10px">
+                    <th width="10px" v-if="permisoEditar">
                         <button type="button" class="btn btn-success" v-on:click="buscarDatos(vacacion)"  data-toggle="modal" data-target="#modificar">
                             editar
                         </button>
+                    
+                        
+                    </th>
+                    <th width="10px" v-if="permisoBorrar">
                         <button type="button" class="btn btn-danger" v-on:click.prevent="borrarVacaciones(vacacion.id)" >
                             borrar
                         </button>
-                        
+
                     </th>
                 </tr>
             </tbody>
         </table>
-        <cargar-vacaciones @speak="speakMethod()"/>
-        <modificar-vacaciones @speak="speakMethod()" :listaModificar="vacacionAux"/>           
+        <div v-if="permisoCrear">
+
+            <cargar-vacaciones @speak="speakMethod()"/>
+        </div>
+        <div v-if="permisoEditar">
+
+            <modificar-vacaciones @speak="speakMethod()" :listaModificar="vacacionAux"/>           
+        </div>
+    </div>
+    <div v-else>
+        <h2 class="display-1">
+            no pose permiso para entrar aqui
+        </h2>
     </div>
 </template>
 <script>
@@ -103,7 +118,7 @@
     import moment from 'moment'
     import axios  from 'axios'
 
-    export default{
+    export default {
         data(){
             return{
                 
@@ -113,12 +128,36 @@
                 agentes:    [],
                 auxiliar:    0,
                 vacacionAux:[],
+                permiso:'',
+                permisoEditar:'',
+                permisoBorrar:'',
+                permisoCrear:''
             }
         },
         created:function(){
-            this.getVacaciones()
+            
+            this.buscarPermiso()
         },
         methods:{
+            async buscarPermiso(){
+                
+                this.permiso = await this.permisos.find(valor =>{
+                    return valor.slug === 'vacaciones.navegar'
+                })
+                this.permisoEditar = await this.permisos.find(valor =>{
+                    return valor.slug === 'vacaciones.editar'
+                })
+                this.permisoBorrar = await this.permisos.find(valor =>{
+                    return valor.slug === 'vacaciones.borrar'
+                })
+                this.permisoCrear = await this.permisos.find(valor =>{
+                    return valor.slug === 'vacaciones.crear'
+                })
+                if(this.permiso){
+                    this.getVacaciones()
+                }
+                
+            },
             getVacaciones: async function(){
                 $('table').on('scroll', function() {
                     $("#" + this.id + " > *").width($(this).width() + $(this).scrollLeft());
@@ -185,6 +224,12 @@
                     return this.vacaciones.filter((vacacion)=>vacacion.DNI.toString().includes(this.dni.toString()))
                 }
                 return this.vacaciones
+            },
+            permisos(){
+                return this.$store.state.permisos
+            },
+            rol(){
+                return this.$store.state.rol
             }
             
         }

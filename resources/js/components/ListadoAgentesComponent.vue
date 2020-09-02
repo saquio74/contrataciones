@@ -1,5 +1,5 @@
 <template>
-    <div class="panel panel-default   col-sm-12">
+    <div class="panel panel-default col-sm-12" v-if="rol.special =='all-access' || permiso">
         <h1 class="text-center">Listado General de agentes</h1>
         <div class="badge-black row col-sm-12">
             <button v-on:click="getActivos" type="submit" class="btn btn-outline-dark">ALTAS</button>
@@ -51,7 +51,7 @@
                 <P>  {{searchAgentes.length}}</P>
             </div>
         </div>
-        <div class="form-group row badge-dark col-sm-12">
+        <div class="form-group row badge-dark col-sm-12" v-if="permisoCrear">
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#NuevoAgente">
                 Nuevo Agente
             </button>
@@ -104,17 +104,32 @@
                     <th>
                         {{since(agente.fecha_ingreso)}}
                     </th>
-                    <th width="10px">
+                    <th width="10px" v-if="permisoEditar">
                         <button type="button" class="btn btn-success" v-on:click="getLegajo(agente)" data-toggle="modal" data-target="#ModificarAgente">
                             editar
                         </button>
-                        <a href="#" class="btn btn-primary btn-small">Datos</a>
+                    </th>
+                    <th width="10px" v-if="permisoBorrar">
+                        <button type="button" class="btn btn-outline-danger" v-on:click="borrar(agente)" >
+                            borrar
+                        </button>
                     </th>
                 </tr>
             </tbody>
         </table>
-        <nuevo-agente @speak="speakMethod()"/>
-        <modificar-agente @speak="speakMethod()" :listaHospitales="hospitales" :listaServicios="servicios" :listaSectores="sectores" :agenteModificar="agenteAux"  />
+        <div v-if="permisoCrear">
+
+            <nuevo-agente @speak="speakMethod()"/>
+        </div>
+        <div v-if="permisoEditar">
+
+            <modificar-agente @speak="speakMethod()" :listaHospitales="hospitales" :listaServicios="servicios" :listaSectores="sectores" :agenteModificar="agenteAux"  />
+        </div>
+    </div>
+    <div v-else>
+        <h2 class="display-1">
+            no pose permiso para entrar aqui
+        </h2>
     </div>
 </template>
 
@@ -125,7 +140,7 @@
     import jquery from 'jquery'
     
     
-    export default{
+export default {
         
         data(){
             return {
@@ -142,15 +157,39 @@
                 sector:'',
                 activo:'',
                 auxiliar:0,
+                permiso:'',
+                permisoEditar:'',
+                permisoBorrar:'',
+                permisoCrear:'',
             }
         },
-        created: function(){
-            this.getAgentes();
-            this.getHospitales();
-            this.getServicios();
-            this.getSectores();
+        created(){
+            
+            this.buscarPermiso()
         },
         methods:{
+            async buscarPermiso(){
+                
+                this.permiso = await this.permisos.find(valor =>{
+                    return valor.slug === 'agentes.ver'
+                })
+                this.permisoEditar = await this.permisos.find(valor =>{
+                    return valor.slug === 'agentes.editar'
+                })
+                this.permisoBorrar = await this.permisos.find(valor =>{
+                    return valor.slug === 'agentes.borrar'
+                })
+                this.permisoCrear = await this.permisos.find(valor =>{
+                    return valor.slug === 'agentes.crear'
+                })
+                if(this.permiso){
+                    this.getAgentes();
+                    this.getHospitales();
+                    this.getServicios();
+                    this.getSectores();
+                }
+                
+            },
             getAgentes: function(){
                 $('table').on('scroll', function() {
                     $("#" + this.id + " > *").width($(this).width() + $(this).scrollLeft());
@@ -243,6 +282,15 @@
             ordenadosDesc:function(prop){
                 this.ordenadosAsc(prop);
                 this.agentes.reverse();
+            },
+            async borrar(agente){
+                try {
+                    await axios.delete(`agente/delete/${agente.LEGAJO}`)
+                    toastr.success('BORRADO CORRECTAMENTE')
+                    this.getAgentes()
+                } catch (error) {
+                    toastr.error(error)
+                }
             }
         },
         computed:{
@@ -266,7 +314,14 @@
             },
             userConfirm(){
                 return this.$store.state.user
+            },
+            permisos(){
+                return this.$store.state.permisos
+            },
+            rol(){
+                return this.$store.state.rol
             }
+            
         }
     }
     

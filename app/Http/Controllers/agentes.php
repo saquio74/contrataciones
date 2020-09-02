@@ -9,9 +9,24 @@ use App\inciso;
 use App\sector;
 use App\servicio;
 use App\ageninc;
+use App\user;
 use DB;
 class agentes extends Controller
 {
+    
+    public function changeRol(Request $datos){
+
+        $this->validate($datos,[
+            'user'   => 'required',
+            'rol'    => 'required'
+        ]);
+        $user = user::find($datos->user);
+        $user->rol_id = $datos->rol;
+        $user->save();
+
+        return response()->json(['modificado correctamente'],204);
+    }
+    
     public function index(){//listado general de agentes
         $agente = DB::table('agentes')
                     ->join('hospitales','idhosp','=','hospitales.id')
@@ -213,7 +228,12 @@ class agentes extends Controller
             }
         }
     }
-
+    public function destroy($legajo)
+    {
+        $delete = agente::where('legajo',$legajo)->delete();
+        
+        return response()->json(['borrado correctamente'], 204);
+    }
     
 
 }

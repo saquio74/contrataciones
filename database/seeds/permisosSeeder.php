@@ -154,5 +154,32 @@ class permisosSeeder extends Seeder
             'slug'          =>  'contratados.borrar',
             'description'   =>  'borrar contratados',
         ]);
+        //liquidar
+        \DB::table('permissions')->insert([
+            'name'          =>  'Liquidar hospital de trauma',
+            'slug'          =>  '12',
+            'description'   =>  'liquidar hospital de trauma',
+        ]);
+        \DB::table('permissions')->insert([
+            'name'          =>  'liquidar Dr. zin',
+            'slug'          =>  '4',
+            'description'   =>  'liquidar Dr. zin',
+        ]);
+        \DB::table('permissions')->insert([
+            'name'          =>  'liquidar Enfermeria hospital de trauma',
+            'slug'          =>  '18',
+            'description'   =>  'liquidar Enfermeria hospital de trauma',
+        ]);
+        \DB::table('permissions')->insert([
+            'name'          =>  'liquidar Maternidad Eva Peron',
+            'slug'          =>  '5',
+            'description'   =>  'Liquidar Maternidad Eva Peron',
+        ]);
+        \DB::table('permissions')->insert([
+            'name'          =>  'Liquidar Cormillot',
+            'slug'          =>  '14',
+            'description'   =>  'Liquidar Hospital Cormillot',
+        ]);
+
     }
 }

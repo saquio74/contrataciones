@@ -83,7 +83,7 @@ export const store = new Vuex.Store({
         },
         llenarPermisos(state,permisos){
             state.permisos          = permisos
-        }
+        },
         
     },
     actions: {
@@ -114,7 +114,6 @@ export const store = new Vuex.Store({
         },
         async getLiquidacion({commit},datos){
             const liquidacion       = await axios.post('agenfac/liquidacion',datos)
-            console.log(liquidacion)
             return commit('llenarLiquidacion',liquidacion.data[0])
         },
         async getModificarLiquidacion({commit},datos){
@@ -181,11 +180,19 @@ export const store = new Vuex.Store({
             await axios.post(url);
             return dispatch("getUser");
         },
+        
         async getUser({commit}){
             const url = 'api/user';
             return axios.get(url).then(Res =>{//promesa con usuarios
                 const urlRol =`roles/${Res.data.rol_id}`;
+                
                 axios.get(urlRol).then(Response=>{//promesa con roles
+                    const urlPermisos = `permission/${Res.data.rol_id}`
+                    axios.get(urlPermisos).then(Response=>{
+                        commit('llenarPermisos', Response.data)
+                    }).catch(e=>{
+                        commit('llenarPermisos',null)
+                    })
                     commit('SET_ROL', Response.data)
                 }).catch(e=>{
                     commit('SET_ROL', null)

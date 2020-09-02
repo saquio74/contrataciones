@@ -22,7 +22,7 @@ class hospitales extends Controller
         //$hospitales = hospitales::find('ID');
 
         //$hospitales = json_encode($hospitales);
-        return $hospitales;
+        return response()->json($hospitales,200);
         
         
     }

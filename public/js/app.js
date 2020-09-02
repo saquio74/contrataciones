@@ -2151,9 +2151,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {};
@@ -2184,14 +2181,32 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! toastr */ "./node_modules/toastr/toastr.js");
-/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(toastr__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
-/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! toastr */ "./node_modules/toastr/toastr.js");
+/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(toastr__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_4__);
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2331,16 +2346,65 @@ __webpack_require__.r(__webpack_exports__);
       servicio: '',
       sector: '',
       activo: '',
-      auxiliar: 0
+      auxiliar: 0,
+      permiso: '',
+      permisoEditar: '',
+      permisoBorrar: '',
+      permisoCrear: ''
     };
   },
   created: function created() {
-    this.getAgentes();
-    this.getHospitales();
-    this.getServicios();
-    this.getSectores();
+    this.buscarPermiso();
   },
   methods: {
+    buscarPermiso: function buscarPermiso() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function buscarPermiso$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.next = 2;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.permisos.find(function (valor) {
+                return valor.slug === 'agentes.ver';
+              }));
+
+            case 2:
+              this.permiso = _context.sent;
+              _context.next = 5;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.permisos.find(function (valor) {
+                return valor.slug === 'agentes.editar';
+              }));
+
+            case 5:
+              this.permisoEditar = _context.sent;
+              _context.next = 8;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.permisos.find(function (valor) {
+                return valor.slug === 'agentes.borrar';
+              }));
+
+            case 8:
+              this.permisoBorrar = _context.sent;
+              _context.next = 11;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.permisos.find(function (valor) {
+                return valor.slug === 'agentes.crear';
+              }));
+
+            case 11:
+              this.permisoCrear = _context.sent;
+
+              if (this.permiso) {
+                this.getAgentes();
+                this.getHospitales();
+                this.getServicios();
+                this.getSectores();
+              }
+
+            case 13:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, null, this);
+    },
     getAgentes: function getAgentes() {
       var _this = this;
 
@@ -2348,27 +2412,27 @@ __webpack_require__.r(__webpack_exports__);
         $("#" + this.id + " > *").width($(this).width() + $(this).scrollLeft());
       });
       var urlAgentes = 'agente/agente';
-      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(urlAgentes).then(function (Response) {
+      axios__WEBPACK_IMPORTED_MODULE_3___default.a.get(urlAgentes).then(function (Response) {
         _this.agentes = Response.data;
-        toastr__WEBPACK_IMPORTED_MODULE_0___default.a.success('contenido cargado satisfactoriamente');
+        toastr__WEBPACK_IMPORTED_MODULE_1___default.a.success('contenido cargado satisfactoriamente');
       });
     },
     getActivos: function getActivos() {
       var _this2 = this;
 
       var urlActivos = 'agente/activos';
-      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(urlActivos).then(function (Response) {
+      axios__WEBPACK_IMPORTED_MODULE_3___default.a.get(urlActivos).then(function (Response) {
         _this2.agentes = Response.data;
-        toastr__WEBPACK_IMPORTED_MODULE_0___default.a.success('contenido cargado satisfactoriamente');
+        toastr__WEBPACK_IMPORTED_MODULE_1___default.a.success('contenido cargado satisfactoriamente');
       });
     },
     getBajas: function getBajas() {
       var _this3 = this;
 
       var urlBajas = 'agente/bajas';
-      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(urlBajas).then(function (Response) {
+      axios__WEBPACK_IMPORTED_MODULE_3___default.a.get(urlBajas).then(function (Response) {
         _this3.agentes = Response.data;
-        toastr__WEBPACK_IMPORTED_MODULE_0___default.a.success('contenido cargado satisfactoriamente');
+        toastr__WEBPACK_IMPORTED_MODULE_1___default.a.success('contenido cargado satisfactoriamente');
       });
     },
     since: function since(d) {
@@ -2376,14 +2440,14 @@ __webpack_require__.r(__webpack_exports__);
         d = 'fecha no inicializada';
         return d;
       } else {
-        return moment__WEBPACK_IMPORTED_MODULE_1___default()(d).fromNow();
+        return moment__WEBPACK_IMPORTED_MODULE_2___default()(d).fromNow();
       }
     },
     getHospitales: function getHospitales() {
       var _this4 = this;
 
       var urlHospitales = '/contrataciones-1/public/hospitales';
-      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(urlHospitales).then(function (Response) {
+      axios__WEBPACK_IMPORTED_MODULE_3___default.a.get(urlHospitales).then(function (Response) {
         _this4.hospitales = Response.data;
       });
     },
@@ -2391,7 +2455,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this5 = this;
 
       var urlServicios = '/contrataciones-1/public/servicios';
-      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(urlServicios).then(function (Response) {
+      axios__WEBPACK_IMPORTED_MODULE_3___default.a.get(urlServicios).then(function (Response) {
         _this5.servicios = Response.data;
       });
     },
@@ -2399,7 +2463,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this6 = this;
 
       var urlSectores = '/contrataciones-1/public/sectores';
-      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(urlSectores).then(function (Response) {
+      axios__WEBPACK_IMPORTED_MODULE_3___default.a.get(urlSectores).then(function (Response) {
         _this6.sectores = Response.data;
       });
     },
@@ -2408,7 +2472,7 @@ __webpack_require__.r(__webpack_exports__);
 
       if (this.hospital != '') {
         var urlPorHospital = '/agente/porhospital/' + this.hospital.ID;
-        axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(urlPorHospital).then(function (Response) {
+        axios__WEBPACK_IMPORTED_MODULE_3___default.a.get(urlPorHospital).then(function (Response) {
           _this7.agentes = Response.data.IDINC;
         });
       }
@@ -2453,6 +2517,33 @@ __webpack_require__.r(__webpack_exports__);
     ordenadosDesc: function ordenadosDesc(prop) {
       this.ordenadosAsc(prop);
       this.agentes.reverse();
+    },
+    borrar: function borrar(agente) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function borrar$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.prev = 0;
+              _context2.next = 3;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios__WEBPACK_IMPORTED_MODULE_3___default.a["delete"]("agente/delete/".concat(agente.LEGAJO)));
+
+            case 3:
+              toastr__WEBPACK_IMPORTED_MODULE_1___default.a.success('BORRADO CORRECTAMENTE');
+              this.getAgentes();
+              _context2.next = 10;
+              break;
+
+            case 7:
+              _context2.prev = 7;
+              _context2.t0 = _context2["catch"](0);
+              toastr__WEBPACK_IMPORTED_MODULE_1___default.a.error(_context2.t0);
+
+            case 10:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, null, this, [[0, 7]]);
     }
   },
   computed: {
@@ -2493,6 +2584,12 @@ __webpack_require__.r(__webpack_exports__);
     },
     userConfirm: function userConfirm() {
       return this.$store.state.user;
+    },
+    permisos: function permisos() {
+      return this.$store.state.permisos;
+    },
+    rol: function rol() {
+      return this.$store.state.rol;
     }
   }
 });
@@ -2616,6 +2713,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2627,27 +2739,76 @@ __webpack_require__.r(__webpack_exports__);
       nombre: '',
       agentes: [],
       auxiliar: 0,
-      vacacionAux: []
+      vacacionAux: [],
+      permiso: '',
+      permisoEditar: '',
+      permisoBorrar: '',
+      permisoCrear: ''
     };
   },
   created: function created() {
-    this.getVacaciones();
+    this.buscarPermiso();
   },
   methods: {
-    getVacaciones: function getVacaciones() {
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getVacaciones$(_context) {
+    buscarPermiso: function buscarPermiso() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function buscarPermiso$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
+            case 0:
+              _context.next = 2;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.permisos.find(function (valor) {
+                return valor.slug === 'vacaciones.navegar';
+              }));
+
+            case 2:
+              this.permiso = _context.sent;
+              _context.next = 5;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.permisos.find(function (valor) {
+                return valor.slug === 'vacaciones.editar';
+              }));
+
+            case 5:
+              this.permisoEditar = _context.sent;
+              _context.next = 8;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.permisos.find(function (valor) {
+                return valor.slug === 'vacaciones.borrar';
+              }));
+
+            case 8:
+              this.permisoBorrar = _context.sent;
+              _context.next = 11;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.permisos.find(function (valor) {
+                return valor.slug === 'vacaciones.crear';
+              }));
+
+            case 11:
+              this.permisoCrear = _context.sent;
+
+              if (this.permiso) {
+                this.getVacaciones();
+              }
+
+            case 13:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, null, this);
+    },
+    getVacaciones: function getVacaciones() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getVacaciones$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
             case 0:
               $('table').on('scroll', function () {
                 $("#" + this.id + " > *").width($(this).width() + $(this).scrollLeft());
               });
-              _context.next = 3;
+              _context2.next = 3;
               return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.$store.dispatch('getVacaciones'));
 
             case 3:
             case "end":
-              return _context.stop();
+              return _context2.stop();
           }
         }
       }, null, this);
@@ -2726,6 +2887,12 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       return this.vacaciones;
+    },
+    permisos: function permisos() {
+      return this.$store.state.permisos;
+    },
+    rol: function rol() {
+      return this.$store.state.rol;
     }
   }
 });
@@ -5849,32 +6016,62 @@ __webpack_require__.r(__webpack_exports__);
     return {
       hospital: '',
       servicio: '',
-      sector: ''
+      sector: '',
+      permiso: ''
     };
   },
   created: function created() {
     this.getTodo();
+    this.buscarPermiso();
   },
   methods: {
-    getTodo: function getTodo() {
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getTodo$(_context) {
+    buscarPermiso: function buscarPermiso() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function buscarPermiso$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
               _context.next = 2;
-              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.$store.dispatch('getHospitales'));
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.permisos.find(function (valor) {
+                var cadena = valor.name.split(" ");
+                console.log(valor.name);
+
+                if (cadena[0] == 'Liquidar') {}
+              }));
 
             case 2:
-              _context.next = 4;
-              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.$store.dispatch('getServicios'));
+              this.permiso = _context.sent;
 
-            case 4:
-              _context.next = 6;
-              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.$store.dispatch('getSectores'));
-
-            case 6:
+            case 3:
             case "end":
               return _context.stop();
+          }
+        }
+      }, null, this);
+    },
+    getTodo: function getTodo() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getTodo$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              if (!(this.rol.special == 'all-access')) {
+                _context2.next = 3;
+                break;
+              }
+
+              _context2.next = 3;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.$store.dispatch('getHospitales'));
+
+            case 3:
+              _context2.next = 5;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.$store.dispatch('getServicios'));
+
+            case 5:
+              _context2.next = 7;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.$store.dispatch('getSectores'));
+
+            case 7:
+            case "end":
+              return _context2.stop();
           }
         }
       }, null, this);
@@ -5889,6 +6086,12 @@ __webpack_require__.r(__webpack_exports__);
     },
     sectores: function sectores() {
       return this.$store.state.sectores;
+    },
+    permisos: function permisos() {
+      return this.$store.state.permisos;
+    },
+    rol: function rol() {
+      return this.$store.state.rol;
     }
   }
 });
@@ -6306,6 +6509,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 axios__WEBPACK_IMPORTED_MODULE_1___default.a.defaults.withCredentials = true;
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -6360,6 +6564,9 @@ axios__WEBPACK_IMPORTED_MODULE_1___default.a.defaults.withCredentials = true;
     },
     userRol: function userRol() {
       return this.$store.state.rol;
+    },
+    permisos: function permisos() {
+      return this.$store.state.permisos;
     }
   }
 });
@@ -6868,6 +7075,13 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! toastr */ "./node_modules/toastr/toastr.js");
+/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(toastr__WEBPACK_IMPORTED_MODULE_2__);
+
 //
 //
 //
@@ -6902,7 +7116,159 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      users: [],
+      roles: [],
+      user: '',
+      role: '',
+      rolUser: '',
+      permisos: []
+    };
+  },
+  created: function created() {
+    this.getUsers();
+    this.getRoles();
+  },
+  methods: {
+    getUsers: function getUsers() {
+      var response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getUsers$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              _context.next = 3;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('user'));
+
+            case 3:
+              response = _context.sent;
+              this.users = response.data[0];
+              _context.next = 10;
+              break;
+
+            case 7:
+              _context.prev = 7;
+              _context.t0 = _context["catch"](0);
+              toastr__WEBPACK_IMPORTED_MODULE_2___default.a.error(_context.t0);
+
+            case 10:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, null, this, [[0, 7]]);
+    },
+    getRoles: function getRoles() {
+      var data;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getRoles$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.prev = 0;
+              _context2.next = 3;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('roles'));
+
+            case 3:
+              data = _context2.sent;
+              this.roles = data.data;
+              _context2.next = 10;
+              break;
+
+            case 7:
+              _context2.prev = 7;
+              _context2.t0 = _context2["catch"](0);
+              toastr__WEBPACK_IMPORTED_MODULE_2___default.a.error(_context2.t0);
+
+            case 10:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, null, this, [[0, 7]]);
+    },
+    getRol: function getRol() {
+      var _this = this;
+
+      this.rolUser = this.roles.find(function (rol) {
+        if (rol.id === _this.user.rol_id) {
+          return rol;
+        }
+      });
+    },
+    getPermisos: function getPermisos() {
+      var data;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getPermisos$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              _context3.prev = 0;
+              console.log(this.role.id);
+              _context3.next = 4;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("permisos/".concat(this.role.id)));
+
+            case 4:
+              data = _context3.sent;
+              this.permisos = data.data;
+              console.log(this.permisos);
+              _context3.next = 12;
+              break;
+
+            case 9:
+              _context3.prev = 9;
+              _context3.t0 = _context3["catch"](0);
+              toastr__WEBPACK_IMPORTED_MODULE_2___default.a.error(_context3.t0);
+
+            case 12:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, null, this, [[0, 9]]);
+    },
+    guardar: function guardar() {
+      var datos;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function guardar$(_context4) {
+        while (1) {
+          switch (_context4.prev = _context4.next) {
+            case 0:
+              datos = {
+                user: this.user.id,
+                rol: this.role.id
+              };
+              _context4.prev = 1;
+              console.log(datos);
+              _context4.next = 5;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios__WEBPACK_IMPORTED_MODULE_1___default.a.put('updateUser', datos));
+
+            case 5:
+              _context4.next = 10;
+              break;
+
+            case 7:
+              _context4.prev = 7;
+              _context4.t0 = _context4["catch"](1);
+              toastr__WEBPACK_IMPORTED_MODULE_2___default.a.error(_context4.t0);
+
+            case 10:
+            case "end":
+              return _context4.stop();
+          }
+        }
+      }, null, this, [[1, 7]]);
+    }
+  }
+});
 
 /***/ }),
 
@@ -44689,22 +45055,6 @@ var render = function() {
                       "router-link",
                       {
                         staticClass: "nav-link",
-                        attrs: { to: { name: "libros" } }
-                      },
-                      [_vm._v(" Libros   ")]
-                    )
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "li",
-                  { staticClass: "nav-item active" },
-                  [
-                    _c(
-                      "router-link",
-                      {
-                        staticClass: "nav-link",
                         attrs: { to: { name: "contratos" } }
                       },
                       [_vm._v(" Contratados")]
@@ -44848,162 +45198,212 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "panel panel-default   col-sm-12" },
-    [
-      _c("h1", { staticClass: "text-center" }, [
-        _vm._v("Listado General de agentes")
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "badge-black row col-sm-12" }, [
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-outline-dark",
-            attrs: { type: "submit" },
-            on: { click: _vm.getActivos }
-          },
-          [_vm._v("ALTAS")]
-        ),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-outline-dark",
-            attrs: { type: "submit" },
-            on: { click: _vm.getBajas }
-          },
-          [_vm._v("BAJAS")]
-        ),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-outline-dark",
-            attrs: { type: "submit" },
-            on: { click: _vm.getAgentes }
-          },
-          [_vm._v("TODOS")]
-        )
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "form-group row badge-dark col-sm-12" }, [
-        _c("hr"),
-        _vm._v(" "),
-        _c("hr"),
-        _vm._v(" "),
-        !_vm.agentes.length
-          ? _c(
-              "button",
-              { staticClass: "btn btn-primary", on: { click: _vm.getAgentes } },
-              [_vm._v("Listar")]
-            )
-          : _vm._e(),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-sm-2" }, [
-          _c("label", { staticClass: "text" }, [_vm._v(" legajo      ")]),
-          _vm._v(" "),
-          _vm.agentes.length
-            ? _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.legajo,
-                    expression: "legajo"
-                  }
-                ],
-                staticClass: "form-control badge-secondary",
-                attrs: { type: "int", id: "legajo", name: "legajo" },
-                domProps: { value: _vm.legajo },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.legajo = $event.target.value
-                  }
-                }
-              })
-            : _vm._e()
+  return _vm.rol.special == "all-access" || _vm.permiso
+    ? _c("div", { staticClass: "panel panel-default col-sm-12" }, [
+        _c("h1", { staticClass: "text-center" }, [
+          _vm._v("Listado General de agentes")
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-sm-2" }, [
-          _c("label", { staticClass: "text" }, [_vm._v(" DNI         ")]),
-          _vm._v(" "),
-          _vm.agentes.length
-            ? _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.dni,
-                    expression: "dni"
-                  }
-                ],
-                staticClass: "form-control badge-secondary",
-                attrs: { type: "int", id: "legajo", name: "legajo" },
-                domProps: { value: _vm.dni },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.dni = $event.target.value
-                  }
-                }
-              })
-            : _vm._e()
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-sm-2" }, [
-          _c("label", { staticClass: "text" }, [_vm._v(" nombre      ")]),
-          _vm._v(" "),
-          _vm.agentes.length
-            ? _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.nombre,
-                    expression: "nombre"
-                  }
-                ],
-                staticClass: "form-control badge-secondary",
-                attrs: { type: "text", id: "nombre", name: "nombre" },
-                domProps: { value: _vm.nombre },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.nombre = $event.target.value
-                  }
-                }
-              })
-            : _vm._e()
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-sm-2" }, [
-          _c("label", { staticClass: "text" }, [_vm._v(" hospital    ")]),
+        _c("div", { staticClass: "badge-black row col-sm-12" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-outline-dark",
+              attrs: { type: "submit" },
+              on: { click: _vm.getActivos }
+            },
+            [_vm._v("ALTAS")]
+          ),
           _vm._v(" "),
           _c(
-            "select",
+            "button",
             {
-              directives: [
+              staticClass: "btn btn-outline-dark",
+              attrs: { type: "submit" },
+              on: { click: _vm.getBajas }
+            },
+            [_vm._v("BAJAS")]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-outline-dark",
+              attrs: { type: "submit" },
+              on: { click: _vm.getAgentes }
+            },
+            [_vm._v("TODOS")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group row badge-dark col-sm-12" }, [
+          _c("hr"),
+          _vm._v(" "),
+          _c("hr"),
+          _vm._v(" "),
+          !_vm.agentes.length
+            ? _c(
+                "button",
                 {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.hospital,
-                  expression: "hospital"
+                  staticClass: "btn btn-primary",
+                  on: { click: _vm.getAgentes }
+                },
+                [_vm._v("Listar")]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-sm-2" }, [
+            _c("label", { staticClass: "text" }, [_vm._v(" legajo      ")]),
+            _vm._v(" "),
+            _vm.agentes.length
+              ? _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.legajo,
+                      expression: "legajo"
+                    }
+                  ],
+                  staticClass: "form-control badge-secondary",
+                  attrs: { type: "int", id: "legajo", name: "legajo" },
+                  domProps: { value: _vm.legajo },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.legajo = $event.target.value
+                    }
+                  }
+                })
+              : _vm._e()
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-sm-2" }, [
+            _c("label", { staticClass: "text" }, [_vm._v(" DNI         ")]),
+            _vm._v(" "),
+            _vm.agentes.length
+              ? _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.dni,
+                      expression: "dni"
+                    }
+                  ],
+                  staticClass: "form-control badge-secondary",
+                  attrs: { type: "int", id: "legajo", name: "legajo" },
+                  domProps: { value: _vm.dni },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.dni = $event.target.value
+                    }
+                  }
+                })
+              : _vm._e()
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-sm-2" }, [
+            _c("label", { staticClass: "text" }, [_vm._v(" nombre      ")]),
+            _vm._v(" "),
+            _vm.agentes.length
+              ? _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.nombre,
+                      expression: "nombre"
+                    }
+                  ],
+                  staticClass: "form-control badge-secondary",
+                  attrs: { type: "text", id: "nombre", name: "nombre" },
+                  domProps: { value: _vm.nombre },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.nombre = $event.target.value
+                    }
+                  }
+                })
+              : _vm._e()
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-sm-2" }, [
+            _c("label", { staticClass: "text" }, [_vm._v(" hospital    ")]),
+            _vm._v(" "),
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.hospital,
+                    expression: "hospital"
+                  }
+                ],
+                staticClass: "form-control badge-secondary",
+                attrs: { id: "hospital", name: "hospital" },
+                on: {
+                  change: [
+                    function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.hospital = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    },
+                    _vm.getPorHospital
+                  ]
                 }
+              },
+              [
+                _c("option", { attrs: { value: "" } }, [_vm._v("seleccione")]),
+                _vm._v(" "),
+                _vm._l(_vm.hospitales, function(hosp) {
+                  return _c(
+                    "option",
+                    { key: hosp.ID, domProps: { value: hosp } },
+                    [_vm._v(_vm._s(hosp.HOSPITAL))]
+                  )
+                })
               ],
-              staticClass: "form-control badge-secondary",
-              attrs: { id: "hospital", name: "hospital" },
-              on: {
-                change: [
-                  function($event) {
+              2
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-sm-2" }, [
+            _c("label", { staticClass: "text" }, [_vm._v(" servicio    ")]),
+            _vm._v(" "),
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.servicio,
+                    expression: "servicio"
+                  }
+                ],
+                staticClass: "form-control badge-secondary",
+                attrs: { id: "servicio", name: "servicio" },
+                on: {
+                  change: function($event) {
                     var $$selectedVal = Array.prototype.filter
                       .call($event.target.options, function(o) {
                         return o.selected
@@ -45012,479 +45412,461 @@ var render = function() {
                         var val = "_value" in o ? o._value : o.value
                         return val
                       })
-                    _vm.hospital = $event.target.multiple
+                    _vm.servicio = $event.target.multiple
                       ? $$selectedVal
                       : $$selectedVal[0]
-                  },
-                  _vm.getPorHospital
-                ]
-              }
-            },
-            [
-              _c("option", { attrs: { value: "" } }, [_vm._v("seleccione")]),
-              _vm._v(" "),
-              _vm._l(_vm.hospitales, function(hosp) {
-                return _c(
-                  "option",
-                  { key: hosp.ID, domProps: { value: hosp } },
-                  [_vm._v(_vm._s(hosp.HOSPITAL))]
-                )
-              })
-            ],
-            2
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-sm-2" }, [
-          _c("label", { staticClass: "text" }, [_vm._v(" servicio    ")]),
-          _vm._v(" "),
-          _c(
-            "select",
-            {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.servicio,
-                  expression: "servicio"
+                  }
                 }
+              },
+              [
+                _c("option", { attrs: { value: "" } }, [_vm._v("seleccione")]),
+                _vm._v(" "),
+                _vm._l(_vm.servicios, function(serv) {
+                  return _c(
+                    "option",
+                    { key: serv.ID, domProps: { value: serv.SERVICIO } },
+                    [_vm._v(_vm._s(serv.SERVICIO))]
+                  )
+                })
               ],
-              staticClass: "form-control badge-secondary",
-              attrs: { id: "servicio", name: "servicio" },
-              on: {
-                change: function($event) {
-                  var $$selectedVal = Array.prototype.filter
-                    .call($event.target.options, function(o) {
-                      return o.selected
-                    })
-                    .map(function(o) {
-                      var val = "_value" in o ? o._value : o.value
-                      return val
-                    })
-                  _vm.servicio = $event.target.multiple
-                    ? $$selectedVal
-                    : $$selectedVal[0]
-                }
-              }
-            },
-            [
-              _c("option", { attrs: { value: "" } }, [_vm._v("seleccione")]),
-              _vm._v(" "),
-              _vm._l(_vm.servicios, function(serv) {
-                return _c(
-                  "option",
-                  { key: serv.ID, domProps: { value: serv.SERVICIO } },
-                  [_vm._v(_vm._s(serv.SERVICIO))]
-                )
-              })
-            ],
-            2
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-sm-2" }, [
-          _c("label", { staticClass: "text" }, [_vm._v(" sectores    ")]),
-          _vm._v(" "),
-          _c(
-            "select",
-            {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.sector,
-                  expression: "sector"
-                }
-              ],
-              staticClass: "form-control badge-secondary",
-              attrs: { id: "servicio", name: "servicio" },
-              on: {
-                change: function($event) {
-                  var $$selectedVal = Array.prototype.filter
-                    .call($event.target.options, function(o) {
-                      return o.selected
-                    })
-                    .map(function(o) {
-                      var val = "_value" in o ? o._value : o.value
-                      return val
-                    })
-                  _vm.sector = $event.target.multiple
-                    ? $$selectedVal
-                    : $$selectedVal[0]
-                }
-              }
-            },
-            [
-              _c("option", { attrs: { value: "" } }, [_vm._v("seleccione")]),
-              _vm._v(" "),
-              _vm._l(_vm.sectores, function(sect) {
-                return _c(
-                  "option",
-                  { key: sect.SECTOR, domProps: { value: sect.SECTOR } },
-                  [_vm._v(_vm._s(sect.SECTOR))]
-                )
-              })
-            ],
-            2
-          )
-        ]),
-        _vm._v(" "),
-        _c("hr"),
-        _vm._v(" "),
-        _c("hr"),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "col-sm-6" },
-          [
-            _c("label", { staticClass: "text" }, [_vm._v("TOTAL DE AGENTES:")]),
-            _vm._v(" "),
-            _c("P", [_vm._v("  " + _vm._s(_vm.searchAgentes.length))])
-          ],
-          1
-        )
-      ]),
-      _vm._v(" "),
-      _vm._m(0),
-      _vm._v(" "),
-      _c(
-        "table",
-        {
-          staticClass:
-            "table table-striped table-dark table-bordered table-hover"
-        },
-        [
-          _c("thead", [
-            _c("tr", [
-              _vm.auxiliar === 0
-                ? _c(
-                    "th",
-                    {
-                      attrs: { scope: "col" },
-                      on: {
-                        click: function($event) {
-                          _vm.ordenadosDesc("LEGAJO")
-                          _vm.auxiliar++
-                        }
-                      }
-                    },
-                    [_vm._v("LEGAJO")]
-                  )
-                : _c(
-                    "th",
-                    {
-                      attrs: { scope: "col" },
-                      on: {
-                        click: function($event) {
-                          _vm.ordenadosAsc("LEGAJO")
-                          _vm.auxiliar--
-                        }
-                      }
-                    },
-                    [_vm._v("LEGAJO")]
-                  ),
-              _vm._v(" "),
-              _vm.auxiliar === 0
-                ? _c(
-                    "th",
-                    {
-                      attrs: { scope: "col" },
-                      on: {
-                        click: function($event) {
-                          _vm.ordenadosDesc("DNI")
-                          _vm.auxiliar++
-                        }
-                      }
-                    },
-                    [_vm._v("DNI")]
-                  )
-                : _c(
-                    "th",
-                    {
-                      attrs: { scope: "col" },
-                      on: {
-                        click: function($event) {
-                          _vm.ordenadosAsc("DNI")
-                          _vm.auxiliar--
-                        }
-                      }
-                    },
-                    [_vm._v("DNI")]
-                  ),
-              _vm._v(" "),
-              _vm.auxiliar === 0
-                ? _c(
-                    "th",
-                    {
-                      attrs: { scope: "col" },
-                      on: {
-                        click: function($event) {
-                          _vm.ordenadosDesc("NOMBRE")
-                          _vm.auxiliar++
-                        }
-                      }
-                    },
-                    [_vm._v("NOMBRE")]
-                  )
-                : _c(
-                    "th",
-                    {
-                      attrs: { scope: "col" },
-                      on: {
-                        click: function($event) {
-                          _vm.ordenadosAsc("NOMBRE")
-                          _vm.auxiliar--
-                        }
-                      }
-                    },
-                    [_vm._v("NOMBRE")]
-                  ),
-              _vm._v(" "),
-              _vm.auxiliar === 0
-                ? _c(
-                    "th",
-                    {
-                      attrs: { scope: "col" },
-                      on: {
-                        click: function($event) {
-                          _vm.ordenadosDesc("HOSPITAL")
-                          _vm.auxiliar++
-                        }
-                      }
-                    },
-                    [_vm._v("HOSPITAL")]
-                  )
-                : _c(
-                    "th",
-                    {
-                      attrs: { scope: "col" },
-                      on: {
-                        click: function($event) {
-                          _vm.ordenadosAsc("HOSPITAL")
-                          _vm.auxiliar--
-                        }
-                      }
-                    },
-                    [_vm._v("HOSPITAL")]
-                  ),
-              _vm._v(" "),
-              _vm.auxiliar === 0
-                ? _c(
-                    "th",
-                    {
-                      attrs: { scope: "col" },
-                      on: {
-                        click: function($event) {
-                          _vm.ordenadosDesc("SERVICIO")
-                          _vm.auxiliar++
-                        }
-                      }
-                    },
-                    [_vm._v("SERVICIO")]
-                  )
-                : _c(
-                    "th",
-                    {
-                      attrs: { scope: "col" },
-                      on: {
-                        click: function($event) {
-                          _vm.ordenadosAsc("SERVICIO")
-                          _vm.auxiliar--
-                        }
-                      }
-                    },
-                    [_vm._v("SERVICIO")]
-                  ),
-              _vm._v(" "),
-              _vm.auxiliar === 0
-                ? _c(
-                    "th",
-                    {
-                      attrs: { scope: "col" },
-                      on: {
-                        click: function($event) {
-                          _vm.ordenadosDesc("SECTOR")
-                          _vm.auxiliar++
-                        }
-                      }
-                    },
-                    [_vm._v("SECTOR")]
-                  )
-                : _c(
-                    "th",
-                    {
-                      attrs: { scope: "col" },
-                      on: {
-                        click: function($event) {
-                          _vm.ordenadosAsc("SECTOR")
-                          _vm.auxiliar--
-                        }
-                      }
-                    },
-                    [_vm._v("SECTOR")]
-                  ),
-              _vm._v(" "),
-              _c("th", { attrs: { scope: "col" } }, [_vm._v("ACTIVO")]),
-              _vm._v(" "),
-              _c("th", { attrs: { scope: "col" } }, [
-                _vm._v("FECHA DE INGRESO")
-              ])
-            ])
+              2
+            )
           ]),
           _vm._v(" "),
+          _c("div", { staticClass: "col-sm-2" }, [
+            _c("label", { staticClass: "text" }, [_vm._v(" sectores    ")]),
+            _vm._v(" "),
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.sector,
+                    expression: "sector"
+                  }
+                ],
+                staticClass: "form-control badge-secondary",
+                attrs: { id: "servicio", name: "servicio" },
+                on: {
+                  change: function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.sector = $event.target.multiple
+                      ? $$selectedVal
+                      : $$selectedVal[0]
+                  }
+                }
+              },
+              [
+                _c("option", { attrs: { value: "" } }, [_vm._v("seleccione")]),
+                _vm._v(" "),
+                _vm._l(_vm.sectores, function(sect) {
+                  return _c(
+                    "option",
+                    { key: sect.SECTOR, domProps: { value: sect.SECTOR } },
+                    [_vm._v(_vm._s(sect.SECTOR))]
+                  )
+                })
+              ],
+              2
+            )
+          ]),
+          _vm._v(" "),
+          _c("hr"),
+          _vm._v(" "),
+          _c("hr"),
+          _vm._v(" "),
           _c(
-            "tbody",
-            _vm._l(_vm.searchAgentes, function(agente) {
-              return _c("tr", { key: agente.LEGAJO }, [
-                _c("th", [
-                  _vm._v(
-                    "\n                    " +
-                      _vm._s(agente.LEGAJO) +
-                      "\n                "
-                  )
-                ]),
-                _vm._v(" "),
-                _c("th", [
-                  _vm._v(
-                    "\n                    " +
-                      _vm._s(agente.DNI) +
-                      "\n                "
-                  )
-                ]),
-                _vm._v(" "),
-                _c("th", [
-                  _vm._v(
-                    "\n                    " +
-                      _vm._s(agente.NOMBRE.toUpperCase()) +
-                      "\n                "
-                  )
-                ]),
-                _vm._v(" "),
-                _c("th", [
-                  _vm._v(
-                    "\n                    " +
-                      _vm._s(agente.HOSPITAL.toUpperCase()) +
-                      "\n                "
-                  )
-                ]),
-                _vm._v(" "),
-                _c("th", [
-                  _vm._v(
-                    "\n                    " +
-                      _vm._s(agente.SERVICIO.toUpperCase()) +
-                      "\n                "
-                  )
-                ]),
-                _vm._v(" "),
-                _c("th", [
-                  _vm._v(
-                    "\n                    " +
-                      _vm._s(agente.SECTOR.toUpperCase()) +
-                      "\n                "
-                  )
-                ]),
-                _vm._v(" "),
-                agente.ACTIVO == 0
-                  ? _c("th", [
-                      _vm._v("\n                    ACTIVO\n                ")
-                    ])
-                  : _c("th", [
-                      _vm._v("\n                    BAJA\n                ")
-                    ]),
-                _vm._v(" "),
-                _c("th", [
-                  _vm._v(
-                    "\n                    " +
-                      _vm._s(_vm.since(agente.fecha_ingreso)) +
-                      "\n                "
-                  )
-                ]),
-                _vm._v(" "),
-                _c("th", { attrs: { width: "10px" } }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-success",
-                      attrs: {
-                        type: "button",
-                        "data-toggle": "modal",
-                        "data-target": "#ModificarAgente"
-                      },
-                      on: {
-                        click: function($event) {
-                          return _vm.getLegajo(agente)
+            "div",
+            { staticClass: "col-sm-6" },
+            [
+              _c("label", { staticClass: "text" }, [
+                _vm._v("TOTAL DE AGENTES:")
+              ]),
+              _vm._v(" "),
+              _c("P", [_vm._v("  " + _vm._s(_vm.searchAgentes.length))])
+            ],
+            1
+          )
+        ]),
+        _vm._v(" "),
+        _vm.permisoCrear
+          ? _c("div", { staticClass: "form-group row badge-dark col-sm-12" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary",
+                  attrs: {
+                    type: "button",
+                    "data-toggle": "modal",
+                    "data-target": "#NuevoAgente"
+                  }
+                },
+                [_vm._v("\n            Nuevo Agente\n        ")]
+              )
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _c(
+          "table",
+          {
+            staticClass:
+              "table table-striped table-dark table-bordered table-hover"
+          },
+          [
+            _c("thead", [
+              _c("tr", [
+                _vm.auxiliar === 0
+                  ? _c(
+                      "th",
+                      {
+                        attrs: { scope: "col" },
+                        on: {
+                          click: function($event) {
+                            _vm.ordenadosDesc("LEGAJO")
+                            _vm.auxiliar++
+                          }
                         }
-                      }
-                    },
-                    [
-                      _vm._v(
-                        "\n                        editar\n                    "
-                      )
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "a",
-                    {
-                      staticClass: "btn btn-primary btn-small",
-                      attrs: { href: "#" }
-                    },
-                    [_vm._v("Datos")]
-                  )
+                      },
+                      [_vm._v("LEGAJO")]
+                    )
+                  : _c(
+                      "th",
+                      {
+                        attrs: { scope: "col" },
+                        on: {
+                          click: function($event) {
+                            _vm.ordenadosAsc("LEGAJO")
+                            _vm.auxiliar--
+                          }
+                        }
+                      },
+                      [_vm._v("LEGAJO")]
+                    ),
+                _vm._v(" "),
+                _vm.auxiliar === 0
+                  ? _c(
+                      "th",
+                      {
+                        attrs: { scope: "col" },
+                        on: {
+                          click: function($event) {
+                            _vm.ordenadosDesc("DNI")
+                            _vm.auxiliar++
+                          }
+                        }
+                      },
+                      [_vm._v("DNI")]
+                    )
+                  : _c(
+                      "th",
+                      {
+                        attrs: { scope: "col" },
+                        on: {
+                          click: function($event) {
+                            _vm.ordenadosAsc("DNI")
+                            _vm.auxiliar--
+                          }
+                        }
+                      },
+                      [_vm._v("DNI")]
+                    ),
+                _vm._v(" "),
+                _vm.auxiliar === 0
+                  ? _c(
+                      "th",
+                      {
+                        attrs: { scope: "col" },
+                        on: {
+                          click: function($event) {
+                            _vm.ordenadosDesc("NOMBRE")
+                            _vm.auxiliar++
+                          }
+                        }
+                      },
+                      [_vm._v("NOMBRE")]
+                    )
+                  : _c(
+                      "th",
+                      {
+                        attrs: { scope: "col" },
+                        on: {
+                          click: function($event) {
+                            _vm.ordenadosAsc("NOMBRE")
+                            _vm.auxiliar--
+                          }
+                        }
+                      },
+                      [_vm._v("NOMBRE")]
+                    ),
+                _vm._v(" "),
+                _vm.auxiliar === 0
+                  ? _c(
+                      "th",
+                      {
+                        attrs: { scope: "col" },
+                        on: {
+                          click: function($event) {
+                            _vm.ordenadosDesc("HOSPITAL")
+                            _vm.auxiliar++
+                          }
+                        }
+                      },
+                      [_vm._v("HOSPITAL")]
+                    )
+                  : _c(
+                      "th",
+                      {
+                        attrs: { scope: "col" },
+                        on: {
+                          click: function($event) {
+                            _vm.ordenadosAsc("HOSPITAL")
+                            _vm.auxiliar--
+                          }
+                        }
+                      },
+                      [_vm._v("HOSPITAL")]
+                    ),
+                _vm._v(" "),
+                _vm.auxiliar === 0
+                  ? _c(
+                      "th",
+                      {
+                        attrs: { scope: "col" },
+                        on: {
+                          click: function($event) {
+                            _vm.ordenadosDesc("SERVICIO")
+                            _vm.auxiliar++
+                          }
+                        }
+                      },
+                      [_vm._v("SERVICIO")]
+                    )
+                  : _c(
+                      "th",
+                      {
+                        attrs: { scope: "col" },
+                        on: {
+                          click: function($event) {
+                            _vm.ordenadosAsc("SERVICIO")
+                            _vm.auxiliar--
+                          }
+                        }
+                      },
+                      [_vm._v("SERVICIO")]
+                    ),
+                _vm._v(" "),
+                _vm.auxiliar === 0
+                  ? _c(
+                      "th",
+                      {
+                        attrs: { scope: "col" },
+                        on: {
+                          click: function($event) {
+                            _vm.ordenadosDesc("SECTOR")
+                            _vm.auxiliar++
+                          }
+                        }
+                      },
+                      [_vm._v("SECTOR")]
+                    )
+                  : _c(
+                      "th",
+                      {
+                        attrs: { scope: "col" },
+                        on: {
+                          click: function($event) {
+                            _vm.ordenadosAsc("SECTOR")
+                            _vm.auxiliar--
+                          }
+                        }
+                      },
+                      [_vm._v("SECTOR")]
+                    ),
+                _vm._v(" "),
+                _c("th", { attrs: { scope: "col" } }, [_vm._v("ACTIVO")]),
+                _vm._v(" "),
+                _c("th", { attrs: { scope: "col" } }, [
+                  _vm._v("FECHA DE INGRESO")
                 ])
               ])
-            }),
-            0
-          )
-        ]
-      ),
-      _vm._v(" "),
-      _c("nuevo-agente", {
-        on: {
-          speak: function($event) {
-            return _vm.speakMethod()
-          }
-        }
-      }),
-      _vm._v(" "),
-      _c("modificar-agente", {
-        attrs: {
-          listaHospitales: _vm.hospitales,
-          listaServicios: _vm.servicios,
-          listaSectores: _vm.sectores,
-          agenteModificar: _vm.agenteAux
-        },
-        on: {
-          speak: function($event) {
-            return _vm.speakMethod()
-          }
-        }
-      })
-    ],
-    1
-  )
+            ]),
+            _vm._v(" "),
+            _c(
+              "tbody",
+              _vm._l(_vm.searchAgentes, function(agente) {
+                return _c("tr", { key: agente.LEGAJO }, [
+                  _c("th", [
+                    _vm._v(
+                      "\n                    " +
+                        _vm._s(agente.LEGAJO) +
+                        "\n                "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("th", [
+                    _vm._v(
+                      "\n                    " +
+                        _vm._s(agente.DNI) +
+                        "\n                "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("th", [
+                    _vm._v(
+                      "\n                    " +
+                        _vm._s(agente.NOMBRE.toUpperCase()) +
+                        "\n                "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("th", [
+                    _vm._v(
+                      "\n                    " +
+                        _vm._s(agente.HOSPITAL.toUpperCase()) +
+                        "\n                "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("th", [
+                    _vm._v(
+                      "\n                    " +
+                        _vm._s(agente.SERVICIO.toUpperCase()) +
+                        "\n                "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("th", [
+                    _vm._v(
+                      "\n                    " +
+                        _vm._s(agente.SECTOR.toUpperCase()) +
+                        "\n                "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  agente.ACTIVO == 0
+                    ? _c("th", [
+                        _vm._v("\n                    ACTIVO\n                ")
+                      ])
+                    : _c("th", [
+                        _vm._v("\n                    BAJA\n                ")
+                      ]),
+                  _vm._v(" "),
+                  _c("th", [
+                    _vm._v(
+                      "\n                    " +
+                        _vm._s(_vm.since(agente.fecha_ingreso)) +
+                        "\n                "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _vm.permisoEditar
+                    ? _c("th", { attrs: { width: "10px" } }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-success",
+                            attrs: {
+                              type: "button",
+                              "data-toggle": "modal",
+                              "data-target": "#ModificarAgente"
+                            },
+                            on: {
+                              click: function($event) {
+                                return _vm.getLegajo(agente)
+                              }
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n                        editar\n                    "
+                            )
+                          ]
+                        )
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.permisoBorrar
+                    ? _c("th", { attrs: { width: "10px" } }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-outline-danger",
+                            attrs: { type: "button" },
+                            on: {
+                              click: function($event) {
+                                return _vm.borrar(agente)
+                              }
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n                        borrar\n                    "
+                            )
+                          ]
+                        )
+                      ])
+                    : _vm._e()
+                ])
+              }),
+              0
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _vm.permisoCrear
+          ? _c(
+              "div",
+              [
+                _c("nuevo-agente", {
+                  on: {
+                    speak: function($event) {
+                      return _vm.speakMethod()
+                    }
+                  }
+                })
+              ],
+              1
+            )
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.permisoEditar
+          ? _c(
+              "div",
+              [
+                _c("modificar-agente", {
+                  attrs: {
+                    listaHospitales: _vm.hospitales,
+                    listaServicios: _vm.servicios,
+                    listaSectores: _vm.sectores,
+                    agenteModificar: _vm.agenteAux
+                  },
+                  on: {
+                    speak: function($event) {
+                      return _vm.speakMethod()
+                    }
+                  }
+                })
+              ],
+              1
+            )
+          : _vm._e()
+      ])
+    : _c("div", [
+        _c("h2", { staticClass: "display-1" }, [
+          _vm._v("\n        no pose permiso para entrar aqui\n    ")
+        ])
+      ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group row badge-dark col-sm-12" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-primary",
-          attrs: {
-            type: "button",
-            "data-toggle": "modal",
-            "data-target": "#NuevoAgente"
-          }
-        },
-        [_vm._v("\n            Nuevo Agente\n        ")]
-      )
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -45506,393 +45888,411 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "panel panel-default   col-sm-12" },
-    [
-      _c("h1", { staticClass: "text-center" }, [
-        _vm._v("Listado General de vacaciones")
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "form-group row badge-dark col-sm-12" }, [
-        _c("hr"),
-        _vm._v(" "),
-        _c("hr"),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-sm-2" }, [
-          _c("label", { staticClass: "text" }, [_vm._v(" legajo      ")]),
-          _vm._v(" "),
-          _vm.vacaciones.length
-            ? _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.legajo,
-                    expression: "legajo"
-                  }
-                ],
-                staticClass: "form-control badge-secondary",
-                attrs: { type: "int", id: "legajo", name: "legajo" },
-                domProps: { value: _vm.legajo },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.legajo = $event.target.value
-                  }
-                }
-              })
-            : _vm._e()
+  return _vm.rol.special == "all-access" || _vm.permiso
+    ? _c("div", { staticClass: "panel panel-default   col-sm-12" }, [
+        _c("h1", { staticClass: "text-center" }, [
+          _vm._v("Listado General de vacaciones")
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-sm-2" }, [
-          _c("label", { staticClass: "text" }, [_vm._v(" DNI      ")]),
+        _c("div", { staticClass: "form-group row badge-dark col-sm-12" }, [
+          _c("hr"),
           _vm._v(" "),
-          _vm.vacaciones.length
-            ? _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.dni,
-                    expression: "dni"
-                  }
-                ],
-                staticClass: "form-control badge-secondary",
-                attrs: { type: "int", id: "legajo", name: "legajo" },
-                domProps: { value: _vm.dni },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.dni = $event.target.value
-                  }
-                }
-              })
-            : _vm._e()
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-sm-2" }, [
-          _c("label", { staticClass: "text" }, [_vm._v(" nombre      ")]),
+          _c("hr"),
           _vm._v(" "),
-          _vm.vacaciones.length
-            ? _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.nombre,
-                    expression: "nombre"
-                  }
-                ],
-                staticClass: "form-control badge-secondary",
-                attrs: { type: "text", id: "nombre", name: "nombre" },
-                domProps: { value: _vm.nombre },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
+          _c("div", { staticClass: "col-sm-2" }, [
+            _c("label", { staticClass: "text" }, [_vm._v(" legajo      ")]),
+            _vm._v(" "),
+            _vm.vacaciones.length
+              ? _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.legajo,
+                      expression: "legajo"
                     }
-                    _vm.nombre = $event.target.value
+                  ],
+                  staticClass: "form-control badge-secondary",
+                  attrs: { type: "int", id: "legajo", name: "legajo" },
+                  domProps: { value: _vm.legajo },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.legajo = $event.target.value
+                    }
                   }
-                }
-              })
-            : _vm._e()
-        ]),
-        _vm._v(" "),
-        _c("hr"),
-        _vm._v(" "),
-        _c("hr"),
-        _vm._v(" "),
-        _c("hr"),
-        _vm._v(" "),
-        _c("p", [_vm._v(_vm._s(_vm.searchVacaciones.length))])
-      ]),
-      _vm._v(" "),
-      _vm._m(0),
-      _vm._v(" "),
-      _c(
-        "table",
-        {
-          staticClass:
-            "table table-striped table-dark table-bordered table-hover"
-        },
-        [
-          _c("thead", [
-            _c("tr", [
-              _vm.auxiliar === 0
-                ? _c(
-                    "th",
-                    {
-                      attrs: { scope: "col" },
-                      on: {
-                        click: function($event) {
-                          _vm.ordenadosDesc("LEGAJO")
-                          _vm.auxiliar++
-                        }
-                      }
-                    },
-                    [_vm._v("LEGAJO")]
-                  )
-                : _c(
-                    "th",
-                    {
-                      attrs: { scope: "col" },
-                      on: {
-                        click: function($event) {
-                          _vm.ordenadosAsc("LEGAJO")
-                          _vm.auxiliar--
-                        }
-                      }
-                    },
-                    [_vm._v("LEGAJO")]
-                  ),
-              _vm._v(" "),
-              _vm.auxiliar === 0
-                ? _c(
-                    "th",
-                    {
-                      attrs: { scope: "col" },
-                      on: {
-                        click: function($event) {
-                          _vm.ordenadosDesc("DNI")
-                          _vm.auxiliar++
-                        }
-                      }
-                    },
-                    [_vm._v("DNI")]
-                  )
-                : _c(
-                    "th",
-                    {
-                      attrs: { scope: "col" },
-                      on: {
-                        click: function($event) {
-                          _vm.ordenadosAsc("DNI")
-                          _vm.auxiliar--
-                        }
-                      }
-                    },
-                    [_vm._v("DNI")]
-                  ),
-              _vm._v(" "),
-              _vm.auxiliar === 0
-                ? _c(
-                    "th",
-                    {
-                      attrs: { scope: "col" },
-                      on: {
-                        click: function($event) {
-                          _vm.ordenadosDesc("NOMBRE")
-                          _vm.auxiliar++
-                        }
-                      }
-                    },
-                    [_vm._v("NOMBRE")]
-                  )
-                : _c(
-                    "th",
-                    {
-                      attrs: { scope: "col" },
-                      on: {
-                        click: function($event) {
-                          _vm.ordenadosAsc("NOMBRE")
-                          _vm.auxiliar--
-                        }
-                      }
-                    },
-                    [_vm._v("NOMBRE")]
-                  ),
-              _vm._v(" "),
-              _vm.auxiliar === 0
-                ? _c(
-                    "th",
-                    {
-                      attrs: { scope: "col" },
-                      on: {
-                        click: function($event) {
-                          _vm.ordenadosDesc("HOSPITAL")
-                          _vm.auxiliar++
-                        }
-                      }
-                    },
-                    [_vm._v("DEPENDENCIA")]
-                  )
-                : _c(
-                    "th",
-                    {
-                      attrs: { scope: "col" },
-                      on: {
-                        click: function($event) {
-                          _vm.ordenadosAsc("HOSPITAL")
-                          _vm.auxiliar--
-                        }
-                      }
-                    },
-                    [_vm._v("DEPENDENCIA")]
-                  ),
-              _vm._v(" "),
-              _c("th", [_vm._v("COMIENZA")]),
-              _vm._v(" "),
-              _c("th", [_vm._v("FINALIZA-")]),
-              _vm._v(" "),
-              _c("th", [_vm._v("AÑO")])
-            ])
+                })
+              : _vm._e()
           ]),
           _vm._v(" "),
-          _c(
-            "tbody",
-            _vm._l(_vm.searchVacaciones, function(vacacion) {
-              return _c("tr", { key: vacacion.ID }, [
-                _c("th", [
-                  _vm._v(
-                    "\n                    " +
-                      _vm._s(vacacion.LEGAJO) +
-                      "\n                "
-                  )
-                ]),
-                _vm._v(" "),
-                _c("th", [
-                  _vm._v(
-                    "\n                    " +
-                      _vm._s(vacacion.DNI) +
-                      "\n                "
-                  )
-                ]),
-                _vm._v(" "),
-                _c("th", [
-                  _vm._v(
-                    "\n                    " +
-                      _vm._s(vacacion.NOMBRE) +
-                      "\n                "
-                  )
-                ]),
-                _vm._v(" "),
-                _c("th", [
-                  _vm._v(
-                    "\n                    " +
-                      _vm._s(vacacion.HOSPITAL) +
-                      "\n                "
-                  )
-                ]),
-                _vm._v(" "),
-                _c("th", [
-                  _vm._v(
-                    "\n                    " +
-                      _vm._s(_vm.formatoFecha(vacacion.fecha_inicio)) +
-                      "\n                "
-                  )
-                ]),
-                _vm._v(" "),
-                _c("th", [
-                  _vm._v(
-                    "\n                    " +
-                      _vm._s(_vm.formatoFecha(vacacion.fecha_fin)) +
-                      "\n                "
-                  )
-                ]),
-                _vm._v(" "),
-                _c("th", [
-                  _vm._v(
-                    "\n                    " +
-                      _vm._s(vacacion.anio) +
-                      "\n                "
-                  )
-                ]),
-                _vm._v(" "),
-                _c("th", { attrs: { width: "10px" } }, [
-                  _c(
-                    "button",
+          _c("div", { staticClass: "col-sm-2" }, [
+            _c("label", { staticClass: "text" }, [_vm._v(" DNI      ")]),
+            _vm._v(" "),
+            _vm.vacaciones.length
+              ? _c("input", {
+                  directives: [
                     {
-                      staticClass: "btn btn-success",
-                      attrs: {
-                        type: "button",
-                        "data-toggle": "modal",
-                        "data-target": "#modificar"
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.dni,
+                      expression: "dni"
+                    }
+                  ],
+                  staticClass: "form-control badge-secondary",
+                  attrs: { type: "int", id: "legajo", name: "legajo" },
+                  domProps: { value: _vm.dni },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.dni = $event.target.value
+                    }
+                  }
+                })
+              : _vm._e()
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-sm-2" }, [
+            _c("label", { staticClass: "text" }, [_vm._v(" nombre      ")]),
+            _vm._v(" "),
+            _vm.vacaciones.length
+              ? _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.nombre,
+                      expression: "nombre"
+                    }
+                  ],
+                  staticClass: "form-control badge-secondary",
+                  attrs: { type: "text", id: "nombre", name: "nombre" },
+                  domProps: { value: _vm.nombre },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.nombre = $event.target.value
+                    }
+                  }
+                })
+              : _vm._e()
+          ]),
+          _vm._v(" "),
+          _c("hr"),
+          _vm._v(" "),
+          _c("hr"),
+          _vm._v(" "),
+          _c("hr"),
+          _vm._v(" "),
+          _c("p", [_vm._v(_vm._s(_vm.searchVacaciones.length))])
+        ]),
+        _vm._v(" "),
+        _vm.permisoCrear
+          ? _c("div", { staticClass: "form-group row badge-dark col-sm-12" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary",
+                  attrs: {
+                    type: "button",
+                    "data-toggle": "modal",
+                    "data-target": "#cargar"
+                  }
+                },
+                [_vm._v("\n                Cargar Vacaciones\n            ")]
+              )
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _c(
+          "table",
+          {
+            staticClass:
+              "table table-striped table-dark table-bordered table-hover"
+          },
+          [
+            _c("thead", [
+              _c("tr", [
+                _vm.auxiliar === 0
+                  ? _c(
+                      "th",
+                      {
+                        attrs: { scope: "col" },
+                        on: {
+                          click: function($event) {
+                            _vm.ordenadosDesc("LEGAJO")
+                            _vm.auxiliar++
+                          }
+                        }
                       },
-                      on: {
-                        click: function($event) {
-                          return _vm.buscarDatos(vacacion)
+                      [_vm._v("LEGAJO")]
+                    )
+                  : _c(
+                      "th",
+                      {
+                        attrs: { scope: "col" },
+                        on: {
+                          click: function($event) {
+                            _vm.ordenadosAsc("LEGAJO")
+                            _vm.auxiliar--
+                          }
                         }
-                      }
-                    },
-                    [
-                      _vm._v(
-                        "\n                        editar\n                    "
-                      )
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-danger",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          $event.preventDefault()
-                          return _vm.borrarVacaciones(vacacion.id)
+                      },
+                      [_vm._v("LEGAJO")]
+                    ),
+                _vm._v(" "),
+                _vm.auxiliar === 0
+                  ? _c(
+                      "th",
+                      {
+                        attrs: { scope: "col" },
+                        on: {
+                          click: function($event) {
+                            _vm.ordenadosDesc("DNI")
+                            _vm.auxiliar++
+                          }
                         }
-                      }
-                    },
-                    [
-                      _vm._v(
-                        "\n                        borrar\n                    "
-                      )
-                    ]
-                  )
-                ])
+                      },
+                      [_vm._v("DNI")]
+                    )
+                  : _c(
+                      "th",
+                      {
+                        attrs: { scope: "col" },
+                        on: {
+                          click: function($event) {
+                            _vm.ordenadosAsc("DNI")
+                            _vm.auxiliar--
+                          }
+                        }
+                      },
+                      [_vm._v("DNI")]
+                    ),
+                _vm._v(" "),
+                _vm.auxiliar === 0
+                  ? _c(
+                      "th",
+                      {
+                        attrs: { scope: "col" },
+                        on: {
+                          click: function($event) {
+                            _vm.ordenadosDesc("NOMBRE")
+                            _vm.auxiliar++
+                          }
+                        }
+                      },
+                      [_vm._v("NOMBRE")]
+                    )
+                  : _c(
+                      "th",
+                      {
+                        attrs: { scope: "col" },
+                        on: {
+                          click: function($event) {
+                            _vm.ordenadosAsc("NOMBRE")
+                            _vm.auxiliar--
+                          }
+                        }
+                      },
+                      [_vm._v("NOMBRE")]
+                    ),
+                _vm._v(" "),
+                _vm.auxiliar === 0
+                  ? _c(
+                      "th",
+                      {
+                        attrs: { scope: "col" },
+                        on: {
+                          click: function($event) {
+                            _vm.ordenadosDesc("HOSPITAL")
+                            _vm.auxiliar++
+                          }
+                        }
+                      },
+                      [_vm._v("DEPENDENCIA")]
+                    )
+                  : _c(
+                      "th",
+                      {
+                        attrs: { scope: "col" },
+                        on: {
+                          click: function($event) {
+                            _vm.ordenadosAsc("HOSPITAL")
+                            _vm.auxiliar--
+                          }
+                        }
+                      },
+                      [_vm._v("DEPENDENCIA")]
+                    ),
+                _vm._v(" "),
+                _c("th", [_vm._v("COMIENZA")]),
+                _vm._v(" "),
+                _c("th", [_vm._v("FINALIZA-")]),
+                _vm._v(" "),
+                _c("th", [_vm._v("AÑO")])
               ])
-            }),
-            0
-          )
-        ]
-      ),
-      _vm._v(" "),
-      _c("cargar-vacaciones", {
-        on: {
-          speak: function($event) {
-            return _vm.speakMethod()
-          }
-        }
-      }),
-      _vm._v(" "),
-      _c("modificar-vacaciones", {
-        attrs: { listaModificar: _vm.vacacionAux },
-        on: {
-          speak: function($event) {
-            return _vm.speakMethod()
-          }
-        }
-      })
-    ],
-    1
-  )
+            ]),
+            _vm._v(" "),
+            _c(
+              "tbody",
+              _vm._l(_vm.searchVacaciones, function(vacacion) {
+                return _c("tr", { key: vacacion.ID }, [
+                  _c("th", [
+                    _vm._v(
+                      "\n                    " +
+                        _vm._s(vacacion.LEGAJO) +
+                        "\n                "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("th", [
+                    _vm._v(
+                      "\n                    " +
+                        _vm._s(vacacion.DNI) +
+                        "\n                "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("th", [
+                    _vm._v(
+                      "\n                    " +
+                        _vm._s(vacacion.NOMBRE) +
+                        "\n                "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("th", [
+                    _vm._v(
+                      "\n                    " +
+                        _vm._s(vacacion.HOSPITAL) +
+                        "\n                "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("th", [
+                    _vm._v(
+                      "\n                    " +
+                        _vm._s(_vm.formatoFecha(vacacion.fecha_inicio)) +
+                        "\n                "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("th", [
+                    _vm._v(
+                      "\n                    " +
+                        _vm._s(_vm.formatoFecha(vacacion.fecha_fin)) +
+                        "\n                "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("th", [
+                    _vm._v(
+                      "\n                    " +
+                        _vm._s(vacacion.anio) +
+                        "\n                "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _vm.permisoEditar
+                    ? _c("th", { attrs: { width: "10px" } }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-success",
+                            attrs: {
+                              type: "button",
+                              "data-toggle": "modal",
+                              "data-target": "#modificar"
+                            },
+                            on: {
+                              click: function($event) {
+                                return _vm.buscarDatos(vacacion)
+                              }
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n                        editar\n                    "
+                            )
+                          ]
+                        )
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.permisoBorrar
+                    ? _c("th", { attrs: { width: "10px" } }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-danger",
+                            attrs: { type: "button" },
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                return _vm.borrarVacaciones(vacacion.id)
+                              }
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n                        borrar\n                    "
+                            )
+                          ]
+                        )
+                      ])
+                    : _vm._e()
+                ])
+              }),
+              0
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _vm.permisoCrear
+          ? _c(
+              "div",
+              [
+                _c("cargar-vacaciones", {
+                  on: {
+                    speak: function($event) {
+                      return _vm.speakMethod()
+                    }
+                  }
+                })
+              ],
+              1
+            )
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.permisoEditar
+          ? _c(
+              "div",
+              [
+                _c("modificar-vacaciones", {
+                  attrs: { listaModificar: _vm.vacacionAux },
+                  on: {
+                    speak: function($event) {
+                      return _vm.speakMethod()
+                    }
+                  }
+                })
+              ],
+              1
+            )
+          : _vm._e()
+      ])
+    : _c("div", [
+        _c("h2", { staticClass: "display-1" }, [
+          _vm._v("\n        no pose permiso para entrar aqui\n    ")
+        ])
+      ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group row badge-dark col-sm-12" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-primary",
-          attrs: {
-            type: "button",
-            "data-toggle": "modal",
-            "data-target": "#cargar"
-          }
-        },
-        [_vm._v("\n                Cargar Vacaciones\n            ")]
-      )
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -47372,7 +47772,7 @@ var render = function() {
                       attrs: { type: "submit" },
                       on: {
                         click: function($event) {
-                          return _vm.$emit("   ")
+                          return _vm.$emit("")
                         }
                       }
                     },
@@ -52737,15 +53137,27 @@ var render = function() {
         ]),
         _vm._v(" "),
         _vm.userRol
-          ? _c("div", [
-              _c("h5", { staticClass: "display-5" }, [
-                _vm._v("su rol es " + _vm._s(_vm.userRol.name) + " ")
-              ]),
-              _vm._v(" "),
-              _c("h5", { staticClass: "display-5" }, [
-                _vm._v("tu puedes: " + _vm._s(_vm.userRol.description))
-              ])
-            ])
+          ? _c(
+              "div",
+              [
+                _c("h5", { staticClass: "display-5" }, [
+                  _vm._v("su rol es " + _vm._s(_vm.userRol.name) + " ")
+                ]),
+                _vm._v(" "),
+                _c("h5", { staticClass: "display-5" }, [
+                  _vm._v("tu puedes: " + _vm._s(_vm.userRol.description))
+                ]),
+                _vm._v(" "),
+                _vm._l(_vm.permisos, function(permiso) {
+                  return _c(
+                    "h4",
+                    { key: permiso.id, staticClass: "display-5" },
+                    [_vm._v(_vm._s(permiso.name))]
+                  )
+                })
+              ],
+              2
+            )
           : _c("div", [
               _c("h5", { staticClass: "display-5" }, [
                 _vm._v("Todavia no tienes Rol asignado")
@@ -53440,19 +53852,19 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row col-sm-12 mt-3" }, [
-    _c(
-      "form",
-      {
-        on: {
-          submit: function($event) {
-            $event.preventDefault()
-            return _vm.guardar($event)
-          }
+  return _c(
+    "form",
+    {
+      on: {
+        submit: function($event) {
+          $event.preventDefault()
+          return _vm.guardar($event)
         }
-      },
-      [
-        _c("div", { staticClass: "col-sm-8 " }, [
+      }
+    },
+    [
+      _c("div", { staticClass: "row col-sm-12 mt-3" }, [
+        _c("div", { staticClass: "col-sm-6 " }, [
           _c("label", { staticClass: "text-white" }, [_vm._v(" Usuario    ")]),
           _vm._v(" "),
           _c(
@@ -53462,61 +53874,14 @@ var render = function() {
                 {
                   name: "model",
                   rawName: "v-model",
-                  value: _vm.rol,
-                  expression: "rol"
+                  value: _vm.user,
+                  expression: "user"
                 }
               ],
               staticClass: "form-control badge-secondary",
               on: {
-                change: function($event) {
-                  var $$selectedVal = Array.prototype.filter
-                    .call($event.target.options, function(o) {
-                      return o.selected
-                    })
-                    .map(function(o) {
-                      var val = "_value" in o ? o._value : o.value
-                      return val
-                    })
-                  _vm.rol = $event.target.multiple
-                    ? $$selectedVal
-                    : $$selectedVal[0]
-                }
-              }
-            },
-            [
-              _c("option", { attrs: { value: "" } }, [_vm._v("seleccione")]),
-              _vm._v(" "),
-              _vm._l(_vm.roles, function(rolAux) {
-                return _c(
-                  "option",
-                  { key: rolAux.id, domProps: { value: rolAux.id } },
-                  [_vm._v(_vm._s(rolAux.name))]
-                )
-              })
-            ],
-            2
-          )
-        ]),
-        _vm._v(" "),
-        _vm._m(0),
-        _vm._v(" "),
-        _c("div", { staticClass: "row col-sm-12" }, [
-          _c("div", { staticClass: "col-sm-8" }, [
-            _c(
-              "select",
-              {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.rolPermiso,
-                    expression: "rolPermiso"
-                  }
-                ],
-                staticClass: "form-control badge-secondary",
-                attrs: { multiple: "" },
-                on: {
-                  change: function($event) {
+                change: [
+                  function($event) {
                     var $$selectedVal = Array.prototype.filter
                       .call($event.target.options, function(o) {
                         return o.selected
@@ -53525,43 +53890,120 @@ var render = function() {
                         var val = "_value" in o ? o._value : o.value
                         return val
                       })
-                    _vm.rolPermiso = $event.target.multiple
+                    _vm.user = $event.target.multiple
                       ? $$selectedVal
                       : $$selectedVal[0]
-                  }
-                }
-              },
-              _vm._l(_vm.permisos, function(permiso) {
+                  },
+                  _vm.getRol
+                ]
+              }
+            },
+            [
+              _c("option", { attrs: { value: "" } }, [_vm._v("seleccione")]),
+              _vm._v(" "),
+              _vm._l(_vm.users, function(user) {
                 return _c(
                   "option",
-                  { key: permiso.id, domProps: { value: permiso.id } },
-                  [_vm._v(_vm._s(permiso.name))]
+                  { key: user.id, domProps: { value: user } },
+                  [_vm._v(_vm._s(user.name))]
                 )
+              })
+            ],
+            2
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-sm-6" }, [
+          _vm._v(
+            "\n            Rol actual: " +
+              _vm._s(_vm.rolUser.name) +
+              "\n        "
+          )
+        ]),
+        _vm._v(" "),
+        _vm._m(0),
+        _vm._v(" "),
+        _c("div", { staticClass: "row col-sm-8" }, [
+          _c("div", { staticClass: "col-sm-8" }, [
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.role,
+                    expression: "role"
+                  }
+                ],
+                staticClass: "form-control badge-secondary",
+                on: {
+                  change: [
+                    function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.role = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    },
+                    _vm.getPermisos
+                  ]
+                }
+              },
+              _vm._l(_vm.roles, function(rol) {
+                return _c("option", { key: rol.id, domProps: { value: rol } }, [
+                  _vm._v(_vm._s(rol.name))
+                ])
               }),
               0
             )
-          ]),
-          _vm._v(" "),
-          _vm._m(1)
+          ])
         ]),
         _vm._v(" "),
-        _c(
-          "button",
-          { staticClass: "btn btn-primary", attrs: { type: "submit" } },
-          [_vm._v("agregar")]
-        )
-      ]
-    )
-  ])
+        _vm.role.special === "no-access"
+          ? _c(
+              "div",
+              { staticClass: "row col-sm-12" },
+              _vm._l(_vm.permisos, function(permiso) {
+                return _c("div", { key: permiso.id, staticClass: "col-sm-4" }, [
+                  _vm._v(
+                    "\n                Permiso: " +
+                      _vm._s(permiso.name) +
+                      "\n            "
+                  )
+                ])
+              }),
+              0
+            )
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.role.special === "all-access"
+          ? _c("div", { staticClass: "row col-sm-12" }, [
+              _c("div", { staticClass: "col-sm-4" }, [
+                _vm._v("\n                Permiso: Acceso total\n            ")
+              ])
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm._m(1)
+      ])
+    ]
+  )
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-sm-12" }, [
+    return _c("div", { staticClass: "col-sm-8 mt-3" }, [
       _c("label", { staticClass: "text-white", attrs: { for: "" } }, [
-        _vm._v("Permisos")
+        _vm._v("Roles")
       ])
     ])
   },
@@ -53569,12 +54011,12 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-sm-4" }, [
-      _c("label", { staticClass: "text-white", attrs: { for: "" } }, [
-        _vm._v(
-          'Utilice la tecla "ctrl + click izquierdo para seleccionar mas de uno"'
-        )
-      ])
+    return _c("div", { staticClass: "col-sm-8" }, [
+      _c(
+        "button",
+        { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+        [_vm._v("agregar")]
+      )
     ])
   }
 ]
@@ -72207,10 +72649,9 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
 
             case 3:
               liquidacion = _context5.sent;
-              console.log(liquidacion);
               return _context5.abrupt("return", commit('llenarLiquidacion', liquidacion.data[0]));
 
-            case 6:
+            case 5:
             case "end":
               return _context5.stop();
           }
@@ -72531,6 +72972,12 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
                 var urlRol = "roles/".concat(Res.data.rol_id);
                 axios__WEBPACK_IMPORTED_MODULE_3___default.a.get(urlRol).then(function (Response) {
                   //promesa con roles
+                  var urlPermisos = "permission/".concat(Res.data.rol_id);
+                  axios__WEBPACK_IMPORTED_MODULE_3___default.a.get(urlPermisos).then(function (Response) {
+                    commit('llenarPermisos', Response.data);
+                  })["catch"](function (e) {
+                    commit('llenarPermisos', null);
+                  });
                   commit('SET_ROL', Response.data);
                 })["catch"](function (e) {
                   commit('SET_ROL', null);

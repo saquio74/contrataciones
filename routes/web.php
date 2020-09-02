@@ -14,6 +14,8 @@ Route::post('/register',                     'authController@signup');
 
 Route::get('/agente/agente',                 'agentes@index');
 
+Route::delete('/agente/delete/{legajo}',     'agentes@destroy');
+
 Route::get('/agente/activos',                'agentes@activos');
 
 Route::get('/agente/bajas',                  'agentes@bajas');
@@ -122,8 +124,6 @@ Route::post('/contratos/store',              'contratoController@store');
 
 Route::delete('/contrato/delete/{id}',       'contratoController@delete');
 
-Route::get('/permission',                    'permissionController@index');
-
 Route::get('/user',                          'authController@getUsuarios');
 
 Route::get('/roles',                         'rolesController@index');
@@ -154,6 +154,10 @@ Route::delete('/inciso/delete/{id}',         'incisos@delete');
 
 Route::get('/permisos',                      'permissionController@index');
 
+Route::get('/permisos/{id}',                 'permissionController@getRolPermissions');
+
 Route::post('/rolesPermisos',                'permissionController@store');
 
-Route::get('/rolesPermisos/{$id}',           'rolesController@getRolesUser');
+Route::get('/permission/{id}',               'rolesController@getRolesUser');
+
+Route::put('/updateUser',                    'agentes@changeRol');

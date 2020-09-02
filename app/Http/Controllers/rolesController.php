@@ -60,6 +60,7 @@ class rolesController extends Controller
                     ->join('permissions','permissions.id','permissionsrole.permissions_id')
                     ->where('roles.id','=',$id)
                     ->get();
+        return response()->json($roles,200);
     }
     public function edit($id)
     {
