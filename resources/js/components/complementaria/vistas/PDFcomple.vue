@@ -1,10 +1,17 @@
 <template>
     <form  @submit.prevent="getPdf" >
-        <div class="col-sm-3 ">
+        <div class="col-sm-3 " v-if="rol.special =='all-access'">
             <label class="text"> hospital    </label>
             <select class="form-control badge-secondary" v-model="hospital" id="hospital" name='hospital'>
                 <option value=''>seleccione</option>
-                <option v-for="hosp in hospitales" :key="hosp.ID" :value="hosp" >{{hosp.HOSPITAL}}</option>
+                <option v-for="hosp in hospitales" :key="hosp.ID" :value="hosp.ID" >{{hosp.HOSPITAL}}</option>
+            </select>
+        </div>
+        <div class="col-sm-3 " v-else>
+            <label class="text"> hospital    </label>
+            <select class="form-control badge-secondary" v-model="hospital" id="hospital" name='hospital'>
+                <option value=''>seleccione</option>
+                <option v-for="hosp in hospitalesAux" :key="hosp.ID" :value="hosp.ID" >{{hosp.HOSPITAL}}</option>
             </select>
         </div>
         <div class="col-sm-3 ">
@@ -42,16 +49,35 @@ export default {
             vista:0,
             aux:{
 
-            }
+            },
+            permiso:    [],
+            hospitalesAux: [],
         }
     },
     created: function(){
         this.getHosp()
         this.getPeriodo()
         this.getFechas()
-        
+        this.buscarPermiso()
     },
     methods:{
+        async buscarPermiso(){
+            await this.permisos.find(valor =>{
+                let cadena = valor.name.split(" ")
+                if(cadena[0]=='Liquidar'){
+                    this.permiso.push(valor.slug)
+                }
+            })
+            await this.hospitales.find(hospital=>{
+                this.permiso.find(perm => {
+                    
+                    if(perm == hospital.ID){
+                        this.hospitalesAux.push(hospital)
+                    }
+                })
+            })
+            
+        },
         async getHosp(){
             await this.$store.dispatch('getHospitales')
         },
@@ -94,6 +120,12 @@ export default {
         },
         fechas(){
             return this.$store.state.fechas
+        },
+        rol(){
+            return this.$store.state.rol
+        },
+        permisos(){
+            return this.$store.state.permisos
         }
     }
     

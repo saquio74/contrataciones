@@ -1,15 +1,22 @@
 <template>
     <div>
-        <div class="form-group row badge-dark col-sm-12" >
+        <div class="form-group row badge-dark col-sm-12" v-if="rol.special =='all-access' || permiso">
             <h2 class="text-center">Buscar Agentes</h2>
             <hr>
             
             <br>
-            <div class="col-sm-3 ">
+            <div class="col-sm-3 " v-if="rol.special =='all-access'">
                 <label class="text"> hospital    </label>
                 <select class="form-control badge-secondary" v-model="hospital" id="hospital" name='hospital'>
                     <option value=''>seleccione</option>
                     <option v-for="hosp in hospitales" :key="hosp.ID" :value="hosp.ID" >{{hosp.HOSPITAL}}</option>
+                </select>
+            </div>
+            <div class="col-sm-3 " v-else>
+                <label class="text"> hospital    </label>
+                <select class="form-control badge-secondary" v-model="hospital" id="hospital" name='hospital'>
+                    <option value=''>seleccione</option>
+                    <option v-for="hosp in hospitalesAux" :key="hosp.ID" :value="hosp.ID" >{{hosp.HOSPITAL}}</option>
                 </select>
             </div>
             <div class="col-sm-3">
@@ -31,10 +38,15 @@
             
             <br>
             <br>
-        </div>
-        <div class="form-group row badge-secondary col-sm-12">
+            <div class="form-group row badge-secondary col-sm-12">
 
-            <liquidacion @speak="speakMethod()" :hospitalId="hospital" :servicioId="servicio" :sectorId="sector" />
+                <liquidacion @speak="speakMethod()" :hospitalId="hospital" :servicioId="servicio" :sectorId="sector" />
+            </div>
+        </div>
+        <div v-else>
+            <h2 class="display-1">
+                no pose permiso para entrar aqui
+            </h2>
         </div>
     </div>
 </template>
@@ -52,7 +64,8 @@
                 hospital:   '',
                 servicio:   '',
                 sector:     '',
-                permiso:    '',
+                permiso:    [],
+                hospitalesAux: [],
             }
         },
         created: function(){
@@ -62,25 +75,24 @@
         methods:{
             async buscarPermiso(){
                 
-                this.permiso = await this.permisos.find(valor =>{
+                await this.permisos.find(valor =>{
                     let cadena = valor.name.split(" ")
-                    console.log(valor.name)
                     if(cadena[0]=='Liquidar'){
-
-                        
-
+                        this.permiso.push(valor.slug)
                     }
-
-                    
                 })
-                
+                await this.hospitales.find(hospital=>{
+                    this.permiso.find(perm => {
+                        
+                        if(perm == hospital.ID){
+                            this.hospitalesAux.push(hospital)
+                        }
+                    })
+                })
                 
             },
             getTodo:async function(){
-                if(this.rol.special == 'all-access'){
-
-                    await this.$store.dispatch('getHospitales')
-                }
+                await this.$store.dispatch('getHospitales')
                 await this.$store.dispatch('getServicios')
                 await this.$store.dispatch('getSectores')
             },

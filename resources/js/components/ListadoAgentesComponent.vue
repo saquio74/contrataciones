@@ -104,12 +104,12 @@
                     <th>
                         {{since(agente.fecha_ingreso)}}
                     </th>
-                    <th width="10px" v-if="permisoEditar">
+                    <th width="10px" v-if="rol.special =='all-access' ||  permisoEditar">
                         <button type="button" class="btn btn-success" v-on:click="getLegajo(agente)" data-toggle="modal" data-target="#ModificarAgente">
                             editar
                         </button>
                     </th>
-                    <th width="10px" v-if="permisoBorrar">
+                    <th width="10px" v-if="rol.special =='all-access' ||  permisoBorrar">
                         <button type="button" class="btn btn-outline-danger" v-on:click="borrar(agente)" >
                             borrar
                         </button>
@@ -117,11 +117,11 @@
                 </tr>
             </tbody>
         </table>
-        <div v-if="permisoCrear">
+        <div v-if="rol.special =='all-access' ||  permisoCrear">
 
             <nuevo-agente @speak="speakMethod()"/>
         </div>
-        <div v-if="permisoEditar">
+        <div v-if="rol.special =='all-access' ||  permisoEditar">
 
             <modificar-agente @speak="speakMethod()" :listaHospitales="hospitales" :listaServicios="servicios" :listaSectores="sectores" :agenteModificar="agenteAux"  />
         </div>

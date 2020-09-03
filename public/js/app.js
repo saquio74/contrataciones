@@ -2155,7 +2155,11 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {};
   },
-  created: function created() {},
+  created: function created() {
+    window.onbeforeunload = function (e) {
+      this.$router.go('/login');
+    };
+  },
   methods: {},
   computed: {
     hospitales: function hospitales() {
@@ -3653,26 +3657,61 @@ __webpack_require__.r(__webpack_exports__);
       comples: {},
       fecha: '',
       vista: 0,
-      aux: {}
+      aux: {},
+      permiso: [],
+      hospitalesAux: []
     };
   },
   created: function created() {
     this.getHosp();
     this.getPeriodo();
-    this.getFechas();
+    this.buscarPermiso();
   },
   methods: {
-    getHosp: function getHosp() {
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getHosp$(_context) {
+    buscarPermiso: function buscarPermiso() {
+      var _this = this;
+
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function buscarPermiso$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
               _context.next = 2;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.permisos.find(function (valor) {
+                var cadena = valor.name.split(" ");
+
+                if (cadena[0] == 'Liquidar') {
+                  _this.permiso.push(valor.slug);
+                }
+              }));
+
+            case 2:
+              _context.next = 4;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.hospitales.find(function (hospital) {
+                _this.permiso.find(function (perm) {
+                  if (perm == hospital.ID) {
+                    _this.hospitalesAux.push(hospital);
+                  }
+                });
+              }));
+
+            case 4:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, null, this);
+    },
+    getHosp: function getHosp() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getHosp$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.next = 2;
               return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.$store.dispatch('getHospitales'));
 
             case 2:
             case "end":
-              return _context.stop();
+              return _context2.stop();
           }
         }
       }, null, this);
@@ -3685,9 +3724,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     getComplementaria: function getComplementaria() {
       var complementaria, response;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getComplementaria$(_context2) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getComplementaria$(_context3) {
         while (1) {
-          switch (_context2.prev = _context2.next) {
+          switch (_context3.prev = _context3.next) {
             case 0:
               complementaria = {
                 periodo: this.periodo.periodo,
@@ -3701,54 +3740,54 @@ __webpack_require__.r(__webpack_exports__);
                 toastr__WEBPACK_IMPORTED_MODULE_2___default.a.error('no puedes generar un PDF sin esos datos');
               }
 
-              _context2.prev = 2;
-              _context2.next = 5;
+              _context3.prev = 2;
+              _context3.next = 5;
               return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('complementaria/get', complementaria));
 
             case 5:
-              response = _context2.sent;
+              response = _context3.sent;
               this.comples = response.data;
-              _context2.next = 12;
+              _context3.next = 12;
               break;
 
             case 9:
-              _context2.prev = 9;
-              _context2.t0 = _context2["catch"](2);
-              toastr__WEBPACK_IMPORTED_MODULE_2___default.a.error(_context2.t0);
+              _context3.prev = 9;
+              _context3.t0 = _context3["catch"](2);
+              toastr__WEBPACK_IMPORTED_MODULE_2___default.a.error(_context3.t0);
 
             case 12:
             case "end":
-              return _context2.stop();
+              return _context3.stop();
           }
         }
       }, null, this, [[2, 9]]);
     },
     borrarComplementaria: function borrarComplementaria(agente) {
       var response;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function borrarComplementaria$(_context3) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function borrarComplementaria$(_context4) {
         while (1) {
-          switch (_context3.prev = _context3.next) {
+          switch (_context4.prev = _context4.next) {
             case 0:
-              _context3.prev = 0;
-              _context3.next = 3;
+              _context4.prev = 0;
+              _context4.next = 3;
               return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios__WEBPACK_IMPORTED_MODULE_1___default.a["delete"]("complementaria/delete/".concat(agente.id)));
 
             case 3:
-              response = _context3.sent;
+              response = _context4.sent;
               this.getComplementaria();
               this.getFechas();
               toastr__WEBPACK_IMPORTED_MODULE_2___default.a.success('borrado correctamente');
-              _context3.next = 12;
+              _context4.next = 12;
               break;
 
             case 9:
-              _context3.prev = 9;
-              _context3.t0 = _context3["catch"](0);
-              toastr__WEBPACK_IMPORTED_MODULE_2___default.a.error(_context3.t0);
+              _context4.prev = 9;
+              _context4.t0 = _context4["catch"](0);
+              toastr__WEBPACK_IMPORTED_MODULE_2___default.a.error(_context4.t0);
 
             case 12:
             case "end":
-              return _context3.stop();
+              return _context4.stop();
           }
         }
       }, null, this, [[0, 9]]);
@@ -3763,6 +3802,12 @@ __webpack_require__.r(__webpack_exports__);
     },
     fechas: function fechas() {
       return this.$store.state.fechas;
+    },
+    rol: function rol() {
+      return this.$store.state.rol;
+    },
+    permisos: function permisos() {
+      return this.$store.state.permisos;
     }
   }
 });
@@ -4014,6 +4059,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -4023,26 +4075,62 @@ __webpack_require__.r(__webpack_exports__);
       periodo: {},
       fecha: '',
       vista: 0,
-      aux: {}
+      aux: {},
+      permiso: [],
+      hospitalesAux: []
     };
   },
   created: function created() {
     this.getHosp();
     this.getPeriodo();
     this.getFechas();
+    this.buscarPermiso();
   },
   methods: {
-    getHosp: function getHosp() {
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getHosp$(_context) {
+    buscarPermiso: function buscarPermiso() {
+      var _this = this;
+
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function buscarPermiso$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
               _context.next = 2;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.permisos.find(function (valor) {
+                var cadena = valor.name.split(" ");
+
+                if (cadena[0] == 'Liquidar') {
+                  _this.permiso.push(valor.slug);
+                }
+              }));
+
+            case 2:
+              _context.next = 4;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.hospitales.find(function (hospital) {
+                _this.permiso.find(function (perm) {
+                  if (perm == hospital.ID) {
+                    _this.hospitalesAux.push(hospital);
+                  }
+                });
+              }));
+
+            case 4:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, null, this);
+    },
+    getHosp: function getHosp() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getHosp$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.next = 2;
               return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.$store.dispatch('getHospitales'));
 
             case 2:
             case "end":
-              return _context.stop();
+              return _context2.stop();
           }
         }
       }, null, this);
@@ -4055,9 +4143,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     getPdf: function getPdf() {
       var complementaria, response, pdf, fileURL;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getPdf$(_context2) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getPdf$(_context3) {
         while (1) {
-          switch (_context2.prev = _context2.next) {
+          switch (_context3.prev = _context3.next) {
             case 0:
               complementaria = {
                 periodo: this.periodo.periodo,
@@ -4071,34 +4159,34 @@ __webpack_require__.r(__webpack_exports__);
                 toastr__WEBPACK_IMPORTED_MODULE_2___default.a.error('no puedes generar un PDF sin esos datos');
               }
 
-              _context2.prev = 2;
-              _context2.next = 5;
+              _context3.prev = 2;
+              _context3.next = 5;
               return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('complementaria/getPDF', complementaria, {
                 responseType: 'blob'
               }));
 
             case 5:
-              response = _context2.sent;
-              _context2.next = 8;
+              response = _context3.sent;
+              _context3.next = 8;
               return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(new Blob([response.data], {
                 type: 'application/pdf'
               }));
 
             case 8:
-              pdf = _context2.sent;
+              pdf = _context3.sent;
               fileURL = URL.createObjectURL(pdf);
               window.open(fileURL);
-              _context2.next = 16;
+              _context3.next = 16;
               break;
 
             case 13:
-              _context2.prev = 13;
-              _context2.t0 = _context2["catch"](2);
-              toastr__WEBPACK_IMPORTED_MODULE_2___default.a.error(_context2.t0.response);
+              _context3.prev = 13;
+              _context3.t0 = _context3["catch"](2);
+              toastr__WEBPACK_IMPORTED_MODULE_2___default.a.error(_context3.t0.response);
 
             case 16:
             case "end":
-              return _context2.stop();
+              return _context3.stop();
           }
         }
       }, null, this, [[2, 13]]);
@@ -4113,6 +4201,12 @@ __webpack_require__.r(__webpack_exports__);
     },
     fechas: function fechas() {
       return this.$store.state.fechas;
+    },
+    rol: function rol() {
+      return this.$store.state.rol;
+    },
+    permisos: function permisos() {
+      return this.$store.state.permisos;
     }
   }
 });
@@ -4288,6 +4382,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -4299,71 +4414,53 @@ __webpack_require__.r(__webpack_exports__);
       hospital: {},
       periodo: {},
       vista: 0,
-      aux: {}
+      aux: {},
+      permiso: [],
+      hospitalesAux: []
     };
   },
   created: function created() {
     this.getHosp();
     this.getPeriodo();
+    this.buscarPermiso();
   },
   methods: {
-    getPdf: function getPdf() {
-      var datos, response, pdf, fileURL;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getPdf$(_context) {
+    buscarPermiso: function buscarPermiso() {
+      var _this = this;
+
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function buscarPermiso$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              datos = {
-                hospital_id: this.hospital.ID,
-                hospital: this.hospital.HOSPITAL,
-                periodo: this.periodo.periodo,
-                anio: this.periodo.anio
-              };
+              _context.next = 2;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.permisos.find(function (valor) {
+                var cadena = valor.name.split(" ");
 
-              if (!(!datos.hospital || !datos.periodo)) {
-                _context.next = 4;
-                break;
-              }
+                if (cadena[0] == 'Liquidar') {
+                  _this.permiso.push(valor.slug);
+                }
+              }));
 
-              toastr__WEBPACK_IMPORTED_MODULE_2___default.a.error('datos vacios');
-              return _context.abrupt("return");
+            case 2:
+              _context.next = 4;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.hospitales.find(function (hospital) {
+                _this.permiso.find(function (perm) {
+                  if (perm == hospital.ID) {
+                    _this.hospitalesAux.push(hospital);
+                  }
+                });
+              }));
 
             case 4:
-              _context.prev = 4;
-              _context.next = 7;
-              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('agenfac/liquidacionpdf', datos, {
-                responseType: 'blob'
-              }));
-
-            case 7:
-              response = _context.sent;
-              _context.next = 10;
-              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(new Blob([response.data], {
-                type: 'application/pdf'
-              }));
-
-            case 10:
-              pdf = _context.sent;
-              fileURL = URL.createObjectURL(pdf);
-              window.open(fileURL);
-              _context.next = 18;
-              break;
-
-            case 15:
-              _context.prev = 15;
-              _context.t0 = _context["catch"](4);
-              console.log(_context.t0);
-
-            case 18:
             case "end":
               return _context.stop();
           }
         }
-      }, null, this, [[4, 15]]);
+      }, null, this);
     },
-    getExcel: function getExcel() {
-      var datos, response, blob, link;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getExcel$(_context2) {
+    getPdf: function getPdf() {
+      var datos, response, pdf, fileURL;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getPdf$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
@@ -4385,39 +4482,39 @@ __webpack_require__.r(__webpack_exports__);
             case 4:
               _context2.prev = 4;
               _context2.next = 7;
-              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('agenfac/excel', datos, {
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('agenfac/liquidacionpdf', datos, {
                 responseType: 'blob'
               }));
 
             case 7:
               response = _context2.sent;
-              blob = new Blob([response.data], {
-                type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64"
-              });
-              link = document.createElement('a');
-              link.href = window.URL.createObjectURL(blob);
-              link.download = datos.hospital + '' + '.xlsx';
-              document.body.appendChild(link);
-              link.click();
-              document.body.removeChild(link);
-              _context2.next = 20;
+              _context2.next = 10;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(new Blob([response.data], {
+                type: 'application/pdf'
+              }));
+
+            case 10:
+              pdf = _context2.sent;
+              fileURL = URL.createObjectURL(pdf);
+              window.open(fileURL);
+              _context2.next = 18;
               break;
 
-            case 17:
-              _context2.prev = 17;
+            case 15:
+              _context2.prev = 15;
               _context2.t0 = _context2["catch"](4);
-              console.log(_context2.t0.data);
+              console.log(_context2.t0);
 
-            case 20:
+            case 18:
             case "end":
               return _context2.stop();
           }
         }
-      }, null, this, [[4, 17]]);
+      }, null, this, [[4, 15]]);
     },
-    getLiquidacion: function getLiquidacion() {
-      var datos;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getLiquidacion$(_context3) {
+    getExcel: function getExcel() {
+      var datos, response, blob, link;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getExcel$(_context3) {
         while (1) {
           switch (_context3.prev = _context3.next) {
             case 0:
@@ -4439,10 +4536,64 @@ __webpack_require__.r(__webpack_exports__);
             case 4:
               _context3.prev = 4;
               _context3.next = 7;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('agenfac/excel', datos, {
+                responseType: 'blob'
+              }));
+
+            case 7:
+              response = _context3.sent;
+              blob = new Blob([response.data], {
+                type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64"
+              });
+              link = document.createElement('a');
+              link.href = window.URL.createObjectURL(blob);
+              link.download = datos.hospital + '' + '.xlsx';
+              document.body.appendChild(link);
+              link.click();
+              document.body.removeChild(link);
+              _context3.next = 20;
+              break;
+
+            case 17:
+              _context3.prev = 17;
+              _context3.t0 = _context3["catch"](4);
+              console.log(_context3.t0.data);
+
+            case 20:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, null, this, [[4, 17]]);
+    },
+    getLiquidacion: function getLiquidacion() {
+      var datos;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getLiquidacion$(_context4) {
+        while (1) {
+          switch (_context4.prev = _context4.next) {
+            case 0:
+              datos = {
+                hospital_id: this.hospital.ID,
+                hospital: this.hospital.HOSPITAL,
+                periodo: this.periodo.periodo,
+                anio: this.periodo.anio
+              };
+
+              if (!(!datos.hospital || !datos.periodo)) {
+                _context4.next = 4;
+                break;
+              }
+
+              toastr__WEBPACK_IMPORTED_MODULE_2___default.a.error('datos vacios');
+              return _context4.abrupt("return");
+
+            case 4:
+              _context4.prev = 4;
+              _context4.next = 7;
               return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.$store.dispatch('getModificarLiquidacion', datos));
 
             case 7:
-              this.liquidacion = _context3.sent;
+              this.liquidacion = _context4.sent;
               console.log(this.liquidacion.length);
 
               if (this.liquidacion.length > 0) {
@@ -4451,16 +4602,16 @@ __webpack_require__.r(__webpack_exports__);
                 toastr__WEBPACK_IMPORTED_MODULE_2___default.a.error("el hospital ".concat(this.datos.hospital, " no arrojo resultados"));
               }
 
-              _context3.next = 14;
+              _context4.next = 14;
               break;
 
             case 12:
-              _context3.prev = 12;
-              _context3.t0 = _context3["catch"](4);
+              _context4.prev = 12;
+              _context4.t0 = _context4["catch"](4);
 
             case 14:
             case "end":
-              return _context3.stop();
+              return _context4.stop();
           }
         }
       }, null, this, [[4, 12]]);
@@ -4472,32 +4623,32 @@ __webpack_require__.r(__webpack_exports__);
       this.$store.dispatch('getPeriodos');
     },
     borrarLiquidacion: function borrarLiquidacion(agente) {
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function borrarLiquidacion$(_context4) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function borrarLiquidacion$(_context5) {
         while (1) {
-          switch (_context4.prev = _context4.next) {
+          switch (_context5.prev = _context5.next) {
             case 0:
-              _context4.prev = 0;
-              _context4.next = 3;
+              _context5.prev = 0;
+              _context5.next = 3;
               return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios__WEBPACK_IMPORTED_MODULE_1___default.a["delete"]("agenfac/delete/".concat(agente.id)));
 
             case 3:
               toastr__WEBPACK_IMPORTED_MODULE_2___default.a.success('borrado correctamente');
-              _context4.next = 6;
+              _context5.next = 6;
               return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.getLiquidacion());
 
             case 6:
-              _context4.next = 12;
+              _context5.next = 12;
               break;
 
             case 8:
-              _context4.prev = 8;
-              _context4.t0 = _context4["catch"](0);
-              toastr__WEBPACK_IMPORTED_MODULE_2___default.a.error(_context4.t0.error);
-              console.log(_context4.t0);
+              _context5.prev = 8;
+              _context5.t0 = _context5["catch"](0);
+              toastr__WEBPACK_IMPORTED_MODULE_2___default.a.error(_context5.t0.error);
+              console.log(_context5.t0);
 
             case 12:
             case "end":
-              return _context4.stop();
+              return _context5.stop();
           }
         }
       }, null, this, [[0, 8]]);
@@ -4515,6 +4666,12 @@ __webpack_require__.r(__webpack_exports__);
     },
     liquidacionM: function liquidacionM() {
       return this.$store.state.liquidacionM;
+    },
+    rol: function rol() {
+      return this.$store.state.rol;
+    },
+    permisos: function permisos() {
+      return this.$store.state.permisos;
     }
   }
 });
@@ -4836,6 +4993,47 @@ __webpack_require__.r(__webpack_exports__);
     this.proveedores(); //this.onFileChange();
   },
   methods: {
+    buscarPermiso: function buscarPermiso() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function buscarPermiso$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.next = 2;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.permisos.find(function (valor) {
+                return valor.slug === 'contratados.navegar';
+              }));
+
+            case 2:
+              this.permiso = _context.sent;
+              _context.next = 5;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.permisos.find(function (valor) {
+                return valor.slug === 'contratados.editar';
+              }));
+
+            case 5:
+              this.permisoEditar = _context.sent;
+              _context.next = 8;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.permisos.find(function (valor) {
+                return valor.slug === 'contratados.borrar';
+              }));
+
+            case 8:
+              this.permisoBorrar = _context.sent;
+              _context.next = 11;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.permisos.find(function (valor) {
+                return valor.slug === 'contratados.crear';
+              }));
+
+            case 11:
+              this.permisoCrear = _context.sent;
+
+            case 12:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, null, this);
+    },
     hosp: function hosp() {
       $('table').on('scroll', function () {
         $("#" + this.id + " > *").width($(this).width() + $(this).scrollLeft());
@@ -4923,38 +5121,38 @@ __webpack_require__.r(__webpack_exports__);
     },
     deleteContrato: function deleteContrato(id) {
       var url;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function deleteContrato$(_context) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function deleteContrato$(_context2) {
         while (1) {
-          switch (_context.prev = _context.next) {
+          switch (_context2.prev = _context2.next) {
             case 0:
               url = 'contrato/delete/' + id;
               console.log(url);
-              _context.prev = 2;
-              _context.next = 5;
+              _context2.prev = 2;
+              _context2.next = 5;
               return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios__WEBPACK_IMPORTED_MODULE_1___default.a["delete"](url));
 
             case 5:
-              _context.next = 7;
+              _context2.next = 7;
               return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.cont());
 
             case 7:
-              _context.next = 9;
+              _context2.next = 9;
               return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.contBajas());
 
             case 9:
               toastr__WEBPACK_IMPORTED_MODULE_2___default.a.success('eliminado satisfactoriamente');
-              _context.next = 16;
+              _context2.next = 16;
               break;
 
             case 12:
-              _context.prev = 12;
-              _context.t0 = _context["catch"](2);
-              this.errors = _context.t0.response.data;
+              _context2.prev = 12;
+              _context2.t0 = _context2["catch"](2);
+              this.errors = _context2.t0.response.data;
               toastr__WEBPACK_IMPORTED_MODULE_2___default.a.error('error');
 
             case 16:
             case "end":
-              return _context.stop();
+              return _context2.stop();
           }
         }
       }, null, this, [[2, 12]]);
@@ -4975,6 +5173,12 @@ __webpack_require__.r(__webpack_exports__);
     },
     proveedor: function proveedor() {
       return this.$store.state.proveedor;
+    },
+    permisos: function permisos() {
+      return this.$store.state.permisos;
+    },
+    rol: function rol() {
+      return this.$store.state.rol;
     }
   }
 });
@@ -6009,6 +6213,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -6017,7 +6233,8 @@ __webpack_require__.r(__webpack_exports__);
       hospital: '',
       servicio: '',
       sector: '',
-      permiso: ''
+      permiso: [],
+      hospitalesAux: []
     };
   },
   created: function created() {
@@ -6026,6 +6243,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     buscarPermiso: function buscarPermiso() {
+      var _this = this;
+
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function buscarPermiso$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
@@ -6033,15 +6252,23 @@ __webpack_require__.r(__webpack_exports__);
               _context.next = 2;
               return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.permisos.find(function (valor) {
                 var cadena = valor.name.split(" ");
-                console.log(valor.name);
 
-                if (cadena[0] == 'Liquidar') {}
+                if (cadena[0] == 'Liquidar') {
+                  _this.permiso.push(valor.slug);
+                }
               }));
 
             case 2:
-              this.permiso = _context.sent;
+              _context.next = 4;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.hospitales.find(function (hospital) {
+                _this.permiso.find(function (perm) {
+                  if (perm == hospital.ID) {
+                    _this.hospitalesAux.push(hospital);
+                  }
+                });
+              }));
 
-            case 3:
+            case 4:
             case "end":
               return _context.stop();
           }
@@ -6053,23 +6280,18 @@ __webpack_require__.r(__webpack_exports__);
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
-              if (!(this.rol.special == 'all-access')) {
-                _context2.next = 3;
-                break;
-              }
-
-              _context2.next = 3;
+              _context2.next = 2;
               return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.$store.dispatch('getHospitales'));
 
-            case 3:
-              _context2.next = 5;
+            case 2:
+              _context2.next = 4;
               return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.$store.dispatch('getServicios'));
 
-            case 5:
-              _context2.next = 7;
+            case 4:
+              _context2.next = 6;
               return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.$store.dispatch('getSectores'));
 
-            case 7:
+            case 6:
             case "end":
               return _context2.stop();
           }
@@ -45768,7 +45990,7 @@ var render = function() {
                     )
                   ]),
                   _vm._v(" "),
-                  _vm.permisoEditar
+                  _vm.rol.special == "all-access" || _vm.permisoEditar
                     ? _c("th", { attrs: { width: "10px" } }, [
                         _c(
                           "button",
@@ -45794,7 +46016,7 @@ var render = function() {
                       ])
                     : _vm._e(),
                   _vm._v(" "),
-                  _vm.permisoBorrar
+                  _vm.rol.special == "all-access" || _vm.permisoBorrar
                     ? _c("th", { attrs: { width: "10px" } }, [
                         _c(
                           "button",
@@ -45822,7 +46044,7 @@ var render = function() {
           ]
         ),
         _vm._v(" "),
-        _vm.permisoCrear
+        _vm.rol.special == "all-access" || _vm.permisoCrear
           ? _c(
               "div",
               [
@@ -45838,7 +46060,7 @@ var render = function() {
             )
           : _vm._e(),
         _vm._v(" "),
-        _vm.permisoEditar
+        _vm.rol.special == "all-access" || _vm.permisoEditar
           ? _c(
               "div",
               [
@@ -46198,7 +46420,7 @@ var render = function() {
                     )
                   ]),
                   _vm._v(" "),
-                  _vm.permisoEditar
+                  _vm.rol.special == "all-access" || _vm.permisoEditar
                     ? _c("th", { attrs: { width: "10px" } }, [
                         _c(
                           "button",
@@ -46224,7 +46446,7 @@ var render = function() {
                       ])
                     : _vm._e(),
                   _vm._v(" "),
-                  _vm.permisoBorrar
+                  _vm.rol.special == "all-access" || _vm.permisoBorrar
                     ? _c("th", { attrs: { width: "10px" } }, [
                         _c(
                           "button",
@@ -46253,7 +46475,7 @@ var render = function() {
           ]
         ),
         _vm._v(" "),
-        _vm.permisoCrear
+        _vm.rol.special == "all-access" || _vm.permisoCrear
           ? _c(
               "div",
               [
@@ -46269,7 +46491,7 @@ var render = function() {
             )
           : _vm._e(),
         _vm._v(" "),
-        _vm.permisoEditar
+        _vm.rol.special == "all-access" || _vm.permisoEditar
           ? _c(
               "div",
               [
@@ -47925,97 +48147,103 @@ var render = function() {
         }
       },
       [
-        _c("div", { staticClass: "col-sm-3 " }, [
-          _c("label", { staticClass: "text" }, [_vm._v(" hospital    ")]),
-          _vm._v(" "),
-          _c(
-            "select",
-            {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.hospital,
-                  expression: "hospital"
-                }
-              ],
-              staticClass: "form-control badge-secondary",
-              attrs: { id: "hospital", name: "hospital" },
-              on: {
-                change: function($event) {
-                  var $$selectedVal = Array.prototype.filter
-                    .call($event.target.options, function(o) {
-                      return o.selected
-                    })
-                    .map(function(o) {
-                      var val = "_value" in o ? o._value : o.value
-                      return val
-                    })
-                  _vm.hospital = $event.target.multiple
-                    ? $$selectedVal
-                    : $$selectedVal[0]
-                }
-              }
-            },
-            [
-              _c("option", { attrs: { value: "" } }, [_vm._v("seleccione")]),
+        _vm.rol.special == "all-access"
+          ? _c("div", { staticClass: "col-sm-3 " }, [
+              _c("label", { staticClass: "text" }, [_vm._v(" hospital    ")]),
               _vm._v(" "),
-              _vm._l(_vm.hospitales, function(hosp) {
-                return _c(
-                  "option",
-                  { key: hosp.ID, domProps: { value: hosp } },
-                  [_vm._v(_vm._s(hosp.HOSPITAL))]
-                )
-              })
-            ],
-            2
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-sm-3 " }, [
-          _c("label", { staticClass: "text" }, [_vm._v(" periodo    ")]),
-          _vm._v(" "),
-          _c(
-            "select",
-            {
-              directives: [
+              _c(
+                "select",
                 {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.periodo,
-                  expression: "periodo"
-                }
-              ],
-              staticClass: "form-control badge-secondary",
-              attrs: { id: "periodo", name: "periodo" },
-              on: {
-                change: function($event) {
-                  var $$selectedVal = Array.prototype.filter
-                    .call($event.target.options, function(o) {
-                      return o.selected
-                    })
-                    .map(function(o) {
-                      var val = "_value" in o ? o._value : o.value
-                      return val
-                    })
-                  _vm.periodo = $event.target.multiple
-                    ? $$selectedVal
-                    : $$selectedVal[0]
-                }
-              }
-            },
-            [
-              _c("option", { attrs: { value: "" } }, [_vm._v("seleccione")]),
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.hospital,
+                      expression: "hospital"
+                    }
+                  ],
+                  staticClass: "form-control badge-secondary",
+                  attrs: { id: "hospital", name: "hospital" },
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.hospital = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    }
+                  }
+                },
+                [
+                  _c("option", { attrs: { value: "" } }, [
+                    _vm._v("seleccione")
+                  ]),
+                  _vm._v(" "),
+                  _vm._l(_vm.hospitales, function(hosp) {
+                    return _c(
+                      "option",
+                      { key: hosp.ID, domProps: { value: hosp.ID } },
+                      [_vm._v(_vm._s(hosp.HOSPITAL))]
+                    )
+                  })
+                ],
+                2
+              )
+            ])
+          : _c("div", { staticClass: "col-sm-3 " }, [
+              _c("label", { staticClass: "text" }, [_vm._v(" hospital    ")]),
               _vm._v(" "),
-              _vm._l(_vm.periodos, function(periodo) {
-                return _c("option", { domProps: { value: periodo } }, [
-                  _vm._v(_vm._s(periodo.periodo + " " + periodo.anio))
-                ])
-              })
-            ],
-            2
-          )
-        ]),
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.hospital,
+                      expression: "hospital"
+                    }
+                  ],
+                  staticClass: "form-control badge-secondary",
+                  attrs: { id: "hospital", name: "hospital" },
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.hospital = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    }
+                  }
+                },
+                [
+                  _c("option", { attrs: { value: "" } }, [
+                    _vm._v("seleccione")
+                  ]),
+                  _vm._v(" "),
+                  _vm._l(_vm.hospitalesAux, function(hosp) {
+                    return _c(
+                      "option",
+                      { key: hosp.ID, domProps: { value: hosp.ID } },
+                      [_vm._v(_vm._s(hosp.HOSPITAL))]
+                    )
+                  })
+                ],
+                2
+              )
+            ]),
         _vm._v(" "),
         _c("div", { staticClass: "col-sm-3 " }, [
           _c("label", { staticClass: "text" }, [_vm._v(" fecha    ")]),
@@ -48575,50 +48803,99 @@ var render = function() {
       }
     },
     [
-      _c("div", { staticClass: "col-sm-3 " }, [
-        _c("label", { staticClass: "text" }, [_vm._v(" hospital    ")]),
-        _vm._v(" "),
-        _c(
-          "select",
-          {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.hospital,
-                expression: "hospital"
-              }
-            ],
-            staticClass: "form-control badge-secondary",
-            attrs: { id: "hospital", name: "hospital" },
-            on: {
-              change: function($event) {
-                var $$selectedVal = Array.prototype.filter
-                  .call($event.target.options, function(o) {
-                    return o.selected
-                  })
-                  .map(function(o) {
-                    var val = "_value" in o ? o._value : o.value
-                    return val
-                  })
-                _vm.hospital = $event.target.multiple
-                  ? $$selectedVal
-                  : $$selectedVal[0]
-              }
-            }
-          },
-          [
-            _c("option", { attrs: { value: "" } }, [_vm._v("seleccione")]),
+      _vm.rol.special == "all-access"
+        ? _c("div", { staticClass: "col-sm-3 " }, [
+            _c("label", { staticClass: "text" }, [_vm._v(" hospital    ")]),
             _vm._v(" "),
-            _vm._l(_vm.hospitales, function(hosp) {
-              return _c("option", { key: hosp.ID, domProps: { value: hosp } }, [
-                _vm._v(_vm._s(hosp.HOSPITAL))
-              ])
-            })
-          ],
-          2
-        )
-      ]),
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.hospital,
+                    expression: "hospital"
+                  }
+                ],
+                staticClass: "form-control badge-secondary",
+                attrs: { id: "hospital", name: "hospital" },
+                on: {
+                  change: function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.hospital = $event.target.multiple
+                      ? $$selectedVal
+                      : $$selectedVal[0]
+                  }
+                }
+              },
+              [
+                _c("option", { attrs: { value: "" } }, [_vm._v("seleccione")]),
+                _vm._v(" "),
+                _vm._l(_vm.hospitales, function(hosp) {
+                  return _c(
+                    "option",
+                    { key: hosp.ID, domProps: { value: hosp.ID } },
+                    [_vm._v(_vm._s(hosp.HOSPITAL))]
+                  )
+                })
+              ],
+              2
+            )
+          ])
+        : _c("div", { staticClass: "col-sm-3 " }, [
+            _c("label", { staticClass: "text" }, [_vm._v(" hospital    ")]),
+            _vm._v(" "),
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.hospital,
+                    expression: "hospital"
+                  }
+                ],
+                staticClass: "form-control badge-secondary",
+                attrs: { id: "hospital", name: "hospital" },
+                on: {
+                  change: function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.hospital = $event.target.multiple
+                      ? $$selectedVal
+                      : $$selectedVal[0]
+                  }
+                }
+              },
+              [
+                _c("option", { attrs: { value: "" } }, [_vm._v("seleccione")]),
+                _vm._v(" "),
+                _vm._l(_vm.hospitalesAux, function(hosp) {
+                  return _c(
+                    "option",
+                    { key: hosp.ID, domProps: { value: hosp.ID } },
+                    [_vm._v(_vm._s(hosp.HOSPITAL))]
+                  )
+                })
+              ],
+              2
+            )
+          ]),
       _vm._v(" "),
       _c("div", { staticClass: "col-sm-3 " }, [
         _c("label", { staticClass: "text" }, [_vm._v(" periodo    ")]),
@@ -48830,54 +49107,107 @@ var render = function() {
               }
             },
             [
-              _c("div", { staticClass: "col-sm-3 " }, [
-                _c("label", { staticClass: "text" }, [_vm._v(" hospital    ")]),
-                _vm._v(" "),
-                _c(
-                  "select",
-                  {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.hospital,
-                        expression: "hospital"
-                      }
-                    ],
-                    staticClass: "form-control badge-secondary",
-                    attrs: { id: "hospital", name: "hospital" },
-                    on: {
-                      change: function($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function(o) {
-                            return o.selected
-                          })
-                          .map(function(o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.hospital = $event.target.multiple
-                          ? $$selectedVal
-                          : $$selectedVal[0]
-                      }
-                    }
-                  },
-                  [
-                    _c("option", { attrs: { value: "" } }, [
-                      _vm._v("seleccione")
+              _vm.rol.special == "all-access"
+                ? _c("div", { staticClass: "col-sm-3 " }, [
+                    _c("label", { staticClass: "text" }, [
+                      _vm._v(" hospital    ")
                     ]),
                     _vm._v(" "),
-                    _vm._l(_vm.hospitales, function(hosp) {
-                      return _c(
-                        "option",
-                        { key: hosp.ID, domProps: { value: hosp } },
-                        [_vm._v(_vm._s(hosp.HOSPITAL))]
-                      )
-                    })
-                  ],
-                  2
-                )
-              ]),
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.hospital,
+                            expression: "hospital"
+                          }
+                        ],
+                        staticClass: "form-control badge-secondary",
+                        attrs: { id: "hospital", name: "hospital" },
+                        on: {
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.hospital = $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          }
+                        }
+                      },
+                      [
+                        _c("option", { attrs: { value: "" } }, [
+                          _vm._v("seleccione")
+                        ]),
+                        _vm._v(" "),
+                        _vm._l(_vm.hospitales, function(hosp) {
+                          return _c(
+                            "option",
+                            { key: hosp.ID, domProps: { value: hosp.ID } },
+                            [_vm._v(_vm._s(hosp.HOSPITAL))]
+                          )
+                        })
+                      ],
+                      2
+                    )
+                  ])
+                : _c("div", { staticClass: "col-sm-3 " }, [
+                    _c("label", { staticClass: "text" }, [
+                      _vm._v(" hospital    ")
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.hospital,
+                            expression: "hospital"
+                          }
+                        ],
+                        staticClass: "form-control badge-secondary",
+                        attrs: { id: "hospital", name: "hospital" },
+                        on: {
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.hospital = $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          }
+                        }
+                      },
+                      [
+                        _c("option", { attrs: { value: "" } }, [
+                          _vm._v("seleccione")
+                        ]),
+                        _vm._v(" "),
+                        _vm._l(_vm.hospitalesAux, function(hosp) {
+                          return _c(
+                            "option",
+                            { key: hosp.ID, domProps: { value: hosp.ID } },
+                            [_vm._v(_vm._s(hosp.HOSPITAL))]
+                          )
+                        })
+                      ],
+                      2
+                    )
+                  ]),
               _vm._v(" "),
               _c("div", { staticClass: "col-sm-3 " }, [
                 _c("label", { staticClass: "text" }, [_vm._v(" periodo    ")]),
@@ -48951,54 +49281,107 @@ var render = function() {
               }
             },
             [
-              _c("div", { staticClass: "col-sm-3 " }, [
-                _c("label", { staticClass: "text" }, [_vm._v(" hospital    ")]),
-                _vm._v(" "),
-                _c(
-                  "select",
-                  {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.hospital,
-                        expression: "hospital"
-                      }
-                    ],
-                    staticClass: "form-control badge-secondary",
-                    attrs: { id: "hospital", name: "hospital" },
-                    on: {
-                      change: function($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function(o) {
-                            return o.selected
-                          })
-                          .map(function(o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.hospital = $event.target.multiple
-                          ? $$selectedVal
-                          : $$selectedVal[0]
-                      }
-                    }
-                  },
-                  [
-                    _c("option", { attrs: { value: "" } }, [
-                      _vm._v("seleccione")
+              _vm.rol.special == "all-access"
+                ? _c("div", { staticClass: "col-sm-3 " }, [
+                    _c("label", { staticClass: "text" }, [
+                      _vm._v(" hospital    ")
                     ]),
                     _vm._v(" "),
-                    _vm._l(_vm.hospitales, function(hosp) {
-                      return _c(
-                        "option",
-                        { key: hosp.ID, domProps: { value: hosp } },
-                        [_vm._v(_vm._s(hosp.HOSPITAL))]
-                      )
-                    })
-                  ],
-                  2
-                )
-              ]),
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.hospital,
+                            expression: "hospital"
+                          }
+                        ],
+                        staticClass: "form-control badge-secondary",
+                        attrs: { id: "hospital", name: "hospital" },
+                        on: {
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.hospital = $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          }
+                        }
+                      },
+                      [
+                        _c("option", { attrs: { value: "" } }, [
+                          _vm._v("seleccione")
+                        ]),
+                        _vm._v(" "),
+                        _vm._l(_vm.hospitales, function(hosp) {
+                          return _c(
+                            "option",
+                            { key: hosp.ID, domProps: { value: hosp.ID } },
+                            [_vm._v(_vm._s(hosp.HOSPITAL))]
+                          )
+                        })
+                      ],
+                      2
+                    )
+                  ])
+                : _c("div", { staticClass: "col-sm-3 " }, [
+                    _c("label", { staticClass: "text" }, [
+                      _vm._v(" hospital    ")
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.hospital,
+                            expression: "hospital"
+                          }
+                        ],
+                        staticClass: "form-control badge-secondary",
+                        attrs: { id: "hospital", name: "hospital" },
+                        on: {
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.hospital = $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          }
+                        }
+                      },
+                      [
+                        _c("option", { attrs: { value: "" } }, [
+                          _vm._v("seleccione")
+                        ]),
+                        _vm._v(" "),
+                        _vm._l(_vm.hospitalesAux, function(hosp) {
+                          return _c(
+                            "option",
+                            { key: hosp.ID, domProps: { value: hosp.ID } },
+                            [_vm._v(_vm._s(hosp.HOSPITAL))]
+                          )
+                        })
+                      ],
+                      2
+                    )
+                  ]),
               _vm._v(" "),
               _c("div", { staticClass: "col-sm-3 " }, [
                 _c("label", { staticClass: "text" }, [_vm._v(" periodo    ")]),
@@ -49075,56 +49458,107 @@ var render = function() {
                 }
               },
               [
-                _c("div", { staticClass: "col-sm-3 " }, [
-                  _c("label", { staticClass: "text" }, [
-                    _vm._v(" hospital    ")
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "select",
-                    {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.hospital,
-                          expression: "hospital"
-                        }
-                      ],
-                      staticClass: "form-control badge-secondary",
-                      attrs: { id: "hospital", name: "hospital" },
-                      on: {
-                        change: function($event) {
-                          var $$selectedVal = Array.prototype.filter
-                            .call($event.target.options, function(o) {
-                              return o.selected
-                            })
-                            .map(function(o) {
-                              var val = "_value" in o ? o._value : o.value
-                              return val
-                            })
-                          _vm.hospital = $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        }
-                      }
-                    },
-                    [
-                      _c("option", { attrs: { value: "" } }, [
-                        _vm._v("seleccione")
+                _vm.rol.special == "all-access"
+                  ? _c("div", { staticClass: "col-sm-3 " }, [
+                      _c("label", { staticClass: "text" }, [
+                        _vm._v(" hospital    ")
                       ]),
                       _vm._v(" "),
-                      _vm._l(_vm.hospitales, function(hosp) {
-                        return _c(
-                          "option",
-                          { key: hosp.ID, domProps: { value: hosp } },
-                          [_vm._v(_vm._s(hosp.HOSPITAL))]
-                        )
-                      })
-                    ],
-                    2
-                  )
-                ]),
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.hospital,
+                              expression: "hospital"
+                            }
+                          ],
+                          staticClass: "form-control badge-secondary",
+                          attrs: { id: "hospital", name: "hospital" },
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.hospital = $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            }
+                          }
+                        },
+                        [
+                          _c("option", { attrs: { value: "" } }, [
+                            _vm._v("seleccione")
+                          ]),
+                          _vm._v(" "),
+                          _vm._l(_vm.hospitales, function(hosp) {
+                            return _c(
+                              "option",
+                              { key: hosp.ID, domProps: { value: hosp.ID } },
+                              [_vm._v(_vm._s(hosp.HOSPITAL))]
+                            )
+                          })
+                        ],
+                        2
+                      )
+                    ])
+                  : _c("div", { staticClass: "col-sm-3 " }, [
+                      _c("label", { staticClass: "text" }, [
+                        _vm._v(" hospital    ")
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.hospital,
+                              expression: "hospital"
+                            }
+                          ],
+                          staticClass: "form-control badge-secondary",
+                          attrs: { id: "hospital", name: "hospital" },
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.hospital = $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            }
+                          }
+                        },
+                        [
+                          _c("option", { attrs: { value: "" } }, [
+                            _vm._v("seleccione")
+                          ]),
+                          _vm._v(" "),
+                          _vm._l(_vm.hospitalesAux, function(hosp) {
+                            return _c(
+                              "option",
+                              { key: hosp.ID, domProps: { value: hosp.ID } },
+                              [_vm._v(_vm._s(hosp.HOSPITAL))]
+                            )
+                          })
+                        ],
+                        2
+                      )
+                    ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-sm-3 " }, [
                   _c("label", { staticClass: "text" }, [
@@ -49200,57 +49634,57 @@ var render = function() {
                     return _c("tr", { key: agente.LEGAJO }, [
                       _c("th", [
                         _vm._v(
-                          "\n                    " +
+                          "\n                        " +
                             _vm._s(agente.leg) +
-                            "\n                "
+                            "\n                    "
                         )
                       ]),
                       _vm._v(" "),
                       _c("th", [
                         _vm._v(
-                          "\n                    " +
+                          "\n                        " +
                             _vm._s(agente.inciso) +
-                            "\n                "
+                            "\n                    "
                         )
                       ]),
                       _vm._v(" "),
                       _c("th", [
                         _vm._v(
-                          "\n                    " +
+                          "\n                        " +
                             _vm._s(agente.nombre.toUpperCase()) +
-                            "\n                "
+                            "\n                    "
                         )
                       ]),
                       _vm._v(" "),
                       _c("th", [
                         _vm._v(
-                          "\n                    " +
+                          "\n                        " +
                             _vm._s(agente.horas) +
-                            "\n                "
+                            "\n                    "
                         )
                       ]),
                       _vm._v(" "),
                       _c("th", [
                         _vm._v(
-                          "\n                    " +
+                          "\n                        " +
                             _vm._s(agente.subtot.toFixed(2)) +
-                            "\n                "
+                            "\n                    "
                         )
                       ]),
                       _vm._v(" "),
                       _c("th", [
                         _vm._v(
-                          "\n                    " +
+                          "\n                        " +
                             _vm._s(agente.bonvalor.toFixed(2)) +
-                            "\n                "
+                            "\n                    "
                         )
                       ]),
                       _vm._v(" "),
                       _c("th", [
                         _vm._v(
-                          "\n                    " +
+                          "\n                        " +
                             _vm._s(agente.total.toFixed(2)) +
-                            "\n                "
+                            "\n                    "
                         )
                       ]),
                       _vm._v(" "),
@@ -49272,7 +49706,7 @@ var render = function() {
                           },
                           [
                             _vm._v(
-                              "\n                        editar\n                    "
+                              "\n                            editar\n                        "
                             )
                           ]
                         ),
@@ -49290,7 +49724,7 @@ var render = function() {
                           },
                           [
                             _vm._v(
-                              "\n                        eliminar\n                    "
+                              "\n                            eliminar\n                        "
                             )
                           ]
                         )
@@ -49831,545 +50265,521 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "col-sm-12" },
-    [
-      _c("h1", { staticClass: "text-center" }, [
-        _vm._v("Listado General de Contratados")
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "badge-black row col-sm-12" }, [
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-outline-dark",
-            attrs: { type: "submit" },
-            on: {
-              click: function($event) {
-                _vm.ver = 0
-              }
-            }
-          },
-          [_vm._v("ACTIVOS")]
-        ),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-outline-dark",
-            attrs: { type: "submit" },
-            on: {
-              click: function($event) {
-                _vm.ver = 1
-              }
-            }
-          },
-          [_vm._v("NO ACTIVOS")]
-        )
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "form-group row badge-dark col-sm-12" }, [
-        _c(
-          "button",
-          {
-            staticClass: "button2 btn",
-            attrs: {
-              type: "button",
-              "data-toggle": "modal",
-              "data-target": "#cargar"
-            }
-          },
-          [_vm._v("\n            Nuevo contratado\n        ")]
-        ),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass: "button1 btn",
-            attrs: {
-              type: "button",
-              "data-toggle": "modal",
-              "data-target": "#cargarContrato"
-            }
-          },
-          [_vm._v("\n            Nuevo contrato\n        ")]
-        ),
-        _vm._v(" "),
-        _c("p", [
-          _vm._v(
-            "\n            total de proveedores activos " +
-              _vm._s(_vm.contratosActivos.length) +
-              "\n        "
-          )
-        ]),
-        _vm._v(" "),
-        _c("p", [
-          _vm._v(
-            "\n            / total de proveedores inactivos " +
-              _vm._s(_vm.contratosBajas.length) +
-              "\n        "
-          )
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "container horizontal-scrollable" }, [
-        _c(
-          "table",
-          {
-            staticClass:
-              "table table-striped table-dark table-bordered table-hover"
-          },
-          [
-            _vm.ver === 0
-              ? _c("thead", [
-                  _c("tr", [
-                    _vm.auxiliar === 0
-                      ? _c(
-                          "th",
-                          {
-                            attrs: { scope: "col" },
-                            on: {
-                              click: function($event) {
-                                _vm.ordenadosDesc("PROVEEDOR")
-                                _vm.auxiliar++
-                              }
-                            }
-                          },
-                          [_vm._v("PROV")]
-                        )
-                      : _c(
-                          "th",
-                          {
-                            attrs: { scope: "col" },
-                            on: {
-                              click: function($event) {
-                                _vm.ordenadosAsc("PROVEEDOR")
-                                _vm.auxiliar--
-                              }
-                            }
-                          },
-                          [_vm._v("PROV")]
-                        ),
-                    _vm._v(" "),
-                    _vm.auxiliar === 0
-                      ? _c(
-                          "th",
-                          {
-                            attrs: { scope: "col" },
-                            on: {
-                              click: function($event) {
-                                _vm.ordenadosDesc("DOCUMENTO")
-                                _vm.auxiliar++
-                              }
-                            }
-                          },
-                          [_vm._v("DNI")]
-                        )
-                      : _c(
-                          "th",
-                          {
-                            attrs: { scope: "col" },
-                            on: {
-                              click: function($event) {
-                                _vm.ordenadosAsc("DOCUMENTO")
-                                _vm.auxiliar--
-                              }
-                            }
-                          },
-                          [_vm._v("DNI")]
-                        ),
-                    _vm._v(" "),
-                    _vm.auxiliar === 0
-                      ? _c(
-                          "th",
-                          {
-                            attrs: { scope: "col" },
-                            on: {
-                              click: function($event) {
-                                _vm.ordenadosDesc("APELLIDO")
-                                _vm.auxiliar++
-                              }
-                            }
-                          },
-                          [_vm._v("APELLIDO")]
-                        )
-                      : _c(
-                          "th",
-                          {
-                            attrs: { scope: "col" },
-                            on: {
-                              click: function($event) {
-                                _vm.ordenadosAsc("APELLIDO")
-                                _vm.auxiliar--
-                              }
-                            }
-                          },
-                          [_vm._v("APELLIDO")]
-                        ),
-                    _vm._v(" "),
-                    _vm.auxiliar === 0
-                      ? _c(
-                          "th",
-                          {
-                            attrs: { scope: "col" },
-                            on: {
-                              click: function($event) {
-                                _vm.ordenadosDesc("CONTRATO")
-                                _vm.auxiliar++
-                              }
-                            }
-                          },
-                          [_vm._v("CONTRATO")]
-                        )
-                      : _c(
-                          "th",
-                          {
-                            attrs: { scope: "col" },
-                            on: {
-                              click: function($event) {
-                                _vm.ordenadosAsc("CONTRATO")
-                                _vm.auxiliar--
-                              }
-                            }
-                          },
-                          [_vm._v("CONTRATO")]
-                        ),
-                    _vm._v(" "),
-                    _vm.auxiliar === 0
-                      ? _c(
-                          "th",
-                          {
-                            attrs: { scope: "col" },
-                            on: {
-                              click: function($event) {
-                                _vm.ordenadosDesc("ESPECIALIDAD")
-                                _vm.auxiliar++
-                              }
-                            }
-                          },
-                          [_vm._v("ESPECIALIDAD")]
-                        )
-                      : _c(
-                          "th",
-                          {
-                            attrs: { scope: "col" },
-                            on: {
-                              click: function($event) {
-                                _vm.ordenadosAsc("ESPECIALIDAD")
-                                _vm.auxiliar--
-                              }
-                            }
-                          },
-                          [_vm._v("ESPECIALIDAD")]
-                        ),
-                    _vm._v(" "),
-                    _c("th", { attrs: { scope: "col" } }, [
-                      _vm._v("CONTRATADO")
-                    ]),
-                    _vm._v(" "),
-                    _c("th", { attrs: { scope: "col" } }, [_vm._v("CONTRATO")])
-                  ])
-                ])
-              : _c("thead", [
-                  _vm.auxiliar === 0
-                    ? _c(
-                        "th",
-                        {
-                          attrs: { scope: "col" },
-                          on: {
-                            click: function($event) {
-                              _vm.ordenadosDesc("PROVEEDOR")
-                              _vm.auxiliar++
-                            }
-                          }
-                        },
-                        [_vm._v("PROV")]
-                      )
-                    : _c(
-                        "th",
-                        {
-                          attrs: { scope: "col" },
-                          on: {
-                            click: function($event) {
-                              _vm.ordenadosAsc("PROVEEDOR")
-                              _vm.auxiliar--
-                            }
-                          }
-                        },
-                        [_vm._v("PROV")]
-                      ),
-                  _vm._v(" "),
-                  _vm.auxiliar === 0
-                    ? _c(
-                        "th",
-                        {
-                          attrs: { scope: "col" },
-                          on: {
-                            click: function($event) {
-                              _vm.ordenadosDesc("DOCUMENTO")
-                              _vm.auxiliar++
-                            }
-                          }
-                        },
-                        [_vm._v("DNI")]
-                      )
-                    : _c(
-                        "th",
-                        {
-                          attrs: { scope: "col" },
-                          on: {
-                            click: function($event) {
-                              _vm.ordenadosAsc("DOCUMENTO")
-                              _vm.auxiliar--
-                            }
-                          }
-                        },
-                        [_vm._v("DNI")]
-                      ),
-                  _vm._v(" "),
-                  _vm.auxiliar === 0
-                    ? _c(
-                        "th",
-                        {
-                          attrs: { scope: "col" },
-                          on: {
-                            click: function($event) {
-                              _vm.ordenadosDesc("APELLIDO")
-                              _vm.auxiliar++
-                            }
-                          }
-                        },
-                        [_vm._v("APELLIDO")]
-                      )
-                    : _c(
-                        "th",
-                        {
-                          attrs: { scope: "col" },
-                          on: {
-                            click: function($event) {
-                              _vm.ordenadosAsc("APELLIDO")
-                              _vm.auxiliar--
-                            }
-                          }
-                        },
-                        [_vm._v("APELLIDO")]
-                      )
-                ]),
+  return _vm.rol.special == "all-access" || _vm.permiso
+    ? _c(
+        "div",
+        { staticClass: "col-sm-12" },
+        [
+          _c("h1", { staticClass: "text-center" }, [
+            _vm._v("Listado General de Contratados")
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "badge-black row col-sm-12" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-outline-dark",
+                attrs: { type: "submit" },
+                on: {
+                  click: function($event) {
+                    _vm.ver = 0
+                  }
+                }
+              },
+              [_vm._v("ACTIVOS")]
+            ),
             _vm._v(" "),
-            _vm.ver === 0
-              ? _c(
-                  "tbody",
-                  _vm._l(_vm.contratosActivos, function(contratado) {
-                    return _c("tr", { key: contratado.contrato }, [
-                      _c("th", [
-                        _vm._v(
-                          "\n                        " +
-                            _vm._s(contratado.proveedor) +
-                            "\n                    "
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("th", [
-                        _vm._v(
-                          "\n                        " +
-                            _vm._s(contratado.dni) +
-                            "\n                    "
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("th", [
-                        _vm._v(
-                          "\n                        " +
-                            _vm._s(
-                              contratado.apellido.toUpperCase() +
-                                " " +
-                                contratado.nombre.toUpperCase()
-                            ) +
-                            "\n                    "
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("th", [
-                        _vm._v(
-                          "\n                        " +
-                            _vm._s(contratado.contrato) +
-                            "\n                        \n                    "
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("th", [
-                        _vm._v(
-                          "\n                        " +
-                            _vm._s(contratado.especialidad.toUpperCase()) +
-                            "\n                    "
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("th", { attrs: { width: "10px" } }, [
-                        _c(
-                          "button",
-                          {
-                            staticClass: " btn btn-small button1",
-                            attrs: {
-                              type: "button",
-                              "data-toggle": "modal",
-                              "data-target": "#modificar"
-                            },
-                            on: {
-                              click: function($event) {
-                                return _vm.setProveedor(contratado)
-                              }
-                            }
-                          },
-                          [_vm._v("Cambiar")]
-                        ),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-outline-dark",
+                attrs: { type: "submit" },
+                on: {
+                  click: function($event) {
+                    _vm.ver = 1
+                  }
+                }
+              },
+              [_vm._v("NO ACTIVOS")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group row badge-dark col-sm-12" }, [
+            _c(
+              "button",
+              {
+                staticClass: "button2 btn",
+                attrs: {
+                  type: "button",
+                  "data-toggle": "modal",
+                  "data-target": "#cargar"
+                }
+              },
+              [_vm._v("\n            Nuevo contratado\n        ")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "button1 btn",
+                attrs: {
+                  type: "button",
+                  "data-toggle": "modal",
+                  "data-target": "#cargarContrato"
+                }
+              },
+              [_vm._v("\n            Nuevo contrato\n        ")]
+            ),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v(
+                "\n            total de proveedores activos " +
+                  _vm._s(_vm.contratosActivos.length) +
+                  "\n        "
+              )
+            ]),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v(
+                "\n            / total de proveedores inactivos " +
+                  _vm._s(_vm.contratosBajas.length) +
+                  "\n        "
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "container horizontal-scrollable" }, [
+            _c(
+              "table",
+              {
+                staticClass:
+                  "table table-striped table-dark table-bordered table-hover"
+              },
+              [
+                _vm.ver === 0
+                  ? _c("thead", [
+                      _c("tr", [
+                        _vm.auxiliar === 0
+                          ? _c(
+                              "th",
+                              {
+                                attrs: { scope: "col" },
+                                on: {
+                                  click: function($event) {
+                                    _vm.ordenadosDesc("PROVEEDOR")
+                                    _vm.auxiliar++
+                                  }
+                                }
+                              },
+                              [_vm._v("PROV")]
+                            )
+                          : _c(
+                              "th",
+                              {
+                                attrs: { scope: "col" },
+                                on: {
+                                  click: function($event) {
+                                    _vm.ordenadosAsc("PROVEEDOR")
+                                    _vm.auxiliar--
+                                  }
+                                }
+                              },
+                              [_vm._v("PROV")]
+                            ),
                         _vm._v(" "),
-                        _c(
-                          "button",
-                          {
-                            staticClass: " btn btn-small button2",
-                            attrs: { type: "button" }
-                          },
-                          [_vm._v("Datos")]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("th", { attrs: { width: "10px" } }, [
-                        _c(
-                          "button",
-                          {
-                            staticClass: " btn btn-small button1",
-                            attrs: {
-                              type: "button",
-                              "data-toggle": "modal",
-                              "data-target": "#modificar"
-                            }
-                          },
-                          [_vm._v("Cambiar")]
-                        ),
+                        _vm.auxiliar === 0
+                          ? _c(
+                              "th",
+                              {
+                                attrs: { scope: "col" },
+                                on: {
+                                  click: function($event) {
+                                    _vm.ordenadosDesc("DOCUMENTO")
+                                    _vm.auxiliar++
+                                  }
+                                }
+                              },
+                              [_vm._v("DNI")]
+                            )
+                          : _c(
+                              "th",
+                              {
+                                attrs: { scope: "col" },
+                                on: {
+                                  click: function($event) {
+                                    _vm.ordenadosAsc("DOCUMENTO")
+                                    _vm.auxiliar--
+                                  }
+                                }
+                              },
+                              [_vm._v("DNI")]
+                            ),
                         _vm._v(" "),
-                        _c(
-                          "button",
-                          {
-                            staticClass: " btn btn-small btn-danger",
-                            attrs: { type: "button" },
-                            on: {
-                              click: function($event) {
-                                $event.preventDefault()
-                                return _vm.deleteContrato(
-                                  contratado.contrato_id
-                                )
-                              }
-                            }
-                          },
-                          [_vm._v("Borrar")]
-                        )
+                        _vm.auxiliar === 0
+                          ? _c(
+                              "th",
+                              {
+                                attrs: { scope: "col" },
+                                on: {
+                                  click: function($event) {
+                                    _vm.ordenadosDesc("APELLIDO")
+                                    _vm.auxiliar++
+                                  }
+                                }
+                              },
+                              [_vm._v("APELLIDO")]
+                            )
+                          : _c(
+                              "th",
+                              {
+                                attrs: { scope: "col" },
+                                on: {
+                                  click: function($event) {
+                                    _vm.ordenadosAsc("APELLIDO")
+                                    _vm.auxiliar--
+                                  }
+                                }
+                              },
+                              [_vm._v("APELLIDO")]
+                            ),
+                        _vm._v(" "),
+                        _vm.auxiliar === 0
+                          ? _c(
+                              "th",
+                              {
+                                attrs: { scope: "col" },
+                                on: {
+                                  click: function($event) {
+                                    _vm.ordenadosDesc("CONTRATO")
+                                    _vm.auxiliar++
+                                  }
+                                }
+                              },
+                              [_vm._v("CONTRATO")]
+                            )
+                          : _c(
+                              "th",
+                              {
+                                attrs: { scope: "col" },
+                                on: {
+                                  click: function($event) {
+                                    _vm.ordenadosAsc("CONTRATO")
+                                    _vm.auxiliar--
+                                  }
+                                }
+                              },
+                              [_vm._v("CONTRATO")]
+                            ),
+                        _vm._v(" "),
+                        _vm.auxiliar === 0
+                          ? _c(
+                              "th",
+                              {
+                                attrs: { scope: "col" },
+                                on: {
+                                  click: function($event) {
+                                    _vm.ordenadosDesc("ESPECIALIDAD")
+                                    _vm.auxiliar++
+                                  }
+                                }
+                              },
+                              [_vm._v("ESPECIALIDAD")]
+                            )
+                          : _c(
+                              "th",
+                              {
+                                attrs: { scope: "col" },
+                                on: {
+                                  click: function($event) {
+                                    _vm.ordenadosAsc("ESPECIALIDAD")
+                                    _vm.auxiliar--
+                                  }
+                                }
+                              },
+                              [_vm._v("ESPECIALIDAD")]
+                            ),
+                        _vm._v(" "),
+                        _c("th", { attrs: { scope: "col" } }, [
+                          _vm._v("CONTRATADO")
+                        ]),
+                        _vm._v(" "),
+                        _c("th", { attrs: { scope: "col" } }, [
+                          _vm._v("CONTRATO")
+                        ])
                       ])
                     ])
-                  }),
-                  0
-                )
-              : _c(
-                  "tbody",
-                  _vm._l(_vm.contratosBajas, function(contratado) {
-                    return _c("tr", { key: contratado.id }, [
-                      _c("th", [
-                        _vm._v(
-                          "\n                        " +
-                            _vm._s(contratado.proveedor) +
-                            "\n                    "
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("th", [
-                        _vm._v(
-                          "\n                        " +
-                            _vm._s(contratado.dni) +
-                            "\n                    "
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("th", [
-                        _vm._v(
-                          "\n                        " +
-                            _vm._s(
-                              contratado.apellido.toUpperCase() +
-                                " " +
-                                contratado.nombre.toUpperCase()
-                            ) +
-                            "\n                    "
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("th", { attrs: { width: "10px" } }, [
-                        _c(
-                          "button",
-                          {
-                            staticClass: " btn btn-small button1",
-                            attrs: {
-                              type: "button",
-                              "data-toggle": "modal",
-                              "data-target": "#modificar"
-                            },
-                            on: {
-                              click: function($event) {
-                                return _vm.setProveedor(contratado)
+                  : _c("thead", [
+                      _vm.auxiliar === 0
+                        ? _c(
+                            "th",
+                            {
+                              attrs: { scope: "col" },
+                              on: {
+                                click: function($event) {
+                                  _vm.ordenadosDesc("PROVEEDOR")
+                                  _vm.auxiliar++
+                                }
                               }
-                            }
-                          },
-                          [_vm._v("Cambiar")]
-                        )
-                      ]),
+                            },
+                            [_vm._v("PROV")]
+                          )
+                        : _c(
+                            "th",
+                            {
+                              attrs: { scope: "col" },
+                              on: {
+                                click: function($event) {
+                                  _vm.ordenadosAsc("PROVEEDOR")
+                                  _vm.auxiliar--
+                                }
+                              }
+                            },
+                            [_vm._v("PROV")]
+                          ),
                       _vm._v(" "),
-                      _vm._m(0, true),
+                      _vm.auxiliar === 0
+                        ? _c(
+                            "th",
+                            {
+                              attrs: { scope: "col" },
+                              on: {
+                                click: function($event) {
+                                  _vm.ordenadosDesc("DOCUMENTO")
+                                  _vm.auxiliar++
+                                }
+                              }
+                            },
+                            [_vm._v("DNI")]
+                          )
+                        : _c(
+                            "th",
+                            {
+                              attrs: { scope: "col" },
+                              on: {
+                                click: function($event) {
+                                  _vm.ordenadosAsc("DOCUMENTO")
+                                  _vm.auxiliar--
+                                }
+                              }
+                            },
+                            [_vm._v("DNI")]
+                          ),
                       _vm._v(" "),
-                      _vm._m(1, true)
-                    ])
-                  }),
-                  0
-                )
-          ]
-        )
-      ]),
-      _vm._v(" "),
-      _c("nuevo-proveedor"),
-      _vm._v(" "),
-      _c("modificar-proveedor", {
-        attrs: { proveedorModificar: _vm.proveedorAux }
-      }),
-      _vm._v(" "),
-      _c("nuevo-contrato")
-    ],
-    1
-  )
+                      _vm.auxiliar === 0
+                        ? _c(
+                            "th",
+                            {
+                              attrs: { scope: "col" },
+                              on: {
+                                click: function($event) {
+                                  _vm.ordenadosDesc("APELLIDO")
+                                  _vm.auxiliar++
+                                }
+                              }
+                            },
+                            [_vm._v("APELLIDO")]
+                          )
+                        : _c(
+                            "th",
+                            {
+                              attrs: { scope: "col" },
+                              on: {
+                                click: function($event) {
+                                  _vm.ordenadosAsc("APELLIDO")
+                                  _vm.auxiliar--
+                                }
+                              }
+                            },
+                            [_vm._v("APELLIDO")]
+                          )
+                    ]),
+                _vm._v(" "),
+                _vm.ver === 0
+                  ? _c(
+                      "tbody",
+                      _vm._l(_vm.contratosActivos, function(contratado) {
+                        return _c("tr", { key: contratado.contrato }, [
+                          _c("th", [
+                            _vm._v(
+                              "\n                        " +
+                                _vm._s(contratado.proveedor) +
+                                "\n                    "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("th", [
+                            _vm._v(
+                              "\n                        " +
+                                _vm._s(contratado.dni) +
+                                "\n                    "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("th", [
+                            _vm._v(
+                              "\n                        " +
+                                _vm._s(
+                                  contratado.apellido.toUpperCase() +
+                                    " " +
+                                    contratado.nombre.toUpperCase()
+                                ) +
+                                "\n                    "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("th", [
+                            _vm._v(
+                              "\n                        " +
+                                _vm._s(contratado.contrato) +
+                                "\n                        \n                    "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("th", [
+                            _vm._v(
+                              "\n                        " +
+                                _vm._s(contratado.especialidad.toUpperCase()) +
+                                "\n                    "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _vm.rol.special == "all-access" || _vm.permisoEditar
+                            ? _c("th", { attrs: { width: "10px" } }, [
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass: " btn btn-small button1",
+                                    attrs: {
+                                      type: "button",
+                                      "data-toggle": "modal",
+                                      "data-target": "#modificar"
+                                    },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.setProveedor(contratado)
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("Cambiar")]
+                                )
+                              ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _vm.rol.special == "all-access" || _vm.permisoBorrar
+                            ? _c("th", { attrs: { width: "10px" } }, [
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass: " btn btn-small btn-danger",
+                                    attrs: { type: "button" },
+                                    on: {
+                                      click: function($event) {
+                                        $event.preventDefault()
+                                        return _vm.deleteContrato(
+                                          contratado.contrato_id
+                                        )
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("Borrar")]
+                                )
+                              ])
+                            : _vm._e()
+                        ])
+                      }),
+                      0
+                    )
+                  : _c(
+                      "tbody",
+                      _vm._l(_vm.contratosBajas, function(contratado) {
+                        return _c("tr", { key: contratado.id }, [
+                          _c("th", [
+                            _vm._v(
+                              "\n                        " +
+                                _vm._s(contratado.proveedor) +
+                                "\n                    "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("th", [
+                            _vm._v(
+                              "\n                        " +
+                                _vm._s(contratado.dni) +
+                                "\n                    "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("th", [
+                            _vm._v(
+                              "\n                        " +
+                                _vm._s(
+                                  contratado.apellido.toUpperCase() +
+                                    " " +
+                                    contratado.nombre.toUpperCase()
+                                ) +
+                                "\n                    "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _vm.rol.special == "all-access" || _vm.permisoEditar
+                            ? _c("th", { attrs: { width: "10px" } }, [
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass: " btn btn-small button1",
+                                    attrs: {
+                                      type: "button",
+                                      "data-toggle": "modal",
+                                      "data-target": "#modificar"
+                                    },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.setProveedor(contratado)
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("Cambiar")]
+                                )
+                              ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _vm.rol.special == "all-access" || _vm.permisoBorrar
+                            ? _c("th", { attrs: { width: "10px" } }, [
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass: " btn btn-small button3",
+                                    attrs: { type: "button" }
+                                  },
+                                  [_vm._v("Borrar")]
+                                )
+                              ])
+                            : _vm._e()
+                        ])
+                      }),
+                      0
+                    )
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("nuevo-proveedor"),
+          _vm._v(" "),
+          _c("modificar-proveedor", {
+            attrs: { proveedorModificar: _vm.proveedorAux }
+          }),
+          _vm._v(" "),
+          _c("nuevo-contrato")
+        ],
+        1
+      )
+    : _c("div", [
+        _c("h2", { staticClass: "display-1" }, [
+          _vm._v("\n        no pose permiso para entrar aqui\n    ")
+        ])
+      ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("th", { attrs: { width: "10px" } }, [
-      _c(
-        "button",
-        { staticClass: " btn btn-small button2", attrs: { type: "button" } },
-        [_vm._v("Datos")]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("th", { attrs: { width: "10px" } }, [
-      _c(
-        "button",
-        { staticClass: " btn btn-small button3", attrs: { type: "button" } },
-        [_vm._v("Borrar")]
-      )
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -52467,180 +52877,237 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", { staticClass: "form-group row badge-dark col-sm-12" }, [
-      _c("h2", { staticClass: "text-center" }, [_vm._v("Buscar Agentes")]),
-      _vm._v(" "),
-      _c("hr"),
-      _vm._v(" "),
-      _c("br"),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-sm-3 " }, [
-        _c("label", { staticClass: "text" }, [_vm._v(" hospital    ")]),
-        _vm._v(" "),
-        _c(
-          "select",
-          {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.hospital,
-                expression: "hospital"
-              }
-            ],
-            staticClass: "form-control badge-secondary",
-            attrs: { id: "hospital", name: "hospital" },
-            on: {
-              change: function($event) {
-                var $$selectedVal = Array.prototype.filter
-                  .call($event.target.options, function(o) {
-                    return o.selected
-                  })
-                  .map(function(o) {
-                    var val = "_value" in o ? o._value : o.value
-                    return val
-                  })
-                _vm.hospital = $event.target.multiple
-                  ? $$selectedVal
-                  : $$selectedVal[0]
-              }
-            }
-          },
-          [
-            _c("option", { attrs: { value: "" } }, [_vm._v("seleccione")]),
+    _vm.rol.special == "all-access" || _vm.permiso
+      ? _c("div", { staticClass: "form-group row badge-dark col-sm-12" }, [
+          _c("h2", { staticClass: "text-center" }, [_vm._v("Buscar Agentes")]),
+          _vm._v(" "),
+          _c("hr"),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _vm.rol.special == "all-access"
+            ? _c("div", { staticClass: "col-sm-3 " }, [
+                _c("label", { staticClass: "text" }, [_vm._v(" hospital    ")]),
+                _vm._v(" "),
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.hospital,
+                        expression: "hospital"
+                      }
+                    ],
+                    staticClass: "form-control badge-secondary",
+                    attrs: { id: "hospital", name: "hospital" },
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.hospital = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      }
+                    }
+                  },
+                  [
+                    _c("option", { attrs: { value: "" } }, [
+                      _vm._v("seleccione")
+                    ]),
+                    _vm._v(" "),
+                    _vm._l(_vm.hospitales, function(hosp) {
+                      return _c(
+                        "option",
+                        { key: hosp.ID, domProps: { value: hosp.ID } },
+                        [_vm._v(_vm._s(hosp.HOSPITAL))]
+                      )
+                    })
+                  ],
+                  2
+                )
+              ])
+            : _c("div", { staticClass: "col-sm-3 " }, [
+                _c("label", { staticClass: "text" }, [_vm._v(" hospital    ")]),
+                _vm._v(" "),
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.hospital,
+                        expression: "hospital"
+                      }
+                    ],
+                    staticClass: "form-control badge-secondary",
+                    attrs: { id: "hospital", name: "hospital" },
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.hospital = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      }
+                    }
+                  },
+                  [
+                    _c("option", { attrs: { value: "" } }, [
+                      _vm._v("seleccione")
+                    ]),
+                    _vm._v(" "),
+                    _vm._l(_vm.hospitalesAux, function(hosp) {
+                      return _c(
+                        "option",
+                        { key: hosp.ID, domProps: { value: hosp.ID } },
+                        [_vm._v(_vm._s(hosp.HOSPITAL))]
+                      )
+                    })
+                  ],
+                  2
+                )
+              ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-sm-3" }, [
+            _c("label", { staticClass: "text" }, [_vm._v(" servicio    ")]),
             _vm._v(" "),
-            _vm._l(_vm.hospitales, function(hosp) {
-              return _c(
-                "option",
-                { key: hosp.ID, domProps: { value: hosp.ID } },
-                [_vm._v(_vm._s(hosp.HOSPITAL))]
-              )
-            })
-          ],
-          2
-        )
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-sm-3" }, [
-        _c("label", { staticClass: "text" }, [_vm._v(" servicio    ")]),
-        _vm._v(" "),
-        _c(
-          "select",
-          {
-            directives: [
+            _c(
+              "select",
               {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.servicio,
-                expression: "servicio"
-              }
-            ],
-            staticClass: "form-control badge-secondary",
-            attrs: { id: "servicio", name: "servicio" },
-            on: {
-              change: function($event) {
-                var $$selectedVal = Array.prototype.filter
-                  .call($event.target.options, function(o) {
-                    return o.selected
-                  })
-                  .map(function(o) {
-                    var val = "_value" in o ? o._value : o.value
-                    return val
-                  })
-                _vm.servicio = $event.target.multiple
-                  ? $$selectedVal
-                  : $$selectedVal[0]
-              }
-            }
-          },
-          [
-            _c("option", { attrs: { value: "" } }, [_vm._v("seleccione")]),
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.servicio,
+                    expression: "servicio"
+                  }
+                ],
+                staticClass: "form-control badge-secondary",
+                attrs: { id: "servicio", name: "servicio" },
+                on: {
+                  change: function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.servicio = $event.target.multiple
+                      ? $$selectedVal
+                      : $$selectedVal[0]
+                  }
+                }
+              },
+              [
+                _c("option", { attrs: { value: "" } }, [_vm._v("seleccione")]),
+                _vm._v(" "),
+                _vm._l(_vm.servicios, function(serv) {
+                  return _c(
+                    "option",
+                    { key: serv.ID, domProps: { value: serv.ID } },
+                    [_vm._v(_vm._s(serv.SERVICIO))]
+                  )
+                })
+              ],
+              2
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-sm-3" }, [
+            _c("label", { staticClass: "text" }, [_vm._v(" sectores    ")]),
             _vm._v(" "),
-            _vm._l(_vm.servicios, function(serv) {
-              return _c(
-                "option",
-                { key: serv.ID, domProps: { value: serv.ID } },
-                [_vm._v(_vm._s(serv.SERVICIO))]
-              )
-            })
-          ],
-          2
-        )
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-sm-3" }, [
-        _c("label", { staticClass: "text" }, [_vm._v(" sectores    ")]),
-        _vm._v(" "),
-        _c(
-          "select",
-          {
-            directives: [
+            _c(
+              "select",
               {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.sector,
-                expression: "sector"
-              }
-            ],
-            staticClass: "form-control badge-secondary",
-            attrs: { id: "sector", name: "sector" },
-            on: {
-              change: function($event) {
-                var $$selectedVal = Array.prototype.filter
-                  .call($event.target.options, function(o) {
-                    return o.selected
-                  })
-                  .map(function(o) {
-                    var val = "_value" in o ? o._value : o.value
-                    return val
-                  })
-                _vm.sector = $event.target.multiple
-                  ? $$selectedVal
-                  : $$selectedVal[0]
-              }
-            }
-          },
-          [
-            _c("option", { attrs: { value: "" } }, [_vm._v("seleccione")]),
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.sector,
+                    expression: "sector"
+                  }
+                ],
+                staticClass: "form-control badge-secondary",
+                attrs: { id: "sector", name: "sector" },
+                on: {
+                  change: function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.sector = $event.target.multiple
+                      ? $$selectedVal
+                      : $$selectedVal[0]
+                  }
+                }
+              },
+              [
+                _c("option", { attrs: { value: "" } }, [_vm._v("seleccione")]),
+                _vm._v(" "),
+                _vm._l(_vm.sectores, function(sect) {
+                  return _c(
+                    "option",
+                    { key: sect.SECTOR, domProps: { value: sect.ID } },
+                    [_vm._v(_vm._s(sect.SECTOR))]
+                  )
+                })
+              ],
+              2
+            ),
             _vm._v(" "),
-            _vm._l(_vm.sectores, function(sect) {
-              return _c(
-                "option",
-                { key: sect.SECTOR, domProps: { value: sect.ID } },
-                [_vm._v(_vm._s(sect.SECTOR))]
-              )
-            })
-          ],
-          2
-        ),
-        _vm._v(" "),
-        _c("br")
-      ]),
-      _vm._v(" "),
-      _c("br"),
-      _vm._v(" "),
-      _c("br")
-    ]),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "form-group row badge-secondary col-sm-12" },
-      [
-        _c("liquidacion", {
-          attrs: {
-            hospitalId: _vm.hospital,
-            servicioId: _vm.servicio,
-            sectorId: _vm.sector
-          },
-          on: {
-            speak: function($event) {
-              return _vm.speakMethod()
-            }
-          }
-        })
-      ],
-      1
-    )
+            _c("br")
+          ]),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "form-group row badge-secondary col-sm-12" },
+            [
+              _c("liquidacion", {
+                attrs: {
+                  hospitalId: _vm.hospital,
+                  servicioId: _vm.servicio,
+                  sectorId: _vm.sector
+                },
+                on: {
+                  speak: function($event) {
+                    return _vm.speakMethod()
+                  }
+                }
+              })
+            ],
+            1
+          )
+        ])
+      : _c("div", [
+          _c("h2", { staticClass: "display-1" }, [
+            _vm._v("\n            no pose permiso para entrar aqui\n        ")
+          ])
+        ])
   ])
 }
 var staticRenderFns = []

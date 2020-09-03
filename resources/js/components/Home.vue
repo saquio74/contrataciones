@@ -65,7 +65,9 @@ export default {
         }
     },
     created:function()  {
-        
+        window.onbeforeunload = function(e){
+            this.$router.go('/login')
+        } 
     },
     methods:{
         

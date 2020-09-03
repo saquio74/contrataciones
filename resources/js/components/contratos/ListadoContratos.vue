@@ -1,5 +1,5 @@
 <template>
-    <div class="col-sm-12">
+    <div class="col-sm-12" v-if="rol.special =='all-access' || permiso">
         <h1 class="text-center">Listado General de Contratados</h1>
         <div class="badge-black row col-sm-12">
             <button v-on:click="ver=0" type="submit" class="btn btn-outline-dark">ACTIVOS</button>
@@ -68,12 +68,11 @@
                             {{contratado.especialidad.toUpperCase()}}
                         </th >
                         
-                        <th width="10px">
+                        <th width="10px" v-if="rol.special =='all-access' || permisoEditar">
                             <button type="button" class=" btn btn-small button1" data-toggle="modal" data-target="#modificar" @click="setProveedor(contratado)">Cambiar</button>
-                            <button type="button" class=" btn btn-small button2">Datos</button>
+                            
                         </th>
-                        <th width="10px">
-                            <button type="button" class=" btn btn-small button1" data-toggle="modal" data-target="#modificar">Cambiar</button>
+                        <th width="10px" v-if="rol.special =='all-access' ||  permisoBorrar">
                             <button type="button" v-on:click.prevent="deleteContrato(contratado.contrato_id)" class=" btn btn-small btn-danger">Borrar</button>
                             
                         </th>
@@ -92,14 +91,10 @@
                         <th>
                             {{contratado.apellido.toUpperCase() + ' ' + contratado.nombre.toUpperCase()}}
                         </th>
-                        <th width="10px">
+                        <th width="10px" v-if="rol.special =='all-access' ||  permisoEditar">
                             <button type="button" class=" btn btn-small button1" data-toggle="modal" data-target="#modificar" @click="setProveedor(contratado)">Cambiar</button>
                         </th>
-                        <th width="10px">
-
-                            <button type="button" class=" btn btn-small button2">Datos</button>
-                        </th>
-                        <th width="10px">
+                        <th width="10px" v-if="rol.special =='all-access' || permisoBorrar">
 
                             <button type="button" class=" btn btn-small button3">Borrar</button>
                         </th>
@@ -111,6 +106,11 @@
         <modificar-proveedor :proveedorModificar="proveedorAux"></modificar-proveedor>
         <nuevo-contrato />
         
+    </div>
+    <div v-else>
+        <h2 class="display-1">
+            no pose permiso para entrar aqui
+        </h2>
     </div>
 </template>
 <script>
@@ -134,6 +134,22 @@ export default {
         //this.onFileChange();
     },
     methods:{
+        async buscarPermiso(){
+            this.permiso = await this.permisos.find(valor =>{
+                return valor.slug === 'contratados.navegar'
+            })
+            this.permisoEditar = await this.permisos.find(valor =>{
+                return valor.slug === 'contratados.editar'
+            })
+            this.permisoBorrar = await this.permisos.find(valor =>{
+                return valor.slug === 'contratados.borrar'
+            })
+            this.permisoCrear = await this.permisos.find(valor =>{
+                return valor.slug === 'contratados.crear'
+            })
+           
+            
+        },
         hosp(){
             $('table').on('scroll', function() {
             $("#" + this.id + " > *").width($(this).width() + $(this).scrollLeft());
@@ -237,6 +253,12 @@ export default {
         },
         proveedor(){
             return this.$store.state.proveedor
+        },
+        permisos(){
+            return this.$store.state.permisos
+        },
+        rol(){
+            return this.$store.state.rol
         }
     }
 }

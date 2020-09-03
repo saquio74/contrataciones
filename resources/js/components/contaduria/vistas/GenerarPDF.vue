@@ -7,11 +7,18 @@
         </div>
         <div class="col-sm-12" v-if="vista==1">
             <form  @submit.prevent="getPdf" >
-                <div class="col-sm-3 ">
+                <div class="col-sm-3 " v-if="rol.special =='all-access'">
                     <label class="text"> hospital    </label>
                     <select class="form-control badge-secondary" v-model="hospital" id="hospital" name='hospital'>
                         <option value=''>seleccione</option>
-                        <option v-for="hosp in hospitales" :key="hosp.ID" :value="hosp" >{{hosp.HOSPITAL}}</option>
+                        <option v-for="hosp in hospitales" :key="hosp.ID" :value="hosp.ID" >{{hosp.HOSPITAL}}</option>
+                    </select>
+                </div>
+                <div class="col-sm-3 " v-else>
+                    <label class="text"> hospital    </label>
+                    <select class="form-control badge-secondary" v-model="hospital" id="hospital" name='hospital'>
+                        <option value=''>seleccione</option>
+                        <option v-for="hosp in hospitalesAux" :key="hosp.ID" :value="hosp.ID" >{{hosp.HOSPITAL}}</option>
                     </select>
                 </div>
                 <div class="col-sm-3 ">
@@ -28,11 +35,18 @@
         <div class="col-sm-12" v-if="vista==0">
 
             <form  @submit.prevent="getExcel" >
-                <div class="col-sm-3 ">
+                <div class="col-sm-3 " v-if="rol.special =='all-access'">
                     <label class="text"> hospital    </label>
                     <select class="form-control badge-secondary" v-model="hospital" id="hospital" name='hospital'>
                         <option value=''>seleccione</option>
-                        <option v-for="hosp in hospitales" :key="hosp.ID" :value="hosp" >{{hosp.HOSPITAL}}</option>
+                        <option v-for="hosp in hospitales" :key="hosp.ID" :value="hosp.ID" >{{hosp.HOSPITAL}}</option>
+                    </select>
+                </div>
+                <div class="col-sm-3 " v-else>
+                    <label class="text"> hospital    </label>
+                    <select class="form-control badge-secondary" v-model="hospital" id="hospital" name='hospital'>
+                        <option value=''>seleccione</option>
+                        <option v-for="hosp in hospitalesAux" :key="hosp.ID" :value="hosp.ID" >{{hosp.HOSPITAL}}</option>
                     </select>
                 </div>
                 <div class="col-sm-3 ">
@@ -49,11 +63,18 @@
         <div class="col-sm-12" v-if="vista==2">
 
             <form  @submit.prevent="getLiquidacion" >
-                <div class="col-sm-3 ">
+                <div class="col-sm-3 " v-if="rol.special =='all-access'">
                     <label class="text"> hospital    </label>
                     <select class="form-control badge-secondary" v-model="hospital" id="hospital" name='hospital'>
                         <option value=''>seleccione</option>
-                        <option v-for="hosp in hospitales" :key="hosp.ID" :value="hosp" >{{hosp.HOSPITAL}}</option>
+                        <option v-for="hosp in hospitales" :key="hosp.ID" :value="hosp.ID" >{{hosp.HOSPITAL}}</option>
+                    </select>
+                </div>
+                <div class="col-sm-3 " v-else>
+                    <label class="text"> hospital    </label>
+                    <select class="form-control badge-secondary" v-model="hospital" id="hospital" name='hospital'>
+                        <option value=''>seleccione</option>
+                        <option v-for="hosp in hospitalesAux" :key="hosp.ID" :value="hosp.ID" >{{hosp.HOSPITAL}}</option>
                     </select>
                 </div>
                 <div class="col-sm-3 ">
@@ -67,51 +88,51 @@
                 <button type="submit" class="btn btn-danger">Buscar Liquidacion</button>
             </form>
             <table class="table table-striped table-dark table-bordered table-hover">
-            <thead>
-                <tr>
-                    <th scope="col">LEGAJO</th>
-                    <th scope="col">INCISO</th>
-                    <th scope="col">NOMBRE</th>
-                    <th scope="col">HORAS</th>
-                    <th scope="col">SUBTOTAL</th>
-                    <th scope="col">BONIF.</th>
-                    <th scope="col">TOTAL</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr  v-for="agente in liquidacionM" :key="agente.LEGAJO" >
-                    <th>
-                        {{agente.leg}}
-                    </th>
-                    <th>
-                        {{agente.inciso}}
-                    </th>
-                    <th>
-                        {{agente.nombre.toUpperCase()}}
-                    </th>
-                    <th>
-                        {{agente.horas}}
-                    </th>
-                    <th>
-                        {{agente.subtot.toFixed(2)}}
-                    </th>
-                    <th>
-                        {{agente.bonvalor.toFixed(2)}}
-                    </th>
-                    <th>
-                        {{agente.total.toFixed(2)}}
-                    </th >
-                    <th width="10px">
-                        <button type="button" class="btn btn-warning" v-on:click="modificar(agente)" data-toggle="modal" data-target="#ModificarLiquidacion">
-                            editar
-                        </button>
-                        <button type="button" class="btn btn-danger" v-on:click="borrarLiquidacion(agente)">
-                            eliminar
-                        </button>
-                    </th>
-                </tr>
-            </tbody>
-        </table>
+                <thead>
+                    <tr>
+                        <th scope="col">LEGAJO</th>
+                        <th scope="col">INCISO</th>
+                        <th scope="col">NOMBRE</th>
+                        <th scope="col">HORAS</th>
+                        <th scope="col">SUBTOTAL</th>
+                        <th scope="col">BONIF.</th>
+                        <th scope="col">TOTAL</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr  v-for="agente in liquidacionM" :key="agente.LEGAJO" >
+                        <th>
+                            {{agente.leg}}
+                        </th>
+                        <th>
+                            {{agente.inciso}}
+                        </th>
+                        <th>
+                            {{agente.nombre.toUpperCase()}}
+                        </th>
+                        <th>
+                            {{agente.horas}}
+                        </th>
+                        <th>
+                            {{agente.subtot.toFixed(2)}}
+                        </th>
+                        <th>
+                            {{agente.bonvalor.toFixed(2)}}
+                        </th>
+                        <th>
+                            {{agente.total.toFixed(2)}}
+                        </th >
+                        <th width="10px">
+                            <button type="button" class="btn btn-warning" v-on:click="modificar(agente)" data-toggle="modal" data-target="#ModificarLiquidacion">
+                                editar
+                            </button>
+                            <button type="button" class="btn btn-danger" v-on:click="borrarLiquidacion(agente)">
+                                eliminar
+                            </button>
+                        </th>
+                    </tr>
+                </tbody>
+            </table>
         <modificar-liquidacion :agenteData="aux"></modificar-liquidacion>
         </div>
     </div>
@@ -137,15 +158,35 @@ export default {
             vista:0,
             aux:{
 
-            }
+            },
+            permiso:    [],
+            hospitalesAux: [],
         }
     },
     created: function(){
         this.getHosp()
         this.getPeriodo()
+        this.buscarPermiso();
         
     },
     methods:{
+        async buscarPermiso(){
+            await this.permisos.find(valor =>{
+                let cadena = valor.name.split(" ")
+                if(cadena[0]=='Liquidar'){
+                    this.permiso.push(valor.slug)
+                }
+            })
+            await this.hospitales.find(hospital=>{
+                this.permiso.find(perm => {
+                    
+                    if(perm == hospital.ID){
+                        this.hospitalesAux.push(hospital)
+                    }
+                })
+            })
+            
+        },
         async getPdf(){
             let datos={
                 hospital_id:    this.hospital.ID,
@@ -250,6 +291,12 @@ export default {
         },
         liquidacionM(){
             return this.$store.state.liquidacionM
+        },
+        rol(){
+            return this.$store.state.rol
+        },
+        permisos(){
+            return this.$store.state.permisos
         }
     },
 }

@@ -81,14 +81,14 @@
                         }}
                     </th>
                     
-                    <th width="10px" v-if="permisoEditar">
+                    <th width="10px" v-if="rol.special =='all-access' ||  permisoEditar">
                         <button type="button" class="btn btn-success" v-on:click="buscarDatos(vacacion)"  data-toggle="modal" data-target="#modificar">
                             editar
                         </button>
                     
                         
                     </th>
-                    <th width="10px" v-if="permisoBorrar">
+                    <th width="10px" v-if="rol.special =='all-access' ||  permisoBorrar">
                         <button type="button" class="btn btn-danger" v-on:click.prevent="borrarVacaciones(vacacion.id)" >
                             borrar
                         </button>
@@ -97,11 +97,11 @@
                 </tr>
             </tbody>
         </table>
-        <div v-if="permisoCrear">
+        <div v-if="rol.special =='all-access' ||  permisoCrear">
 
             <cargar-vacaciones @speak="speakMethod()"/>
         </div>
-        <div v-if="permisoEditar">
+        <div v-if="rol.special =='all-access' ||  permisoEditar">
 
             <modificar-vacaciones @speak="speakMethod()" :listaModificar="vacacionAux"/>           
         </div>
