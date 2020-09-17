@@ -3,7 +3,7 @@
     <head>
         <title>Home</title>
         
-        <link rel="stylesheet" href="{{asset('css/app.css')}}">
+        <link rel="stylesheet" href="/css/app.css">
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
         
     </head>
@@ -25,6 +25,6 @@
         <script src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/js/toastr.min.js"></script>
         -->        
 
-        <script src="{{asset('js/app.js')}}"></script>
+        <script src="/js/app.js"></script>
     </body>
 </html>
