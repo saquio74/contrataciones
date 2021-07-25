@@ -2037,7 +2037,7 @@ __webpack_require__.r(__webpack_exports__);
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
-              url = '/contrataciones-1/public/vacaciones/store';
+              url = '/contrataciones/public/vacaciones/store';
               _context2.prev = 1;
               _context2.next = 4;
               return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios__WEBPACK_IMPORTED_MODULE_3___default.a.post(url, this.vacaciones));
@@ -2450,7 +2450,7 @@ __webpack_require__.r(__webpack_exports__);
     getHospitales: function getHospitales() {
       var _this4 = this;
 
-      var urlHospitales = '/contrataciones-1/public/hospitales';
+      var urlHospitales = '/contrataciones/public/hospitales';
       axios__WEBPACK_IMPORTED_MODULE_3___default.a.get(urlHospitales).then(function (Response) {
         _this4.hospitales = Response.data;
       });
@@ -2458,7 +2458,7 @@ __webpack_require__.r(__webpack_exports__);
     getServicios: function getServicios() {
       var _this5 = this;
 
-      var urlServicios = '/contrataciones-1/public/servicios';
+      var urlServicios = '/contrataciones/public/servicios';
       axios__WEBPACK_IMPORTED_MODULE_3___default.a.get(urlServicios).then(function (Response) {
         _this5.servicios = Response.data;
       });
@@ -2466,7 +2466,7 @@ __webpack_require__.r(__webpack_exports__);
     getSectores: function getSectores() {
       var _this6 = this;
 
-      var urlSectores = '/contrataciones-1/public/sectores';
+      var urlSectores = '/contrataciones/public/sectores';
       axios__WEBPACK_IMPORTED_MODULE_3___default.a.get(urlSectores).then(function (Response) {
         _this6.sectores = Response.data;
       });
@@ -2857,7 +2857,7 @@ __webpack_require__.r(__webpack_exports__);
     borrarVacaciones: function borrarVacaciones(id) {
       var _this = this;
 
-      var borrar = '/contrataciones-1/public/vacaciones/delete/' + id;
+      var borrar = '/contrataciones/public/vacaciones/delete/' + id;
       axios__WEBPACK_IMPORTED_MODULE_3___default.a["delete"](borrar).then(function (Response) {
         _this.getVacaciones();
 
@@ -3071,7 +3071,7 @@ __webpack_require__.r(__webpack_exports__);
     getIncisos: function getIncisos() {
       var _this = this;
 
-      var urlIncisos = '/contrataciones-1/public/incisos';
+      var urlIncisos = '/contrataciones/public/incisos';
       axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(urlIncisos).then(function (Response) {
         _this.incisos = Response.data;
       });
@@ -3082,7 +3082,7 @@ __webpack_require__.r(__webpack_exports__);
     getAgenInc: function getAgenInc(inciso) {
       var _this2 = this;
 
-      var urlIncisos = '/contrataciones-1/public/agenincs/' + inciso;
+      var urlIncisos = '/contrataciones/public/agenincs/' + inciso;
       axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(urlIncisos).then(function (Response) {
         _this2.resetInciso();
 
@@ -3117,7 +3117,7 @@ __webpack_require__.r(__webpack_exports__);
     modificarAgente: function modificarAgente() {
       var _this3 = this;
 
-      var urlAgentes = '/contrataciones-1/public/agente/update';
+      var urlAgentes = '/contrataciones/public/agente/update';
       axios__WEBPACK_IMPORTED_MODULE_2___default.a.post(urlAgentes, this.agente).then(function (response) {
         $('#ModificarAgente').modal('hide');
         toastr__WEBPACK_IMPORTED_MODULE_0___default.a.success('agente modificado satisfactoriamente satisfactoriamente');
@@ -3455,7 +3455,7 @@ __webpack_require__.r(__webpack_exports__);
     getHospitales: function getHospitales() {
       var _this = this;
 
-      var urlHospitales = '/contrataciones-1/public/hospitales';
+      var urlHospitales = '/contrataciones/public/hospitales';
       axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(urlHospitales).then(function (Response) {
         _this.hospitales = Response.data;
       });
@@ -3463,7 +3463,7 @@ __webpack_require__.r(__webpack_exports__);
     getServicios: function getServicios() {
       var _this2 = this;
 
-      var urlServicios = '/contrataciones-1/public/servicios';
+      var urlServicios = '/contrataciones/public/servicios';
       axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(urlServicios).then(function (Response) {
         _this2.servicios = Response.data;
       });
@@ -3471,7 +3471,7 @@ __webpack_require__.r(__webpack_exports__);
     getSectores: function getSectores() {
       var _this3 = this;
 
-      var urlSectores = '/contrataciones-1/public/sectores';
+      var urlSectores = '/contrataciones/public/sectores';
       axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(urlSectores).then(function (Response) {
         _this3.sectores = Response.data;
       });
@@ -3479,7 +3479,7 @@ __webpack_require__.r(__webpack_exports__);
     getIncisos: function getIncisos() {
       var _this4 = this;
 
-      var urlIncisos = '/contrataciones-1/public/incisos';
+      var urlIncisos = '/contrataciones/public/incisos';
       axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(urlIncisos).then(function (Response) {
         _this4.incisos = Response.data;
       });
@@ -5718,7 +5718,7 @@ __webpack_require__.r(__webpack_exports__);
     guardarContrato: function guardarContrato() {
       var _this = this;
 
-      var url = "/contrataciones-1/public/contratos/store";
+      var url = "/contrataciones/public/contratos/store";
       this.contrato.fecha_inicio = moment__WEBPACK_IMPORTED_MODULE_2___default()(this.contrato.fecha_inicio).format("YYYY-MM-DD");
       this.contrato.fecha_fin = moment__WEBPACK_IMPORTED_MODULE_2___default()(this.contrato.fecha_fin).format("YYYY-MM-DD");
       var c_fecha_inicio = moment__WEBPACK_IMPORTED_MODULE_2___default()(this.contrato.fecha_inicio).toDate();
