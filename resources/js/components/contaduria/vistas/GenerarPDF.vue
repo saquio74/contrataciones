@@ -11,14 +11,14 @@
                     <label class="text"> hospital    </label>
                     <select class="form-control badge-secondary" v-model="hospital" id="hospital" name='hospital'>
                         <option value=''>seleccione</option>
-                        <option v-for="hosp in hospitales" :key="hosp.ID" :value="hosp.ID" >{{hosp.HOSPITAL}}</option>
+                        <option v-for="hosp in hospitales" :key="hosp.ID" :value="hosp" >{{hosp.HOSPITAL}}</option>
                     </select>
                 </div>
                 <div class="col-sm-3 " v-else>
                     <label class="text"> hospital    </label>
                     <select class="form-control badge-secondary" v-model="hospital" id="hospital" name='hospital'>
                         <option value=''>seleccione</option>
-                        <option v-for="hosp in hospitalesAux" :key="hosp.ID" :value="hosp.ID" >{{hosp.HOSPITAL}}</option>
+                        <option v-for="hosp in hospitalesAux" :key="hosp.ID" :value="hosp" >{{hosp.HOSPITAL}}</option>
                     </select>
                 </div>
                 <div class="col-sm-3 ">
@@ -39,21 +39,21 @@
                     <label class="text"> hospital    </label>
                     <select class="form-control badge-secondary" v-model="hospital" id="hospital" name='hospital'>
                         <option value=''>seleccione</option>
-                        <option v-for="hosp in hospitales" :key="hosp.ID" :value="hosp.ID" >{{hosp.HOSPITAL}}</option>
+                        <option v-for="hosp in hospitales" :key="hosp.ID" :value="hosp" >{{hosp.HOSPITAL}}</option>
                     </select>
                 </div>
                 <div class="col-sm-3 " v-else>
                     <label class="text"> hospital    </label>
                     <select class="form-control badge-secondary" v-model="hospital" id="hospital" name='hospital'>
                         <option value=''>seleccione</option>
-                        <option v-for="hosp in hospitalesAux" :key="hosp.ID" :value="hosp.ID" >{{hosp.HOSPITAL}}</option>
+                        <option v-for="hosp in hospitalesAux" :key="hosp.ID" :value="hosp" >{{hosp.HOSPITAL}}</option>
                     </select>
                 </div>
                 <div class="col-sm-3 ">
                     <label class="text"> periodo    </label>
                     <select class="form-control badge-secondary" v-model="periodo" id="periodo" name='periodo'>
                         <option value=''>seleccione</option>
-                        <option v-for="periodo in periodos" :value="periodo" >{{periodo.periodo+ ' ' + periodo.anio}}</option>
+                        <option v-for="periodo in periodos" :value="periodo">{{periodo.periodo+ ' ' + periodo.anio}}</option>
                     </select>
                 </div>
                 <br>
@@ -67,14 +67,14 @@
                     <label class="text"> hospital    </label>
                     <select class="form-control badge-secondary" v-model="hospital" id="hospital" name='hospital'>
                         <option value=''>seleccione</option>
-                        <option v-for="hosp in hospitales" :key="hosp.ID" :value="hosp.ID" >{{hosp.HOSPITAL}}</option>
+                        <option v-for="hosp in hospitales" :key="hosp.ID" :value="hosp" >{{hosp.HOSPITAL}}</option>
                     </select>
                 </div>
                 <div class="col-sm-3 " v-else>
                     <label class="text"> hospital    </label>
                     <select class="form-control badge-secondary" v-model="hospital" id="hospital" name='hospital'>
                         <option value=''>seleccione</option>
-                        <option v-for="hosp in hospitalesAux" :key="hosp.ID" :value="hosp.ID" >{{hosp.HOSPITAL}}</option>
+                        <option v-for="hosp in hospitalesAux" :key="hosp.ID" :value="hosp" >{{hosp.HOSPITAL}}</option>
                     </select>
                 </div>
                 <div class="col-sm-3 ">

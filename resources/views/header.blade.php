@@ -9,6 +9,7 @@
             <a href="{{action('PagesController@index')}}">
                 <h1 class="text-center text-light">Sistema Gral de contrataciones</h1>
             </a>
+            <nuevo-agente></nuevo-agente>
         </div>
     </div>
 </div>
