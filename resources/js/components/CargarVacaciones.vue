@@ -92,7 +92,7 @@
 
             },
             crearVacaciones:async function(){
-                const url = '/contrataciones-1/public/vacaciones/store'
+                const url = '/contrataciones/public/vacaciones/store'
                 try{
                     
                     await axios.post(url,this.vacaciones)

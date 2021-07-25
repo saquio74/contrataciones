@@ -112,7 +112,7 @@ export default {
             this.contrato.proveedor_id = this.proveedorAux.id;
         },
         guardarContrato(){
-            const url = "/contrataciones-1/public/contratos/store";
+            const url = "/contrataciones/public/contratos/store";
            
             this.contrato.fecha_inicio  = moment(this.contrato.fecha_inicio).format("YYYY-MM-DD")
             this.contrato.fecha_fin     = moment(this.contrato.fecha_fin).format("YYYY-MM-DD")

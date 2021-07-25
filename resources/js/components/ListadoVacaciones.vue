@@ -201,7 +201,7 @@
                 this.vacaciones.reverse();
             },
             borrarVacaciones:function(id){
-                var borrar = '/contrataciones-1/public/vacaciones/delete/' + id;
+                var borrar = '/contrataciones/public/vacaciones/delete/' + id;
                 axios.delete(borrar).then(Response=>{
                     this.getVacaciones();
                     toastr.success('eliminado satisfactoriamente');

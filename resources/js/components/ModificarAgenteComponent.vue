@@ -161,7 +161,7 @@
         },
         methods:{
             getIncisos:function(){
-                var urlIncisos = '/contrataciones-1/public/incisos';
+                var urlIncisos = '/contrataciones/public/incisos';
                 axios.get(urlIncisos).then(Response=>{
                     this.incisos = Response.data
                 });
@@ -171,7 +171,7 @@
                 this.agente.inciso = []
             },
             getAgenInc:function(inciso){
-                var urlIncisos = '/contrataciones-1/public/agenincs/' + inciso;
+                var urlIncisos = '/contrataciones/public/agenincs/' + inciso;
                 axios.get(urlIncisos).then(Response=>{
                     this.resetInciso()
                     this.agenInc = Response.data
@@ -182,7 +182,7 @@
                 });
             },
             modificarAgente:function(){
-                var urlAgentes = '/contrataciones-1/public/agente/update';
+                var urlAgentes = '/contrataciones/public/agente/update';
                 axios.post(urlAgentes,this.agente).then(response=>{
                     
                     $('#ModificarAgente').modal('hide');

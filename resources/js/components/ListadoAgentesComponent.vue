@@ -223,19 +223,19 @@ export default {
                 }
             },
             getHospitales:function(){
-                var urlHospitales = '/contrataciones-1/public/hospitales';
+                var urlHospitales = '/contrataciones/public/hospitales';
                 axios.get(urlHospitales).then(Response=>{
                     this.hospitales = Response.data
                 });
             },
             getServicios:function(){
-                var urlServicios = '/contrataciones-1/public/servicios';
+                var urlServicios = '/contrataciones/public/servicios';
                 axios.get(urlServicios).then(Response=>{
                     this.servicios = Response.data
                 });
             },
             getSectores:function(){
-                var urlSectores = '/contrataciones-1/public/sectores';
+                var urlSectores = '/contrataciones/public/sectores';
                 axios.get(urlSectores).then(Response=>{
                     this.sectores = Response.data
                 });
